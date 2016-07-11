@@ -239,6 +239,29 @@
     quickSort([9,4,2,8,1,4,5,3,7]);
     ```
 
+- 手写数组冒泡排序
+    ```JavaScript
+    var bubble = function(arr){
+        var maxIndex = arr.length - 1, temp, flag;
+        for (var i = maxIndex; i > 0; i--) {
+            flag = true
+            for (var j = 0; j < i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    flag = false;
+                }
+            }
+            if(! flag){
+                break;
+            }
+        }
+        return arr;
+    }
+    // 调用
+    var arr = bubble([13, 69, 28, 93, 55, 75, 34]);
+    ```
 - 手写数组去重
     ```JavaScript
     Array.prototype.unique = function() { return [...new Set(this)];};
