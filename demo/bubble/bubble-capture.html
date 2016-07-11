@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    div{
+      font-family: "Microsoft YaHei UI";
+      opacity: .8;
+    }
+    .div1 {
+      width: 400px;
+      height: 400px;
+      background-color: blue
+    }
+
+    .div2 {
+      width: 300px;
+      height: 300px;
+      background-color: yellow
+    }
+
+    .div3 {
+      width: 200px;
+      height: 200px;
+      background-color: orange
+    }
+
+    .div4 {
+      width: 100px;
+      height: 100px;
+      background-color: red
+    }
+  </style>
+</head>
+<body>
+
+<div class="div1">
+  div1
+  <div class="div2">
+    div2
+    <div class="div3">
+      div3
+      <div class="div4">
+        div4
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var div1 = document.querySelector('.div1');
+  var div2 = document.querySelector('.div2');
+  var div3 = document.querySelector('.div3');
+  var div4 = document.querySelector('.div4');
+
+  // 冒泡
+  div1.addEventListener('click', function () {
+    console.log('div1-bubble');
+  }, false);
+  div2.addEventListener('click', function () {
+    console.log('div2-bubble');
+  }, false);
+  div3.addEventListener('click', function () {
+    console.log('div3-bubble');
+  }, false);
+  div4.addEventListener('click', function () {
+    console.log('div4-bubble');
+  }, false);
+
+  // 捕获
+  div1.addEventListener('click', function () {
+    console.log('div1-capture1');
+  }, true);
+  div2.addEventListener('click', function () {
+    console.log('div2-capture1');
+  }, true);
+  div3.addEventListener('click', function () {
+    console.log('div3-capture1');
+  }, true);
+  div4.addEventListener('click', function () {
+    console.log('div4-capture1');
+  }, true);
+
+  // 绑定多次
+  div1.addEventListener('click', function () {
+    console.log('div1-capture2');
+  }, true);
+  div2.addEventListener('click', function () {
+    console.log('div2-capture2');
+  }, true);
+  div3.addEventListener('click', function () {
+    console.log('div3-capture2');
+  }, true);
+  div4.addEventListener('click', function () {
+    console.log('div4-capture2');
+  }, true);
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>事件侦听器函数</title>
+  <script src="eventUtil.js"></script>
+</head>
+<body>
+<button id="btn">Click me</button>
+<a href="http://www.baidu.com">百度</a>
+
+<script type="text/javascript">
+  (function () {
+    var btn = document.getElementById("btn");
+    var link = document.getElementsByTagName("a")[0];
+
+    eventUtil.addListener(btn, "click", function (event) {
+      var event = eventUtil.getEvent(event);
+      var target = eventUtil.getTarget(event);
+      alert('Prevent ' + target.innerHTML + ' \'s ' + event.type + ' event propagation');
+      eventUtil.stopPropagation(event);
+    });
+
+    eventUtil.addListener(link, "click", function (event) {
+      alert("Prevent default event");
+      var event = eventUtil.getEvent(event);
+      eventUtil.preventDefault(event);
+    });
+
+    eventUtil.addListener(document, "click", function () {
+      alert("Click Document");
+    });
+  })();
+</script>
+</body>
+</html>
