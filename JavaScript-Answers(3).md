@@ -368,8 +368,10 @@
     }
 
     function test2(num){
+      // ?= 正向匹配:匹配位置
+      // ?! 正向不匹配:排除位置
       var str = (+num).toString();
-      var re = /(?=(?!\b)(\d{3})+$)/g;
-      return str.replace(re, ',');
+      var reg = /(?=(?!\b)(\d{3})+$)/g;
+      return str.replace(reg, ',');
     }
     ```

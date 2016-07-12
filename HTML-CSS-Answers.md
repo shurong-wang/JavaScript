@@ -4,7 +4,7 @@
 
 - DOCTYPE 的作用？标准模式与兼容模式各有什么区别?
 
-      * <!DOCTYPE> 告知浏览器用何种模式解析文档. DOCTYPE 不存在或格式不正确会导致文档以兼容模式呈现
+      * DOCTYPE 告知浏览器用何种模式解析文档. DOCTYPE 不存在或格式不正确会导致文档以兼容模式呈现
       * 在兼容模式中，页面以宽松的向后兼容的方式显示，模拟老式浏览器的行为以防止站点无法工作
 
 - 行内元素有哪些？块级元素有哪些？ 空(void)元素有那些？
@@ -43,7 +43,7 @@
       * 搜索引擎的爬虫也依赖于HTML标记来确定上下文和各个关键字的权重，利于SEO
       * 便于团队开发和维护，可以减少差异化
 
-- HTML5为什么只需要写 <!DOCTYPE HTML>？
+- HTML5为什么只需要写 `<!DOCTYPE HTML>`？
 
       * HTML5 不基于 SGML(标准通用标记语言)，因此不需要对 DTD 进行引用
       * HTML5 仍需要通过 DOCTYPE 来规范浏览器的行为（让浏览器按照它们应该的方式来运行）
@@ -71,16 +71,13 @@
 
 - HTML5移除了那些元素？
 
-       * 纯表现的元素：basefont/big/center/font/s/strike/tt/u
-       * 对可用性产生负面影响的元素：frame/frameset/noframes
+       * 纯表现的元素：basefont、big、center、font、s、strike、tt、u
+       * 对可用性产生负面影响的元素：frame、frameset、noframes
 
 - 如何处理HTML5新标签的浏览器兼容问题？
 
-       * E8/IE7/IE6支持通过 document.createElement 方法产生的标签
-       * 使用垫片 html5shim:
-       <!--[if lt IE 9]>
-         <script> src="http://html5shim.googlecode.com/svn/trunk/html5.js"</script>
-       <![endif]-->
+       * 通过 document.createElement 创建新标签
+       * 使用垫片 html5shiv.js
 
 - 如何区分 HTML 和 HTML5？
 
@@ -88,74 +85,72 @@
 
 - HTML5的离线储存工作原理能不能解释一下，怎么使用？
 
-      HTML5的离线储存原理：
-        用户在线时，保存更新用户机器上的缓存文件；当用户离线时，可以正常访离线储存问站点或应用内容。
+      * HTML5的离线储存原理：
+        用户在线时，保存更新用户机器上的缓存文件；当用户离线时，可以正常访离线储存问站点或应用内容
 
-      HTML5的离线储存使用：
-        1. 在文档的 html 标签设置 manifest 属性，如 manifest="/offline.appcache"
-        2. 在项目中新建 manifest 文件，manifest 文件的命名建议：xxx.appcache
-        3. 在 web 服务器配置正确的 MIME-type，即 text/cache-manifest
+      * HTML5的离线储存使用：
+        - 在文档的 html 标签设置 manifest 属性，如 manifest="/offline.appcache"
+        - 在项目中新建 manifest 文件，manifest 文件的命名建议：xxx.appcache
+        - 在 web 服务器配置正确的 MIME-type，即 text/cache-manifest
 
-- 浏览器是怎么对HTML5的离线储存资源进行管理和加载的呢？
+- 浏览器是怎么对HTML5的离线储存资源进行管理和加载的？
 
-       在线的情况下，浏览器发现 html 标签有 manifest 属性，它会请求 manifest 文件。
-       如果是第一次访问app，那么浏览器就会根据 manifest 文件的内容下载相应的资源并且进行离线存储。
-       如果已经访问过app并且资源已经离线存储了，那么浏览器就会使用离线的资源加载页面。
-       然后浏览器会对比新的 manifest 文件与旧的 manifest 文件，如果文件没有发生改变，就不做任何操作。
-       如果文件改变了，那么就会重新下载文件中的资源并进行离线存储。
-       离线的情况下，浏览器就直接使用离线存储的资源。
+      * 在线的情况下，浏览器发现 html 标签有 manifest 属性，它会请求 manifest 文件
+      * 如果是第一次访问app，那么浏览器就会根据 manifest 文件的内容下载相应的资源并且进行离线存储
+      * 如果已经访问过app且资源已经离线存储了，浏览器会对比新的 manifest 文件与旧的 manifest 文件，如果文件没有发生改变，就不做任何操作。如果文件改变了，那么就会重新下载文件中的资源并进行离线存储
+      * 离线的情况下，浏览器就直接使用离线存储的资源。
 
-- 请描述一下 cookies、sessionStorage 和 localStorage 的区别？
+- 描述 cookies、sessionStorage 和 localStorage 的区别？
 
-       1.与服务器交互：
-         cookie 是网站为了标示用户身份而储存在用户本地终端上的数据（通常经过加密）
-         cookie 数据始终在同源的 http 请求中携带（即使不需要），会在浏览器和服务器间来回传递
-         sessionStorage 和 localStorage 不会自动把数据发给服务器，仅在本地保存
+      * 与服务器交互：
+        - cookie 是网站为了标示用户身份而储存在用户本地终端上的数据（通常经过加密）
+        - cookie 始终会在同源 http 请求头中携带（即使不需要），在浏览器和服务器间来回传递
+        - sessionStorage 和 localStorage 不会自动把数据发给服务器，仅在本地保存
 
-       2.存储大小：
-         cookie 数据根据不同浏览器限制，大小一般不能超过 4k
-         sessionStorage 和 localStorage 虽然也有存储大小的限制，但比cookie大得多，可以达到5M或更大
+      * 存储大小：
+        - cookie 数据根据不同浏览器限制，大小一般不能超过 4k
+        - sessionStorage 和 localStorage 虽然也有存储大小的限制，但比cookie大得多，可以达到5M或更大
 
-       3.有期时间：
-         localStorage    存储持久数据，浏览器关闭后数据不丢失除非主动删除数据
-         sessionStorage  数据在当前浏览器窗口关闭后自动删除
-         cookie           设置的cookie过期时间之前一直有效，与浏览器是否关闭无关
+      * 有期时间：
+        - localStorage    存储持久数据，浏览器关闭后数据不丢失除非主动删除数据
+        - sessionStorage  数据在当前浏览器窗口关闭后自动删除
+        - cookie           设置的cookie过期时间之前一直有效，与浏览器是否关闭无关
 
 - iframe 有那些优点和缺点？
 
-       优点：
-        a. 用来加载速度较慢的内容（如广告）
-        b. 可以使脚本可以并行下载
-        c. 可以实现跨子域通信
+       * 优点：
+         - 用来加载速度较慢的内容（如广告）
+         - 可以使脚本可以并行下载
+         - 可以实现跨子域通信
 
-       缺点：
-        a. iframe 会阻塞主页面的 onload 事件
-        b. 无法被一些搜索引擎索引到
-        c. 会产生很多页面，不容易管理
+       * 缺点：
+         - iframe 会阻塞主页面的 onload 事件
+         - 无法被一些搜索引擎索识别
+         - 会产生很多页面，不容易管理
 
 - label 的作用是什么？怎么使用的？
 
-        label标签来定义表单控件的关系：
+        * label标签来定义表单控件的关系：
          当用户选择label标签时，浏览器会自动将焦点转到和label标签相关的表单控件上
 
-        使用方法一：
-        <label for="mobile">Number:</label>
-        <input type="text" id="mobile"/>
+        * 使用方法1：
+        `<label for="mobile">Number:</label>`
+        `<input type="text" id="mobile"/>`
 
-        使用方法二：
-        <label>Date:<input type="text"/></label>
+        * 使用方法2：
+        `<label>Date:<input type="text"/></label>`
 
 - 如何关闭 form 的自动完成功能？
 
-      为 form 或某个 input 设置属性 autocomplete="off"
+       为 form 或某个 input 设置属性 autocomplete="off"
 
 - 如何实现浏览器内多个标签页之间的通信？
 
-        * iframe + contentWindow
-        * postMessage
-        * SharedWorker(Web Worker API)
-        * storage 事件(localStorge API)
-        * WebSocket
+       * iframe + contentWindow
+       * postMessage
+       * SharedWorker(Web Worker API)
+       * storage 事件(localStorge API)
+       * WebSocket
 
 -  webSocket 如何兼容低浏览器？
 
@@ -172,19 +167,19 @@
 
 - 如何在页面上实现一个圆形的可点击区域？
 
-      1. 热区 <map><area/></map>
-      2. <svg></svg>
-      3. border-radius
-      4. JS 计算圆的覆盖范围、获取鼠标坐标
+      * 热区 `<map><area/></map>`
+      * `<svg></svg>`
+      * border-radius
+      * JS 计算圆的覆盖范围、获取鼠标坐标
 
-- 不使用 border 画出 1px 高的线，在不同浏览器的标准模式与怪异模式下都能保持一致的效果。
+- 不使用 border 画出 1px 高的线。
 
-      <div style="height:1px;overflow:hidden;background:gray"></div>
+      `<div style="height:1px; overflow:hidden; background:gray"></div>`
 
 - 说明网页验证码的应用，网页验证码解决什么安全问题？
 
-       * 网页验证码是区分操作者是计算机还是人的程序
-       * 可以防止恶意破解密码、短信轰炸、刷票、灌水等；
+      * 网页验证码是区分操作者是计算机还是人的程序
+      * 可以防止恶意破解密码、短信轰炸、刷票、灌水等；
 
 - title 与 h1 的区别、b 与 strong 的区别、i 与 em 的区别？
 
@@ -202,11 +197,11 @@
 
 - 介绍一下标准的CSS的盒子模型？低版本IE的盒子模型有什么不同的？
 
-      1. 盒子模型构成：内容(content)、内填充(padding)、 边框(border)、外边距(margin)
-      2. IE8及其以下版本浏览器，未声明 DOCTYPE，内容宽高会包含内填充和边框，称为怪异盒模型(IE盒模型)
-      3. 标准(W3C)盒模型：元素宽度 = width + padding + border + margin
-      4. 怪异(IE)盒模型：元素宽度 = width + margin
-      5. 标准浏览器通过设置 css3 的 box-sizing: border-box 属性，触发“怪异模式”解析计算宽高
+      * 盒子模型构成：内容(content)、内填充(padding)、 边框(border)、外边距(margin)
+      * IE8及其以下版本浏览器，未声明 DOCTYPE，内容宽高会包含内填充和边框，称为怪异盒模型(IE盒模型)
+      * 标准(W3C)盒模型：元素宽度 = width + padding + border + margin
+      * 怪异(IE)盒模型：元素宽度 = width + margin
+      * 标准浏览器通过设置 css3 的 box-sizing: border-box 属性，触发“怪异模式”解析计算宽高
 
 - box-sizing 常用的属性有哪些？分别有什么作用？
 
@@ -216,28 +211,28 @@
 
 - CSS选择器有哪些？
 
-      1.id选择器        #id
-      2.类选择器        .class
-      3.标签选择器       div, h1, p
-      4.相邻选择器       h1 + p
-      5.子选择器         ul > li
-      6.后代选择器       li a
-      7.通配符选择器      *
-      8.属性选择器       a[rel='external']
-      9.伪类选择器       a:hover, li:nth-child
+      * id选择器        #id
+      * 类选择器        .class
+      * 标签选择器      div, h1, p
+      * 相邻选择器      h1 + p
+      * 子选择器        ul > li
+      * 后代选择器      li a
+      * 通配符选择器    *
+      * 属性选择器      a[rel='external']
+      * 伪类选择器      a:hover, li:nth-child
 
 - CSS哪些属性可以继承？哪些属性不可以继承？
 
-       * 可以继承的样式：font-size、font-family、color、list-style、cursor
-       * 不可继承的样式：width、height、border、padding、margin、background
+      * 可以继承的样式：font-size、font-family、color、list-style、cursor
+      * 不可继承的样式：width、height、border、padding、margin、background
 
 - CSS如何计算选择器优先？
 
-      1.相同权重，定义最近者为准：行内样式 > 内部样式 > 外部样式
-      2.含外部载入样式时，后载入样式覆盖其前面的载入的样式和内部样式
-      3.选择器优先级: 行内样式[1000] > id[100] > class[10] > Tag[1]
-      4.在同一组属性设置中，!important 优先级最高，高于行内样式
-      5.JS动态设置样式，高于一切样式设定
+      * 相同权重，定义最近者为准：行内样式 > 内部样式 > 外部样式
+      * 含外部载入样式时，后载入样式覆盖其前面的载入的样式和内部样式
+      * 选择器优先级: 行内样式[1000] > id[100] > class[10] > Tag[1]
+      * 在同一组属性设置中，!important 优先级最高，高于行内样式
+      5* JS动态设置样式，高于一切样式设定
 
 - CSS3新增伪类有哪些？
 
@@ -294,79 +289,75 @@
 
 - 请列举几种隐藏元素的方法
 
-       a. visibility: hidden;   这个属性只是简单的隐藏某个元素，但是元素占用的空间任然存在
-       b. opacity: 0;           CSS3属性，设置0可以使一个元素完全透明
-       c. position: absolute;   使元素脱离文档流，再给它设置一个很大的 left 负值定位，使元素定位在可见区域之外
-       d. display: none;        元素会变得不可见，并且不会再占用文档的空间。
-       e. transform: scale(0);  将一个元素设置为缩放无限小，元素将不可见，元素原来所在的位置将被保留
-       f. <div hidden="hidden"> HTML5属性,效果和display:none;相同，但这个属性用于记录一个元素的状态
-       g. height: 0;            将元素在垂直方向上收缩为0,使元素消失。只要元素没有可见的边框，就可以正常工作
-       h. filter: blur(0);      CSS3属性，将一个元素的模糊度设置为0，从而使这个元素“消失”在页面中
+       * visibility: hidden;   这个属性只是简单的隐藏某个元素，但是元素占用的空间任然存在
+       * opacity: 0;           CSS3属性，设置0可以使一个元素完全透明
+       * position: absolute;   设置一个很大的 left 负值定位，使元素定位在可见区域之外
+       * display: none;        元素会变得不可见，并且不会再占用文档的空间。
+       * transform: scale(0);  将一个元素设置为缩放无限小，元素将不可见，元素原来所在的位置将被保留
+       * `<div hidden="hidden">` HTML5属性,效果和display:none;相同，但这个属性用于记录一个元素的状态
+       * height: 0;            将元素高度设为 0 ，并消除边框
+       * filter: blur(0);      CSS3属性，将一个元素的模糊度设置为0，从而使这个元素“消失”在页面中
 
 - 说明 relative 和 absolute 定位原点？
 
-      absolute  绝对定位，相对于最近定位父级元素进行定位。默认相对于浏览器窗口（不是body）
-      fixed     固定定位，相对于浏览器窗口进行定位（不是body）
-      relative  相对定位，相对于自身正常位置进行定位
-      static    消除定位，元素位于正常的流（忽略top/bottom/left/right/z-index值）
-      inherit   继承父级元素的 position 属性的值
+       * absolute  绝对定位，相对于最近定位父级元素进行定位。如果没有定位父级，则相对于浏览器窗口（不是body）
+       * relative  相对定位，相对于自身正常位置进行定位
+       * fixed     固定定位，相对于浏览器窗口进行定位（不是body）
+       * static    消除定位，元素位于正常的流（忽略top、bottom、left、right、z-index 值）
+       * inherit   继承父级元素的 position 属性的值
 
-* rgba() 和 opacity 的透明效果有什么不同？
+- rgba() 和 opacity 的透明效果有什么不同？
 
-       a. opacity 作用于元素以及元素内的所有内容（包括文字）的透明度
-       b. rgba() 只作用于元素自身的颜色或其背景色，子元素不会继承透明效果
+       * opacity 作用于元素以及元素内的所有内容（包括文字）的透明度
+       * rgba() 只作用于元素自身的颜色或其背景色，子元素不会继承透明效果
 
-* css 属性 content 有什么作用？有什么应用？
+- css 属性 content 有什么作用？
 
-       content 属性专门应用在 before/after 伪元素上，用于来插入生成内容
-       可以配合自定义字体，显示特殊符号，添加提示信息，清除浮动等
+       content 属性专门应用在 before/after 伪元素上，用于插入额外内容或样式
 
 - CSS3有哪些新特性？
 
-      新增选择器     p:nth-child(n){color: rgba(255, 0, 0, 0.75)}
-      弹性盒模型     display: flex;
-      多列布局       column-count: 5;
-      媒体查询       @media (max-width: 480px) {.box: {column-count: 1;}}
-      个性化字体     @font-face{font-family: BorderWeb; src:url(BORDERW0.eot);}
-      颜色透明度     color: rgba(255, 0, 0, 0.75);
-      圆角          border-radius: 5px;
-      渐变          background:linear-gradient(red, green, blue);
-      阴影          box-shadow:3px 3px 3px rgba(0, 64, 128, 0.3);
-      倒影          box-reflect: below 2px;
-      文字装饰      text-stroke-color: red;
-      文字溢出      text-overflow:ellipsis;
-      背景效果      background-size: 100px 100px;
-      边框效果      border-image:url(bt_blue.png) 0 10;
-      转换
-        旋转         transform: rotate(20deg);
-        倾斜         transform: skew(150deg, -10deg);
-        位移         transform: translate(20px, 20px);
-        缩放         transform: scale(.5);
-      平滑过渡      transition: all .3s ease-in .1s;
-      动画          @keyframes anim-1 {50% {border-radius: 50%;}} animation: anim-1 1s;
+      - 新增选择器     p:nth-child(n){color: rgba(255, 0, 0, 0.75)}
+      - 弹性盒模型     display: flex;
+      - 多列布局       column-count: 5;
+      - 媒体查询       @media (max-width: 480px) {.box: {column-count: 1;}}
+      - 个性化字体     @font-face{font-family: BorderWeb; src:url(BORDERW0.eot);}
+      - 颜色透明度     color: rgba(255, 0, 0, 0.75);
+      - 圆角           border-radius: 5px;
+      - 渐变           background:linear-gradient(red, green, blue);
+      - 阴影           box-shadow:3px 3px 3px rgba(0, 64, 128, 0.3);
+      - 倒影           box-reflect: below 2px;
+      - 文字装饰       text-stroke-color: red;
+      - 文字溢出       text-overflow:ellipsis;
+      - 背景效果       background-size: 100px 100px;
+      - 边框效果       border-image:url(bt_blue.png) 0 10;
+      - 转换
+         旋转          transform: rotate(20deg);
+         倾斜          transform: skew(150deg, -10deg);
+         位移          transform: translate(20px, 20px);
+         缩放          transform: scale(.5);
+      - 平滑过渡       transition: all .3s ease-in .1s;
+      - 动画           @keyframes anim-1 {50% {border-radius: 50%;}} animation: anim-1 1s;
 
 - 请解释一下 CSS3 的 Flexbox（弹性盒布局模型）以及适用场景？
 
-      Flexbox 可以简单快速的创建一个具有弹性功能的布局
-      当在不同大小屏幕上显示的时候，Flexbox可以让子元素在弹性容器中进行自由扩展和收缩
+      Flexbox 用于不同尺寸屏幕中创建可自动扩展和收缩布局
 
 - 用CSS创建一个三角形的原理是什么？
 
       把上、左、右三条边隐藏（颜色设为 transparent）
-
-      #demo {
+          
         width: 0;
         height: 0;
         border-width: 20px;
         border-style: solid;
         border-color: transparent transparent red transparent;
-      }
 
 - 一个满屏“品”字布局如何设计?
 
-      1.上面的 div 宽 100%
-      2.下面的两个 div 分别宽50%
-      3.用 float 或者 inline 使其不换行
+      1. 上面的 div 宽 100%
+      2. 下面的两个 div 分别宽50%
+      3. 用 float 或者 inline 使其不换行
 
 - 经常遇到的浏览器的CSS兼容性有哪些？解决方法是什么？
 
@@ -382,20 +373,15 @@
 - 经常遇到的浏览器的JS兼容性有哪些？解决方法是什么？
 
       * 当前样式：getComputedStyle(el, null) VS el.currentStyle
-      * 绑定事件：addEventListener VS attachEvent
-      * 删除事件：removeEventListener VS detachEvent
       * 事件对象：e VS window.event
       * 鼠标坐标：e.pageX, e.pageY VS window.event.x, window.event.y
-      * 事件目标：e.target VS window.event.srcElement
       * 按键码：e.which VS event.keyCode
-      * 阻止冒泡：e.stopPropagation() VS window.event.cancelBubble = true
-      * 组织默认事件：e.preventDefault() VS window.event.returnValue = false
       * 文本节点：el.textContent VS el.innerText
 
 - li与li之间有看不见的空白间隔是什么原因引起的？有什么解决办法？
 
-      li排列受到中间空白(回车/空格)等的影响，因为空白也属于字符，会被应用样式占据空间，产生间隔
-      解决办法：在ul设置设置font-size=0,在li上设置需要的文字大小
+      * li排列受到中间空白(回车/空格)等的影响，因为空白也属于字符，会被应用样式占据空间，产生间隔
+      * 解决办法：在ul设置设置font-size=0,在li上设置需要的文字大小
 
 - 什么是外边距重叠？ 重叠的结果是什么？
 
@@ -404,107 +390,112 @@
       这种合并外边距的方式被称为折叠，结合而成的外边距称为折叠外边距。
 
       * 折叠结果遵循下列计算规则：
-       a. 两个相邻的外边距都是正数时，折叠结果是它们两者之间较大的值
-       b. 两个相邻的外边距都是负数时，折叠结果是两者绝对值的较大值
-       c. 两个外边距一正一负时，折叠结果是两者的相加的和
+        - 两个相邻的外边距都是正数时，折叠结果是它们两者之间较大的值
+        - 两个相邻的外边距都是负数时，折叠结果是两者绝对值的较大值
+        - 两个外边距一正一负时，折叠结果是两者的相加的和
 
 - 请写出多种等高布局
 
-      a. 在列的父元素上使用这个背景图进行Y轴的铺放，从而实现一种等高列的假像
-      b. 模仿表格布局等高列效果：兼容性不好，在ie6-7无法正常运行
-      c. css3 flexbox 布局： .container{display: flex; align-items: stretch;}
+      * 在列的父元素上使用这个背景图进行Y轴的铺放，从而实现一种等高列的假像
+      * 模仿表格布局等高列效果：兼容性不好，在ie6-7无法正常运行
+      * css3 flexbox 布局： .container{display: flex; align-items: stretch;}
 
 - css垂直居中的方法有哪些？
 
-      1.如果是单行文本, line-height 设置成和 height 值
-      .vertical {
-        height: 100px;
-        line-height: 100px;
-      }
+      * 如果是单行文本, line-height 设置成和 height 值
 
-      2.已知高度的块级子元素，采用绝对定位和负边距
-      .container {
-        position: relative;
-      }
-      .vertical {
-        height: 300px;  /*子元素高度*/
-        position: absolute;
-        top:50%;  /*父元素高度50%*/
-        margin-top: -150px; /*自身高度一半*/
-      }
+        .vertical {
+          height: 100px;
+          line-height: 100px;
+        }
 
-      3.未知高度的块级父子元素居中，模拟表格布局
+      * 已知高度的块级子元素，采用绝对定位和负边距
+
+        .container {
+          position: relative;
+        }
+        .vertical {
+          height: 300px;  /*子元素高度*/
+          position: absolute;
+          top:50%;  /*父元素高度50%*/
+          margin-top: -150px; /*自身高度一半*/
+        }
+
+      * 未知高度的块级父子元素居中，模拟表格布局
       缺点：IE67不兼容，父级 overflow：hidden 失效
-      .container {
-        display: table;
-      }
-      .content {
-        display: table-cell;
-        vertical-align: middle;
-      }
 
-      4.新增 inline-block 兄弟元素，设置 vertical-align
+        .container {
+          display: table;
+        }
+        .content {
+          display: table-cell;
+          vertical-align: middle;
+        }
+
+     * 新增 inline-block 兄弟元素，设置 vertical-align
       缺点：需要增加额外标签，IE67不兼容
-      .container {
-        height: 100%;/*定义父级高度，作为参考*/
-      }
-      .extra .vertical{
-        display: inline-block;  /*行内块显示*/
-        vertical-align: middle; /*垂直居中*/
-      }
-      .extra {
-        height: 100%; /*设置新增元素高度为100%*/
-      }
 
-      5. 绝对定位配合 CSS3 位移
-      .vertical {
-        position: absolute;
-        top:50%;  /*父元素高度50%*/
-        transform:translateY(-50%, -50%);
-      }
+        .container {
+          height: 100%;/*定义父级高度，作为参考*/
+        }
+        .extra .vertical{
+          display: inline-block;  /*行内块显示*/
+          vertical-align: middle; /*垂直居中*/
+        }
+        .extra {
+          height: 100%; /*设置新增元素高度为100%*/
+        }
 
-      6. CSS3弹性盒模型
-      .container {
-        display:flex;
-        justify-content: center; /*子元素水平居中*/
-        align-items: center; /*子元素垂直居中*/
-      }
+      * 绝对定位配合 CSS3 位移
 
-- 什么是圣杯布局？实现原理？
+        .vertical {
+          position: absolute;
+          top:50%;  /*父元素高度50%*/
+          transform:translateY(-50%, -50%);
+        }
 
-      圣杯布局：
-      要求：三列布局；中间主体内容前置，且宽度自适应；两边内容定宽
-      好处：重要的内容放在文档流前面可以优先渲染
-      原理：利用相对定位、浮动、负边距布局，而不添加额外标签
+      * CSS3弹性盒模型
 
+        .container {
+          display:flex;
+          justify-content: center; /*子元素水平居中*/
+          align-items: center; /*子元素垂直居中*/
+        }
+
+- 圣杯布局的实现原理？
+
+      * 要求：三列布局；中间主体内容前置，且宽度自适应；两边内容定宽
+      * 好处：重要的内容放在文档流前面可以优先渲染
+      * 原理：利用相对定位、浮动、负边距布局，而不添加额外标签
+      ```css
           .container {
-              padding-left: 0 150px;
+              padding-left: 150px;
               padding-right: 190px;
           }
           .main {
               float: left;
               width: 100%;
-              background: #D6D6D6;
           }
           .left {
               float: left;
+              width: 190px;
+              margin-left: -100%;
               position: relative;
               left: -150px;
-              margin-left: -100%;
           }
           .right {
               float: left;
               width: 190px;
+              margin-left: -190px;
               position: relative;
               right: -190px;
-              margin-left: -190px;
           }
-
+      ```
 - 什么是双飞翼布局？实现原理？
 
       双飞翼布局：对圣杯布局（使用相对定位，对以后布局有局限性）的改进，消除相对定位布局
       原理：主体元素上设置左右边距，预留两翼位置。左右两栏使用浮动和负边距归位，消除相对定位。
-
+      ```css
         .container {
             /*padding-left:150px;*/
             /*padding-right:190px;*/
@@ -531,50 +522,57 @@
             /*position:relative;*/
             /*right:-190px;*/
         }
+      ```
 
-- 在CSS样式中常使用 px、em，各有什么优劣？在表现上有什么区别？
+- 在CSS样式中常使用 px、em 在表现上有什么区别？
 
-      px 相对于显示器屏幕分辨率而言的
-      em 相对于当前对象内文本的字体尺寸
-
-      px 定义的字体，无法用浏览器字体放大功能
-      em 值并不是固定的，会继承父级元素的字体大小： em = 1 / 父元素font-size * 需要转换的像素值
+      * px 相对于显示器屏幕分辨率，无法用浏览器字体放大功能
+      * em 值并不是固定的，会继承父级的字体大小： em = 像素值 / 父级font-size
 
 - 为什么要初始化CSS样式？
 
-      * 不同浏览器对有些标签样式的默认值解析不同，造成各现浏览器之间的页面显示差异
+      * 不同浏览器对有些标签样式的默认值解析不同
+      * 不初始化CSS会造成各现浏览器之间的页面显示差异
       * 可以使用 reset.css 或 Normalize.css 做 CSS 初始化
 
 - 解释下什么是浮动和它的工作原理？
 
-      在非IE浏览器下，当容器不设高度且内容含有浮动的子元素时，容器的高度不能被内容撑开。
-      此时，内容会溢出到容器外面而影响布局的现象。这个现象叫浮动（溢出）。
-
-      a. 浮动元素脱离文档流，不占据空间（引起“高度塌陷”现象）
-      b. 浮动元素碰到包含它的边框或者其他浮动元素的边框停留
+      * 非IE浏览器下，容器不设高度且子元素浮动时，容器高度不能被内容撑开。
+      此时，内容会溢出到容器外面而影响布局。这种现象被称为浮动（溢出）。
+      
+      * 工作原理：
+        - 浮动元素脱离文档流，不占据空间（引起“高度塌陷”现象）
+       - 浮动元素碰到包含它的边框或者其他浮动元素的边框停留
 
 - 浮动元素引起的问题？
 
-      a. 父元素的高度无法被撑开，影响与父元素同级的元素
-      b. 与浮动元素同级的非浮动元素会跟随其后
+      * 父元素的高度无法被撑开，影响与父元素同级的元素
+      * 与浮动元素同级的非浮动元素会跟随其后
 
 - 列举几种清除浮动的方式？
 
-      a. 添加额外标签，例如<div style="clear:both"></div>
-      b. 使用 br 标签和其自身的 clear 属性，例如<br clear="all" />
-      c. 父元素设置 overflow：hidden; 在IE6中还需要触发 hasLayout，例如zoom：1;
-      d. 父元素也设置浮动
-      e. 使用 :after 伪元素，由于IE6-7不支持 :after，使用 zoom:1 触发 hasLayout
+      * 添加额外标签，例如 `<div style="clear:both"></div>`
+      * 使用 br 标签和其自身的 clear 属性，例如 `<br clear="all" />`
+      * 父元素设置 overflow：hidden; 在IE6中还需要触发 hasLayout，例如zoom：1;
+      * 父元素也设置浮动
+      * 使用 :after 伪元素。由于IE6-7不支持 :after，使用 zoom:1 触发 hasLayout
 
 - 清除浮动最佳实践（after伪元素闭合浮动）：
 
-      .clearfix:after{content:"\200B"; display:block; height:0; clear:both;}
-      .clearfix{*zoom:1;}
+      .clearfix:after{
+        content: "\200B";
+        display: table; 
+        height: 0;
+        clear: both;
+      }
+      .clearfix{
+        *zoom: 1;
+      }
 
-- 什么是 FOUC（无样式内容闪烁）？ 如何来避免 FOUC？
+- 什么是 FOUC(Flash of Unstyled Content)？ 如何来避免 FOUC？
 
       * 当使用 @import 导入 CSS 时，会导致某些页面在 IE 出现奇怪的现象：
-      没有样式的页面内容显示瞬间闪烁，这种现象称为“文档样式短暂失效”(Flash of Unstyled Content)，简称为FOUC
+      没有样式的页面内容显示瞬间闪烁，这种现象称为“文档样式短暂失效”，简称为FOUC
 
       * 产生原因：当样式表晚于结构性html加载时，加载到此样式表时，页面将停止之前的渲染。
        等待此样式表被下载和解析后，再重新渲染页面，期间导致短暂的花屏现象。
@@ -645,31 +643,15 @@
       function screenRespond(){
         var screenWidth = $(window).width();
         if(screenWidth <= 1800){
-          $("body").attr("class","w1800");
+          $("body").attr("class", "w1800");
         }
         if(screenWidth <= 1400){
-          $("body").attr("class","w1400");
+          $("body").attr("class", "w1400");
         }
         if(screenWidth > 1800){
-          $("body").attr("class","");
+          $("body").attr("class", "");
         }
       }
-     ```
-     ```css
-    /* response */
-    .w1800 .screen-wid{width:1200px}
-    .w1800 .p-top-lin,.w1400 .p-top-lin{border:solid #e5e5e5;border-width:1px 0 0}
-    .w1800 .dchart-conut{width:100px}
-    .w1800 .dchart-conut p{padding:8% 0}
-    .w1400 .screen-wid{width:960px}
-    .w1400 .header_fixed .menu-navbox{margin-left:8%}
-    .w1400 .header_fixed .menu-navbox li{padding:17px 1.2%}
-    .w1400 .header_fixed .menu-slide-down li{padding:0}
-    .w1400 .menu-navbox{margin-left:25%}
-    .w1400 .menu-navbox li{padding:17px 2%}
-    .w1400 .menu-navbox .none-mar{padding-right:0}
-    .w1400 .menu-slide-down li{padding:0}
-    .w1400 .menu-navbox a{font-size:15px}
      ```
 
 - 什么是视差滚动效果，如何给每页做不同的动画？
@@ -690,138 +672,147 @@
 - 伪元素和伪类的区别和作用？
 
       * 伪元素 -- 在内容元素的前后插入额外的元素或样式，但是这些元素实际上并不在文档中生成。
-       它们只在外部显示可见，但不会在文档的源代码中找到它们，因此，称为“伪”元素。
-       例如：
+       它们只在外部显示可见，但不会在文档的源代码中找到它们，因此，称为“伪”元素。例如：
+         
           p::before {content:"第一章：";}
           p::after {content:"Hot!";}
           p::first-line {background:red;}
           p::first-letter {font-size:30px;}
 
-      * 伪类 -- 将特殊的效果添加到特定选择器上。它是已有元素上添加类别的，不会产生新的元素。
-       例如：
+      * 伪类 -- 将特殊的效果添加到特定选择器上。它是已有元素上添加类别的，不会产生新的元素。例如：
+          
           a:hover {color: #FF00FF}
           p:first-child {color: red}
 
 - ::before 和 :after 中双冒号和单冒号有什么区别？
 
-      1.在 CSS 中伪类一直用 : 表示，如 :hover, :active 等
-      2.伪元素在CSS1中已存在，当时语法是用 : 表示，如 :before 和 :after
-      3.后来在CSS3中修订，伪元素用 :: 表示，如 ::before 和 ::after，以此区分伪元素和伪类
-      4.由于低版本IE对双冒号不兼容，开发者为了兼容性各浏览器，继续使使用 :after 这种老语法表示伪元素
-      5.综上所述：
-       双冒号 ::before 是 CSS3 中修订的，书写伪元素的新语法
-       单冒号 :after 是 CSS1 中存在的，可兼容IE的老语法
+       * 在 CSS 中伪类一直用 : 表示，如 :hover, :active 等
+       * 伪元素在CSS1中已存在，当时语法是用 : 表示，如 :before 和 :after
+       * 后来在CSS3中修订，伪元素用 :: 表示，如 ::before 和 ::after，以此区分伪元素和伪类
+       * 由于低版本IE对双冒号不兼容，开发者为了兼容性各浏览器，继续使使用 :after 这种老语法表示伪元素
+       * 综上所述：::before 是 CSS3 中写伪元素的新语法； :after 是 CSS1 中存在的、兼容IE的老语法
 
 - 如何修改Chrome记住密码后自动填充表单的黄色背景？
 
-      产生原因：由于Chrome默认会给自动填充的input表单加上 input:-webkit-autofill 私有属性造成的
-      解决方案一：在form标签上直接关闭了表单的自动填充：autocomplete="off"
-      解决方案二：input:-webkit-autofill { background-color: transparent; }
+       产生原因：由于Chrome默认会给自动填充的input表单加上 input:-webkit-autofill 私有属性造成的
+       解决方案1：在form标签上直接关闭了表单的自动填充：autocomplete="off"
+       解决方案2：input:-webkit-autofill { background-color: transparent; }
 
 - input [type=search] 搜索框右侧小图标如何美化？
-
+  ```css
       input[type="search"]::-webkit-search-cancel-button{
-        -webkit-appearance: none;
-        height: 15px;
-        width: 15px;
-        border-radius: 8px;
-        background:url("images/searchicon.png") no-repeat 0 0;
-        background-size: 15px 15px;
+          -webkit-appearance: none;
+          height: 15px;
+          width: 15px;
+          border-radius: 8px;
+          background:url("images/searchicon.png") no-repeat 0 0;
+          background-size: 15px 15px;
       }
+  ```
 
 - 网站图片文件，如何点击下载？而非点击预览？
 
-      <a href="logo.jpg" download>下载</a>
-      <a href="logo.jpg" download="网站LOGO" >下载</a>
+      `<a href="logo.jpg" download>下载</a>`
+      `<a href="logo.jpg" download="网站LOGO" >下载</a>`
 
 - iOS safari 如何阻止“橡皮筋效果”？
-
-    $(document).ready(function(){
-        function stopScrolling(touchEvent) {
-            touchEvent.preventDefault();
-        }
-        document.addEventListener('touchstart', stopScrolling, false);
-        document.addEventListener('touchmove', stopScrolling, false);
-    });
+  ```javascript
+      $(document).ready(function(){
+          var stopScrolling = function(event) {
+              event.preventDefault();
+          }
+          document.addEventListener('touchstart', stopScrolling, false);
+          document.addEventListener('touchmove', stopScrolling, false);
+      });
+  ```
 
 - 你对 line-height 是如何理解的？
 
-       1.line-height指的是一行字的高度，包含了字间距，实际上就是下一行的基线到上一行的基线距离
-       2.如果一个标签没有定义height属性，那么其最终表现的高度是由line-height决定的
-       3.一个div没有设置高度，那么撑开div高度的是line-height，而不是div内的文字内容
-       4.把line-height值设置为height一样大小的值可以实现单行文字的垂直居中
-       5.在某些情形下，line-height可以和height互换，都能撑开一个高度
-        而使用height会使标签触发haslayout，而使用line-height则不会
+       * line-height 指一行字的高度，包含了字间距，实际上是下一行基线到上一行基线距离
+       * 如果一个标签没有定义 height 属性，那么其最终表现的高度是由 line-height 决定的
+       * 一个容器没有设置高度，那么撑开容器高度的是 line-height 而不是容器内的文字内容
+       * 把 line-height 值设置为 height 一样大小的值可以实现单行文字的垂直居中
+       * line-height 和 height 都能撑开一个高度，height 会触发 haslayout，而 line-height 不会
 
-- line-height三种赋值方式有何区别？（带单位、纯数字、百分比）
+- line-height 三种赋值方式有何区别？（带单位、纯数字、百分比）
 
-       带单位：px不用计算，em则会使元素以其父元素font-size值为参考来计算自己的行高
-       纯数字：把比例传递给后代，例如父级行高为1.5，子元素字体为18px，则子元素行高为1.5*18=27px
-       百分比：将计算后的值传递给后代
+       * 带单位：px 是固定值，而 em 会参考父元素 font-size 值计算自身的行高
+       * 纯数字：会把比例传递给后代。例如，父级行高为 1.5，子元素字体为 18px，则子元素行高为 1.5 * 18 = 27px
+       * 百分比：将计算后的值传递给后代
 
 - 设置元素浮动后，该元素的 display 值会如何变化？
 
        设置元素浮动后，该元素的 display 值自动变成 block
 
 - 怎么让Chrome支持小于12px 的文字？
-
-      .shrink{-webkit-transform:scale(0.8);-o-transform:scale(1); display:inline-block;}
+  ```css
+      .shrink{
+        -webkit-transform:scale(0.8);
+        -o-transform:scale(1);
+        display:inline-block;
+      }
+  ```
 
 - 让页面里的字体变清晰，变细用CSS怎么做？（IOS手机浏览器字体齿轮设置）
-
+  ```css
       -webkit-font-smoothing: antialiased;
+  ```
 
-- font-style 属性可以让它赋值为 'oblique', oblique 是什么意思？
+- font-style 属性 oblique 是什么意思？
 
-      font-style:oblique; 是让没有 italic 属性的文字实现倾斜
+      font-style: oblique; 使没有 italic 属性的文字实现倾斜
 
--  position:fixed; 在 android 下无效怎么处理？
-
-       <meta name="viewport" content="width=device-width, initial-scale=1.0,
-        maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+- position:fixed; 在 android 下无效怎么处理？
+  ```html
+     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+  ```
 
 - 如果需要手动写动画，你认为最小时间间隔是多久？
 
-      多数显示器默认频率是60Hz，即1秒刷新60次，所以理论上最小间隔: 1s / 60 * 1000 ＝ 16.7ms
+      16.7ms 多数显示器默认频率是60Hz，即1秒刷新60次，所以理论上最小间隔: 1s / 60 * 1000 ＝ 16.7ms
 
 - display:inline-block 什么时候会显示间隙？
 
-      1. 相邻的 inline-block 元素之间有换行或空格分隔的情况下会产生间距
-      2. 非 inline-block 水平元素设置为 inline-block 也会有水平间距
-      3. 借助 vertical-align:top; 个属性可以消除垂直间隙
-      4. 给父级加 font-size：0; 在子元素里设置需要的字体大小，可以消除垂直间隙
-      5. 把 li 标签写到同一行可以消除垂直间隙，但代码可读性差
+      * 相邻的 inline-block 元素之间有换行或空格分隔的情况下会产生间距
+      * 非 inline-block 水平元素设置为 inline-block 也会有水平间距
+      * 可以借助 vertical-align:top; 消除垂直间隙
+      * 可以在父级加 font-size：0; 在子元素里设置需要的字体大小，消除垂直间隙
+      * 把 li 标签写到同一行可以消除垂直间隙，但代码可读性差
 
 - overflow: scroll 时不能平滑滚动的问题怎么处理？
 
       监听滚轮事件，然后滚动到一定距离时用 jquery 的 animate 实现平滑效果。
 
-- 有一个高度自适应的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度
+- 一个高度自适应的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度
 
-      方案1. height: calc(100%-100px);
-      方案2. 父元素：position:relative; 子元素：position: absolute; top: 100px; bottom: 0;
-      方案3. 父元素：display:flex;flex-direction:column; 子元素：flex:1;
+      方案1：
+        .sub { height: calc(100%-100px); }
+      方案2：
+        .container { position:relative; }
+        .sub { position: absolute; top: 100px; bottom: 0; }
+      方案3：
+        .container { display:flex; flex-direction:column; }
+        .sub { flex:1; }
 
 - png、jpg、gif 这些图片格式解释一下，分别什么时候用。有没有了解过webp？
 
-      png   完全支持alpha透明、间隔渐进显示、无损压缩，不支持动画
-      jpg   支持上百万种颜色，不支持背景透明、动画、图形渐进、无损压缩
-      gif   支持背景透明、动画、图形渐进、无损压缩，只有256种颜色
-      webp  加载速度快，压缩体积小，能节省大量的带宽资源和数据空间，但兼容性差
+      png   支持完全透明；不支持动画
+      jpg   支持上百万种颜色，不支持背景透明、动画
+      gif   支持背景透明、动画，只有256种颜色
+      webp  加载速度快，压缩体积小，但兼容性差
 
-      gif 适用范围：小图标、平铺背景等色彩比较少的小型图片、动图
-      png 适用范围：小图标、平铺背景等色彩比较少的小型图片、屏幕截图
+      gif 适用范围：动图、小图标
+      png 适用范围：小图标、平铺背景、屏幕截图
       jpg 适用范围：自然风景照片、高清海报等照片
 
+- style 标签写在 body 结束标签后与 body 结束标签前有什么区别？
 
-- style标签写在body后与body前有什么区别？
-
-      标准做法是放在<head>区，这样做的好处是保证网页主体加载时，样式已提交加载生效了。
+      标准做法是放在 head 标签区间，好处是保证网页主体加载时，样式已提交加载生效
 
 - 什么是CSS 预处理器 / 后处理器？
 
-      * 预处理器例如：LESS、Sass 用来预编译Sass或less，增强了css代码的复用性。
+      * 预处理器（LESS、Sass）用来预编译 Sass 或 less，增强了 css 代码的复用性。
       使 css 具备层级、mixin、变量、循环、函数等，极大方便了UI组件模块化开发。
 
-      * 后处理器例如：PostCSS，在完成的 CSS 样式表中根据CSS规范进行处理，让其更有效；
+      * 后处理器（PostCSS），在完成的 CSS 样式表中根据 CSS 规范进行处理，让其更有效；
       目前最常用于给CSS属性添加浏览器私有前缀，实现跨浏览器兼容性的问题。

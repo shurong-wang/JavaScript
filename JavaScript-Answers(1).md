@@ -10,8 +10,8 @@
 
 - JS的基本数据类型和引用数据类型
 
-      基本数据类型：undefined、null、boolean、number、string、symbol
-      复杂数据类型：object、array、function
+      * 基本数据类型：undefined、null、boolean、number、string、symbol
+      * 引用数据类型：object、array、function
 
 - 检测浏览器版本版本有哪些方式？
 
@@ -127,12 +127,10 @@
         引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址。
         当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后从堆中获得实体。
 
-        ![Stated Clearly Image](http://www.w3school.com.cn/i/ct_js_value.gif)
-
 - JavaScript创建对象的几种方式？
 
       1. 工厂方式（使用内置 Object 对象生成）
-
+      ```javascript
          var Dog = new Object();
          Dog.name = "旺财";
          Dog.age = 3;
@@ -140,9 +138,9 @@
              alert("我是" + Dog.name + ",汪汪汪...");
          }
          Dog.work();
-
+      ```
       2. 对象字面量方式（使用 JSON 对象生成）
-
+      ```javascript
          var Person = {
              firstname: "Mark",
              lastname: "Yun",
@@ -152,9 +150,9 @@
              }
          };
          Person.introduce();
-
+      ```
       3. 构造函数方式（内部用 this 关键字指向实例对象）
-
+      ```javascript
          function Pet(name, age, hobby){
             this.name = name;
             this.age = age;
@@ -165,9 +163,9 @@
          }
          var maidou = new Pet("麦兜", 25, "coding");
          maidou.eat();
-
+      ```
       4. 原型方式（在 prototype 上添加属性和方法）
-
+      ```javascript
           function Dog(){}
           Dog.prototype.name = "旺财";
           Dog.prototype.eat = function(){
@@ -175,9 +173,9 @@
           }
           var wangcai = new Dog();
           wangcai.eat();
-
+      ```
       5. 混合方式（构造函数方式[this] + 原型方式[prototype]）
-
+      ```javascript
          function Mobile(name, price){
            this.name = name;
            this.price = price;
@@ -187,12 +185,12 @@
          }
          var iPhone7 = new Mobile("iPhone7", 1000);
          iPhone7.sell();
-
+      ```javascript
 - JavaScript如何实现一个类，怎么实例化这个类？
 
       1. 构造函数法（this + prototype） -- 用 new 关键字 生成实例对象
         缺点：用到了 this 和 prototype，编写复杂，可读性差
-
+        ```javascript
           function Mobile(name, price){
              this.name = name;
              this.price = price;
@@ -202,10 +200,10 @@
            }
            var iPhone7 = new Mobile("iPhone7", 1000);
            iPhone7.sell();
-
+        ```
       2. Object.create 法 -- 用 Object.create() 生成实例对象
         缺点：不能实现私有属性和私有方法，实例对象之间也不能共享数据
-
+        ```javascript
          var Person = {
              firstname: "Mark",
              lastname: "Yun",
@@ -214,7 +212,7 @@
                  alert('I am ' + Person.firstname + ' ' + Person.lastname);
              }
          };
-
+        
          var person = Object.create(Person);
          person.introduce();
 
@@ -226,10 +224,10 @@
         　　　 return new F();
         　　};
         　}
-
+      ```
       3. 极简主义法（消除 this 和 prototype） -- 调用 createNew() 得到实例对象
         优点：容易理解，结构清晰优雅，符合传统的"面向对象编程"的构造
-
+        ```javascript
          var Cat = {
            age: 3, // 共享数据 -- 定义在类对象内，createNew() 外
            createNew: function () {
@@ -249,9 +247,9 @@
 
          var cat = Cat.createNew();
          cat.makeSound();
-
+      ```
       4. ES6 语法糖 class -- 用 new 关键字 生成实例对象
-
+      ```javascript
          class Point {
            constructor(x, y) {
              this.x = x;
@@ -263,24 +261,25 @@
          }
 
       var point = new Point(2, 3);
+      ```
 
 - Javascript如何实现继承？
 
       1. 构造函数绑定：使用 call 或 apply 方法，将父对象的构造函数绑定在子对象上
-         　
+      ```javascript   　
         function Cat(name,color){
          　Animal.apply(this, arguments);
          　this.name = name;
          　this.color = color;
         }
-
+      ```
       2. 实例继承：将子对象的 prototype 指向父对象的一个实例
-
+      ```javascript
         Cat.prototype = new Animal();
         Cat.prototype.constructor = Cat;
-
+      ```
       3. 拷贝继承：如果把父对象的所有属性和方法，拷贝进子对象
-          　　
+      ```javascript         　　
         function extend(Child, Parent) {
       　　　var p = Parent.prototype;
       　　　var c = Child.prototype;
@@ -289,9 +288,9 @@
       　　　}
       　　　c.uber = p;
       　 }
-
+      ```
       4. 原型继承：将子对象的 prototype 指向父对象的 prototype
-
+      ```javascript
         function extend(Child, Parent) {
             var F = function(){};
           　F.prototype = Parent.prototype;
@@ -299,9 +298,9 @@
           　Child.prototype.constructor = Child;
           　Child.uber = Parent.prototype;
         }
-
+      ```
       5. ES6 语法糖 extends：class ColorPoint extends Point {}
-
+      ```javascript
         class ColorPoint extends Point {
            constructor(x, y, color) {
               super(x, y); // 调用父类的constructor(x, y)
@@ -311,7 +310,7 @@
               return this.color + ' ' + super.toString(); // 调用父类的toString()
            }
         }
-
+      ```
 - Javascript作用链域?
 
       * 全局函数无法查看局部函数的内部细节，但局部函数可以查看其上层的函数细节，直至全局细节。
@@ -343,14 +342,14 @@
 - null 与 undefined 的区别？
 
       * null 表示"没有对象"，即该处不应该有值。典型用法：
-       1. 作为函数的参数，表示该函数的参数不是对象
-       2. 作为对象原型链的终点
+        - 作为函数的参数，表示该函数的参数不是对象
+        - 作为对象原型链的终点
 
       * undefined 表示"缺少值"，就是此处应该有一个值，但是还没有定义。典型用法：
-       1. 变量被声明了，但没有赋值时，就等于 undefined
-       2. 调用函数时，应该提供的参数没有提供，该参数等于 undefined
-       3. 对象没有赋值的属性，该属性的值为 undefined
-       4. 函数没有返回值时，默认返回 undefined
+        - 变量被声明了，但没有赋值时，就等于 undefined
+        - 调用函数时，应该提供的参数没有提供，该参数等于 undefined
+        - 对象没有赋值的属性，该属性的值为 undefined
+        - 函数没有返回值时，默认返回 undefined
 
 - 介绍 DOM 的发展。
 
@@ -402,8 +401,8 @@
 
       * 事件委托是指将事件绑定目标元素的到父元素上，利用冒泡机制触发该事件
       * 优点：
-        1.可以减少事件注册，节省大量内存占用
-        2.可以将事件应用于动态添加的子元素上
+        - 可以减少事件注册，节省大量内存占用
+        - 可以将事件应用于动态添加的子元素上
       * 缺点：
         使用不当会造成事件在不应该触发时触发
       * 示例：
@@ -421,28 +420,28 @@
 - IE的事件处理和W3C的事件处理有哪些区别？
 
       * 绑定事件
-        W3C: targetEl.addEventListener('click', handler, false);
-        IE: targetEl.attachEvent('onclick', handler);
+        - W3C: targetEl.addEventListener('click', handler, false);
+        - IE: targetEl.attachEvent('onclick', handler);
 
       * 删除事件
-        W3C: targetEl.removeEventListener('click', handler, false);
-        IE: targetEl.detachEvent(event, handler);
+        - W3C: targetEl.removeEventListener('click', handler, false);
+        - IE: targetEl.detachEvent(event, handler);
 
       * 事件对象
-        W3C: var e = arguments.callee.caller.arguments[0]
-        IE: window.event
+        - W3C: var e = arguments.callee.caller.arguments[0]
+        - IE: window.event
 
       * 事件目标
-        W3C: e.target
-        IE: window.event.srcElement
+        - W3C: e.target
+        - IE: window.event.srcElement
 
       * 阻止事件默认行为
-        W3C: window.event.cancelBubble = true
-        IE: window.event.returnValue = false
+        - W3C: window.event.cancelBubble = true
+        - IE: window.event.returnValue = false
 
       * 阻止事件传播
-        W3C: e.stopPropagation()
-        IE: window.event
+        - W3C: e.stopPropagation()
+        - IE: window.event
 
 - W3C事件的 target 与 currentTarget 的区别？
 
@@ -453,9 +452,9 @@
 
 - 如何派发事件(dispatchEvent)？（如何进行事件广播？）
 
-        W3C: 使用 dispatchEvent 方法
-        IE: 使用 fireEvent 方法
-
+      * W3C: 使用 dispatchEvent 方法
+      * IE: 使用 fireEvent 方法
+      ```javascript
         var fireEvent = function(element, event){
             if (document.createEventObject){
                 var mockEvent = document.createEventObject();
@@ -466,7 +465,7 @@
                 return !element.dispatchEvent(mockEvent);
             }
         }
-
+      ```
 - 什么是函数节流？介绍一下应用场景和原理？
 
       * 函数节流(throttle)是指阻止一个函数在很短时间间隔内连续调用。
@@ -481,28 +480,29 @@
       再 setTimeout 一个新的定时器重复以上流程。
 
       * 函数节流简单实现：
-      function throttle(method, context) {
-           clearTimeout(methor.tId);
-           method.tId = setTimeout(function(){
-               method.call(context);
-           }， 100); // 两次调用至少间隔 100ms
-      }
-      // 调用
-      window.onresize = function(){
-          throttle(myFunc, window);
-      }
-
+      ```javascript
+        function throttle(method, context) {
+             clearTimeout(methor.tId);
+             method.tId = setTimeout(function(){
+                 method.call(context);
+             }， 100); // 两次调用至少间隔 100ms
+        }
+        // 调用
+        window.onresize = function(){
+            throttle(myFunc, window);
+        }
+      ```
 - 区分什么是“客户区坐标”、“页面坐标”、“屏幕坐标”？
 
-      客户区坐标：鼠标指针在可视区中的水平坐标(clientX)和垂直坐标(clientY)
-      页面坐标：鼠标指针在页面布局中的水平坐标(pageX)和垂直坐标(pageY)
-      屏幕坐标：设备物理屏幕的水平坐标(screenX)和垂直坐标(screenY)
+      * 客户区坐标：鼠标指针在可视区中的水平坐标(clientX)和垂直坐标(clientY)
+      * 页面坐标：鼠标指针在页面布局中的水平坐标(pageX)和垂直坐标(pageY)
+      * 屏幕坐标：设备物理屏幕的水平坐标(screenX)和垂直坐标(screenY)
 
 - 如何获得一个DOM元素的绝对位置？
 
-      elem.offsetTop：返回元素相对于其定位父级顶部的距离
-      elem.offsetTop：返回元素相对于其定位父级顶部的距离
-      elem.getBoundingClientRect()：返回一个DOMRect对象，包含一组描述边框的只读属性，单位像素
+      * elem.offsetLeft：返回元素相对于其定位父级左侧的距离
+      * elem.offsetTop：返回元素相对于其定位父级顶部的距离
+      * elem.getBoundingClientRect()：返回一个DOMRect对象，包含一组描述边框的只读属性，单位像素
 
 - 分析 ['1', '2', '3'].map(parseInt) 答案是多少？
 
@@ -544,8 +544,7 @@
       * 为eval单独创建作用域，eval不再能生成全局变量
       * 不允许对arguments赋值
       * eval, arguments变为关键字，不可作为变量名、函数名等
-      * 新增保留字：implements, interface, let, package,
-          private, protected, public, static, yield
+      * 新增保留字：implements、interface、let、package、private、protected、public、static、yield
 
 - 如何判断一个对象是否属于某个类？
 
@@ -557,8 +556,6 @@
       2. 属性和方法被加入到 this 引用的对象中
       3. 新创建的对象由 this 所引用，并且最后隐式的返回 this
 
-        var obj = {}; obj.__proto__ = Base.prototype; Base.call(obj);
-
 - 用原生JavaScript的实现过什么功能吗？
 
       封装选择器、调用第三方API、设置和获取样式
@@ -566,7 +563,7 @@
 - Javascript中有一个函数，执行对象属性查找时永远不会去原型链上查找，这个函数是什么？
 
       hasOwnProperty 函数判断一个对象自身是否具有指定属性，不会去原型链上查找
-      用法：var bool = obj.hasOwnProperty(prop);
+      * 用法：var bool = obj.hasOwnProperty(prop);
 
 - 介绍对 JSON 的了解？
 
@@ -587,26 +584,26 @@
 
 - 解释一下这段代码的意思吗？
 
+      ```javascript
       [].forEach.call($$("*"), function(el){
           el.style.outline = "1px solid #" + (~~(Math.random()*(1<<24))).toString(16);
       })
+      ```
+      解释：获取页面所有的元素，遍历这些元素，为它们添加1像素随机颜色的轮廓(outline)
 
-      这段代码首先获取了页面所有的元素，遍历这些元素，为它们添加1像素随机颜色的的轮廓
-
-      1. $$(sel) // $$函数被许多现代浏览器命令行支持，等价于 document.querySelectorAll(sel)
-      2. [].forEach.call(NodeLists) // 使用 call 函数将数组遍历函数 forEach 应到节点元素列表
-      3. el.style.outline = "1px solid #333" // 样式 outline 位于盒模型之外，不影响元素布局位置
-      4. (1<<24) // parseInt("ffffff", 16) == 16777215 == 2^24 - 1 // 1<<24 == 2^24 == 16777216
-      5. Math.random()*(1<<24) // 表示一个位于 0 到 16777216 之间的随机浮点数
-      6. ~~Math.random()*(1<<24) // ~~ 作用相当于 parseInt 取整
-      7. (~~(Math.random()*(1<<24))).toString(16) // 转换为一个十六进制数色值
+      1. `$$(sel)` // $$函数被许多现代浏览器命令行支持，等价于 document.querySelectorAll(sel)
+      2. `[].forEach.call(NodeLists)` // 使用 call 函数将数组遍历函数 forEach 应到节点元素列表
+      3. `el.style.outline = "1px solid #333"` // 样式 outline 位于盒模型之外，不影响元素布局位置
+      4. `(1<<24)` // parseInt("ffffff", 16) == 16777215 == 2^24 - 1 // 1<<24 == 2^24 == 16777216
+      5. `Math.random()*(1<<24)` // 表示一个位于 0 到 16777216 之间的随机浮点数
+      6. `~~Math.random()*(1<<24)` // `~~` 作用相当于 parseInt 取整
+      7. `(~~(Math.random()*(1<<24))).toString(16)` // 转换为一个十六进制数色值
 
 - 什么是 Ajax? 如何创建一个Ajax？
 
-    	AJAX(Asynchronous Javascript And XML) = 异步 JavaScript + XML
-    	在后台与服务器进行异步数据交换，不用重载整个网页，实现局部刷新。
+      * AJAX(Asynchronous Javascript And XML) = 异步 JavaScript + XML 在后台与服务器进行异步数据交换，不用重载整个网页，实现局部刷新。
 
-      创建 ajax 步骤：
+      * 创建 ajax 步骤：
     	 1.创建 XMLHttpRequest 对象
     	 2.创建一个新的 HTTP 请求，并指定该 HTTP 请求的类型、验证信息
     	 3.设置响应 HTTP 请求状态变化的回调函数
@@ -614,6 +611,7 @@
     	 5.获取异步调用返回的数据
     	 6.使用 JavaScript 和 DOM 实现局部刷新
 
+      javascript```
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -623,11 +621,12 @@
             }
         };
         xhr.send(data);
+      ```
 
 - 同步和异步的区别？
 
-      同步：同一时刻只能完成一项任务。如果有多个任务，必须按先后顺序排队执行，因此任务执行是阻塞的
-      异步：同一时刻能够完成多项任务。后面任务不必等前面任务结束就执行，因此任务执行是无序非阻塞的
+      * 同步：同一时刻只能完成一项任务。如果有多个任务，必须按先后顺序排队执行，因此任务执行是阻塞的
+      * 异步：同一时刻能够完成多项任务。后面任务不必等前面任务结束就执行，因此任务执行是无序非阻塞的
 
 - JavaScript实现异步编程的方法？
 
@@ -639,9 +638,9 @@
 
 - 什么是 Cookie 隔离？（请求资源的时候不携带cookie怎么做？）
 
-    	如果静态文件放在主域名下，请求静态文件时携带cookie数据，并提交到服务器，非常浪费流量和响应时间。
-    	cookie是有域的限制，不能跨域提交请求。因此，使用非主域名时，请求头中就不会带有cookie数据。
-    	Cookie 隔离可以减小请求头的体积，使web服务器省去对cookie的处理分析环节，提高了对请求的响应速度。
+      如果静态文件放在主域名下，请求静态文件时携带cookie数据，并提交到服务器，非常浪费流量和响应时间。
+      cookie是有域的限制，不能跨域提交请求。因此，使用非主域名时，请求头中就不会带有cookie数据。
+      Cookie 隔离可以减小请求头的体积，使web服务器省去对cookie的处理分析环节，提高了对请求的响应速度。
 
 - 如何解决跨域问题?
 
@@ -654,34 +653,34 @@
 
 - HTTP/2 与 HTTP/1.x 的关键区别
 
-      1.二进制协议代文本协议，更加简洁高效
-      2.针对每个域只使用一个多路复用的连接
-      3.压缩头部信息减小开销
-      4.允许服务器主动推送应答到客户端的缓存中
+      * 二进制协议代替文本协议，更加简洁高效
+      * 针对每个域只使用一个多路复用的连接
+      * 压缩头部信息减小开销
+      * 允许服务器主动推送应答到客户端的缓存中
 
 - 页面编码和被请求的资源编码如果不一致如何处理？
 
-      1. 后端响应头设置 charset
-      2. 前端页面<meta>设置 charset
+      * 后端响应头设置 charset
+      * 前端页面`<meta>`设置 charset
 
-- 把<script>放在</body>之前和之后有什么区别？浏览器会如何解析它们？
+- 把`<script>`放在`</body>`之前和之后有什么区别？浏览器会如何解析它们？
 
-      1. 按照HTML标准，在</body>结束后出现<script>或任何元素的开始标签，都是解析错误。
-        虽然不符合HTML标准，但浏览器会自动容错，使实际效果与写在</body>之前没有区别
+      * 按照HTML标准，在`</body>`结束后出现`<script>`或任何元素的开始标签，都是解析错误。
+        虽然不符合HTML标准，但浏览器会自动容错，使实际效果与写在`</body>`之前没有区别
 
-      2. 浏览器的容错机制会忽略<script>之前的</body>，视作 <script> 仍在 body 体内。
-        省略</body>和</html>闭合标签符合HTML标准，服务器可以利用这一标准尽可能少输出内容
+      * 浏览器的容错机制会忽略<script>之前的`</body>`，视作`<script>`仍在 body 体内。
+        省略`</body>`和`</html>`闭合标签符合HTML标准，服务器可以利用这一标准尽可能少输出内容
 
 - 延迟加载JS的方式有哪些？
 
-      * 设置<script>属性 defer="defer" （脚本将在页面完成解析时执行）
+      * 设置`<script>`属性 defer="defer" （脚本将在页面完成解析时执行）
       * 动态创建 script DOM：document.createElement('script');
       * XmlHttpRequest 脚本注入
       * 延迟加载工具 LazyLoad
 
 - 异步加载JS的方式有哪些？
 
-      * 设置<script>属性 async="async" （一旦脚本可用，则会异步执行）
+      * 设置`<script>`属性 async="async" （一旦脚本可用，则会异步执行）
       * 动态创建 script DOM：document.createElement('script');
       * XmlHttpRequest 脚本注入
       * 异步加载库 LABjs
@@ -702,28 +701,28 @@
 
 - 什么是 Promise ？
 
-      Promise 就是一个对象，用来表示并传递异步操作的最终结果
-      Promise 最主要的交互方式：将回调函数传入 then 方法来获得最终结果或出错原因
-      Promise 代码书写上的表现：以“链式调用”代替回调函数层层嵌套（回调地狱）
+      * Promise 就是一个对象，用来表示并传递异步操作的最终结果
+      * Promise 最主要的交互方式：将回调函数传入 then 方法来获得最终结果或出错原因
+      * Promise 代码书写上的表现：以“链式调用”代替回调函数层层嵌套（回调地狱）
 
 - documen.write 和 innerHTML 的区别？
 
-  	 document.write 将内容写入页面的内容流，会导致整个页面重绘
-  	 elem.innerHTML 将内容写入特定DOM节点，只重绘页面的某一部分
+  	  * document.write 将内容写入页面的内容流，会导致整个页面重绘
+  	  * elem.innerHTML 将内容写入特定DOM节点，只重绘页面的某一部分
 
 - JS的DOM操作：添加、移除、移动、复制、创建和查找节点?
 
-  	 1.创建新节点
+  	 * 创建新节点
   	  document.createElement()          //创建一个具体的元素
   	  document.createTextNode()         //创建一个文本节点
   	  document.createDocumentFragment() //创建一个DOM片段
-  	 2.复制、添加、移除、替换、插入节点
+  	 * 复制、添加、移除、替换、插入节点
   	  element.cloneNode()
   	  element.appendChild()
   	  element.removeChild()
   	  element.replaceChild()
   	  element.insertBefore() //在已有的子节点前插入新子节点
-  	 3.查找节点
+  	 * 查找节点
   	  document.getElementsByTagName()
   	  document.getElementById()
   	  document.querySelector()
@@ -731,11 +730,11 @@
 
 - JavaScript 中，调用函数有哪几种方式？
 
-      1.方法调用模式          Foo.foo(arg1, arg2);
-      2.函数调用模式          foo(arg1, arg2);
-      3.构造器调用模式         (new Foo())(arg1, arg2);
-      4.call/applay调用模式   Foo.foo.call(that, arg1, arg2);
-      5.bind调用模式          Foo.foo.bind(that)(arg1, arg2)();
+      * 方法调用模式          Foo.foo(arg1, arg2);
+      * 函数调用模式          foo(arg1, arg2);
+      * 构造器调用模式        (new Foo())(arg1, arg2);
+      * call/applay调用模式   Foo.foo.call(that, arg1, arg2);
+      * bind调用模式          Foo.foo.bind(that)(arg1, arg2)();
 
 - func.call() 和 func.apply() 的区别？
 
@@ -745,20 +744,21 @@
 
 - func.bind() 与 func.call()有什么不同？
 
-      应用的场景不同：
-      - bind: 用当前对象绑定函数内部的 this 指向，返回新的函数
-      - call: 使当前对象借用执行其他对象的函数，返回执行结果
+      * 应用的场景不同：
+        - bind: 用当前对象绑定函数内部的 this 指向，返回新的函数
+        - call: 使当前对象借用执行其他对象的函数，返回执行结果
 
-      下面执行结果一致：
-      var add = (a, b) => a + b;
-      add.call(null, 1, 2);
+      * 下面执行结果一致：
 
-      add.bind(null, 1, 2)();
-      add.bind(null, 1)(2);
-      add.bind(null)(1, 2);
+          var add = (a, b) => a + b;
+          add.call(null, 1, 2);
+
+          add.bind(null, 1, 2)();
+          add.bind(null, 1)(2);
+          add.bind(null)(1, 2);
 
 - 简单实现 Function.bind 函数？
-
+  ```javascript
       if (!Function.prototype.bind) {
         Function.prototype.bind = function(that) {
           var func = this, args = arguments;
@@ -772,10 +772,10 @@
 
       // 不支持以下调用阶段传入的参数：
       func.bind(that)(arg1, arg2);
-
+  ```
 - 列举一下JavaScript数组和对象有哪些原生方法？
 
-      1. 数组：
+      * 数组：
       arr.concat(arr1, arr2, arrn);
       arr.join(",");
       arr.sort(func);
@@ -789,7 +789,7 @@
       arr.indexOf(el);
       arr.includes(el);   // ES6
 
-      2. 对象：
+      * 对象：
       object.hasOwnProperty(prop);            //对象自身中是否存在指定属性
       object.propertyIsEnumerable(prop);      //属性能否用for-in循环枚举
       object.valueOf();                       //对象的原始值
@@ -799,18 +799,18 @@
 
 - Array.splice() 与 Array.splice() 的区别？
 
-      1. slice -- “读取”数组指定的元素，不会对原数组进行修改
+      * slice -- “读取”数组指定的元素，不会对原数组进行修改
        语法：arr.slice(start, end)
         * start 指定选取开始位置（含）
         * end 指定选取结束位置（不含）
 
-      2. splice -- “操作”数组指定的元素，会修改原数组，返回被删除的元素
+      * splice -- “操作”数组指定的元素，会修改原数组，返回被删除的元素
        语法：arr.splice(index, count, [insert Elements])
        * index 是操作的起始位置
        * count = 0 插入元素，count > 0 删除元素
        * [insert Elements] 向数组新插入的元素
 
-      3. 示例
+      * 示例
         // Array.splice() -- 获取数组指定元素
         ['A', 'B', 'C', 'D'].slice(1, 3);         // return ['B', 'C']
 
@@ -821,20 +821,20 @@
 
 - JavaScript 对象生命周期的理解？
 
-      1. 当创建一个对象时，JavaScript 会自动为该对象分配适当的内存
-      2. 垃圾回收器定期扫描对象，并计算引用了该对象的其他对象的数量
-      3. 如果被引用数量为 0，或惟一引用是循环的，那么该对象的内存即可回收
+      * 当创建一个对象时，JavaScript 会自动为该对象分配适当的内存
+      * 垃圾回收器定期扫描对象，并计算引用了该对象的其他对象的数量
+      * 如果被引用数量为 0，或惟一引用是循环的，那么该对象的内存即可回收
 
 - 哪些操作会造成内存泄漏？
 
       JavaScript 内存泄露指对象在不需要使用它时仍然存在，导致占用的内存不能使用或回收
 
-      JavaScript 中会造成内存泄漏的操作：
-       * 未使用 var 声明的全局变量
-       * 闭包函数(Closures)
-       * 循环引用(两个对象相互引用)
-       * 控制台日志(console.log)
-       * 移除存在绑定事件的DOM元素(IE)
+      * JavaScript 中会造成内存泄漏的操作：
+        - 未使用 var 声明的全局变量
+        - 闭包函数(Closures)
+        - 循环引用(两个对象相互引用)
+        - 控制台日志(console.log)
+        - 移除存在绑定事件的DOM元素(IE)
 
 ### ECMAScript6 相关
 
@@ -874,12 +874,8 @@
 - 什么是 Babel ？
 
       * Babel 是一个 JS 编译器，自带一组 ES6 语法转化器，用于转化 JS 代码。
-       这些转化器让开发者提前使用最新的 JS语法(ES6/ES7)，而不用等浏览器全部兼容。
-
-      * Babel 默认只转换新的 JS 句法(syntax)，而不转换新的API。如：
-       Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise等全局对象
-       以及一些定义在全局对象上的方法（比如Object.assign）
-
+      这些转化器让开发者提前使用最新的 JS语法(ES6/ES7)，而不用等浏览器全部兼容。
+      * Babel 默认只转换新的 JS 句法(syntax)，而不转换新的API。
+      如：Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise等全局对象以及一些定义在全局对象上的方法(比如Object.assign)
       * 如果运行新的 API 和 新的方法，须使用 babel-polyfill，为当前环境提供一个垫片。
-
       * Babel 6.0 开始，不再直接提供浏览器版本，而是要用构建工具构建出来。
