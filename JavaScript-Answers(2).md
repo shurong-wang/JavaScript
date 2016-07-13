@@ -35,8 +35,8 @@
       * AMD(异步模块定义) -- require.js
       ```javascript
         require(['./math'], function (math) {
-        math.add(2, 3);
-      });
+          math.add(2, 3);
+        });
       ```
       * CMD(通用模块定义) -- sea.js
       ```javascript
@@ -49,14 +49,14 @@
         math.add(2, 3);
       ```
 
-- AMD(Modules Asynchronous Definition) 与 CMD(Common Module Definition) 规范的区别？
+- AMD 与 CMD 规范的区别？
 
       * 规范化产出：
-        - AMD 由 RequireJS 推广
-        - CMD 由 SeaJS 推广
+        - AMD(Modules Asynchronous Definition) 由 RequireJS 推广
+        - CMD(Common Module Definition) 由 SeaJS 推广
 
       * 模块的依赖:
-        - AMD 提前执行（RequireJS 从 2.0 开始，可以延迟执行），推崇依赖前置
+        - AMD 提前执行，推崇依赖前置
         - CMD 延迟执行，推崇依赖就近
 
       * API 功能:
@@ -64,21 +64,23 @@
         - CMD 的 API 推崇职责单一纯粹（没有全局 require）
 
 	    * 模块定义规则：
-      ```javascript
-        // AMD 默认一开始就载入全部依赖模块
-        define(['./a', './b'], function(a, b) {
-          a.doSomething();
-          b.doSomething();
-        });
-
-        // CMD 依赖模块在用到时才就近载入
-        define(function(require, exports, module) {
-          var a = require('./a');
-          a.doSomething();
-          var b = require('./b');
-          b.doSomething();
-        })
-      ```
+        - AMD 默认一开始就载入全部依赖模块
+        ```javascript
+          define(['./a', './b'], function(a, b) {
+            a.doSomething();
+            b.doSomething();
+          });
+        ```
+        
+        - CMD 依赖模块在用到时才就近载入
+        ```javascript
+          define(function(require, exports, module) {
+            var a = require('./a');
+            a.doSomething();
+            var b = require('./b');
+            b.doSomething();
+          })
+        ```
 
 - requireJS的核心原理是什么？
 
