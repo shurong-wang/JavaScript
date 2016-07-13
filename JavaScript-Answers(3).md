@@ -77,10 +77,7 @@
 - 手写事件模型
     ```JavaScript
     var Event = (function () {
-        var list = {},
-                bind,
-                trigger,
-                remove;
+        var list = {}, bind, trigger, remove;
         bind = function (key, fn) {
             if (!list[key]) {
                 list[key] = [];
@@ -88,8 +85,8 @@
             list[key].push(fn);
         };
         trigger = function () {
-            var key = Array.prototype.shift.call(arguments),
-                    fns = list[key];
+            var key = Array.prototype.shift.call(arguments);
+            var fns = list[key];
             if (!fns || fns.length === 0) {
                 return false;
             }
@@ -160,9 +157,9 @@
     }
 
     // 调用
-    var odiv = document.getElementById("oDiv");
-    delegateEvent(odiv, "a", "click", function(){
-        alert("1");
+    var box = document.getElementById("box");
+    delegateEvent(box, "a", "click", function(){
+        console.log(this.href);
     })
     ```
 
@@ -175,7 +172,7 @@
         }else{
             var mockEvent = document.createEvent('HTMLEvents');
             mockEvent.initEvent(event, true, true);
-            return !element.dispatchEvent(mockEvent);
+            return element.dispatchEvent(mockEvent);
         }
     }
     ```
@@ -236,7 +233,7 @@
     };
 
     // 调用
-    quickSort([9,4,2,8,1,4,5,3,7]);
+    quickSort([9, 4, 2, 8, 1, 5, 3, 7]);
     ```
 
 - 手写数组冒泡排序

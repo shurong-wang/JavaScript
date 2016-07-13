@@ -3,19 +3,19 @@
 
 - 什么是单页面应用(SPA)？
 
-      * 单页面应用(SPA)是指用户在浏览器加载单一的HTML页面，后续请求都无需再离开此页。
+      * 单页面应用(SPA)是指用户在浏览器加载单一的HTML页面，后续请求都无需再离开此页
       * 目标：旨在用为用户提供了更接近本地移动APP或桌面应用程序的体验。
 
-      * 流程：第一次请求时，所有HTML传输到客户端，其余的请求都通过 REST API 获取 JSON 数据。
+      * 流程：第一次请求时，将导航页传输到客户端，其余请求通过 REST API 获取 JSON 数据
       * 实现：数据的传输通过 Web Socket API 或 RPC(远程过程调用)。
 
       * 优点：用户体验流畅，服务器压力小，前后端职责分离
-      * 缺点：不利于 SEO
+      * 缺点：关键词布局难度加大，不利于 SEO
 
 - 什么是“前端路由”? 什么时候适用“前端路由”? 有哪些优点和缺点?
 
-      * 前端路由通过JS处理 URL 和 History 来实现页面切换。请求不会传给服务器，而由被浏览器处理。
-      * 应用：前端路由主要适用于“前后端分离”的单页面应用(SPA)项目。
+      * 前端路由通过 URL 和 History 来实现页面切换
+      * 应用：前端路由主要适用于“前后端分离”的单页面应用(SPA)项目
       * 优点：用户体验好，交互流畅
       * 缺点：浏览器“前进”、“后退”会重新请求，无法合理利用缓存
 
@@ -27,26 +27,27 @@
 
 - 通行的 Javascript 模块的规范有哪些？
 
-       * CommonJS -- 主要用在服务器端 node.js
-
-            var math = require('./math');
-            math.add(2,3);
-
-       * AMD(异步模块定义) -- require.js
-
-        　  require(['./math'], function (math) {
-        　　　　math.add(2, 3);
-        　　});
-
-       * CMD(通用模块定义) -- sea.js
-
-            var math = require('./math');
-            math.add(2,3);
-
-       * E6 模块
-
-            import {math} from './math';
-            math.add(2, 3);
+      * CommonJS -- 主要用在服务器端 node.js
+      ```javascript
+        var math = require('./math');
+        math.add(2,3);
+      ```
+      * AMD(异步模块定义) -- require.js
+      ```javascript
+        require(['./math'], function (math) {
+        math.add(2, 3);
+      });
+      ```
+      * CMD(通用模块定义) -- sea.js
+      ```javascript
+        var math = require('./math');
+        math.add(2,3);
+      ```
+      * E6 模块
+      ```javascript
+        import {math} from './math';
+        math.add(2, 3);
+      ```
 
 - AMD(Modules Asynchronous Definition) 与 CMD(Common Module Definition) 规范的区别？
 
@@ -63,29 +64,25 @@
         - CMD 的 API 推崇职责单一纯粹（没有全局 require）
 
 	    * 模块定义规则：
+      ```javascript
+        // AMD 默认一开始就载入全部依赖模块
+        define(['./a', './b'], function(a, b) {
+          a.doSomething();
+          b.doSomething();
+        });
 
-          // AMD 默认一开始就载入全部依赖模块
-          define(['./a', './b'], function(a, b) {
-              a.doSomething();
-              b.doSomething();
-          });
-
-          // CMD 依赖模块在用到时才就近载入
-          define(function(require, exports, module) {
-              var a = require('./a');
-              a.doSomething();
-              var b = require('./b');
-              b.doSomething();
-          })
+        // CMD 依赖模块在用到时才就近载入
+        define(function(require, exports, module) {
+          var a = require('./a');
+          a.doSomething();
+          var b = require('./b');
+          b.doSomething();
+        })
+      ```
 
 - requireJS的核心原理是什么？
 
       每个模块所依赖模块都会比本模块预先加载
-
-- react-router 路由系统的实现原理？
-
-      实现原理：location 与 components 之间的同步
-        路由的职责是保证 UI 和 URL 的同步。在 react-router 中，URL 对应 Location 对象，而 UI 由 react components 来决定。这样，在 react-router 中就转变成 location 与 components 之间的同步。
 
 - 对 Node.js 的优点、缺点提出了自己的看法？ Node.js的特点和适用场景？
 
@@ -129,20 +126,21 @@
        * BDD：行为驱动开发 -- 业务需求描述产出产品代码的开发方法
        * TDD：测试驱动开发 -- 单元测试用例代码产出产品代码的开发方法
        * 单元测试框架：
-
-        // mocha:
+       ```javascript
+        // mocha 示例
         describe('Test add', function() {
           it('1 + 2 = 3', function() {
-            expect(add(1, 2)).to.be.equal(3);
+              expect(add(1, 2)).to.be.equal(3);
           });
         });
 
-        // jasmin:
+        // jasmin 示例
         describe('Test add', function () {
             it('1 + 2 = 3', function () {
                 expect(add(1, 2)).toEqual(3);
             });
         });
+        ```
 
 - 介绍你知道的前端模板引擎？
 
@@ -150,28 +148,24 @@
 
 - 什么是 Shim 和 Polyfill？ 区别是什么？ 目标是什么？
 
-      * Shim：将一个新的 API 引入到一个旧的环境中，仅靠旧环境中已有的手段实现。
-          Shim 有时候也称为 shiv，比如著名的 HTML5 兼容库 html5shiv
-          例如 es5-shim：在 ES3 引擎上实现了 ES5 的新特性，可用在浏览器和服务器(Node.js)
+      * Shim(垫片)：将一个新的 API 引入到一个旧的环境中，仅靠旧环境中已有的手段实现。
+      Shim 有时候也称为 shiv，比如著名的 HTML5 兼容库 html5shiv
 
-	    * Polyfill：用在浏览器API上的 Shim(垫片)。在旧版浏览器上复制标准 API(HTML5, CSS3) 的补充。
-		    通常的做法是先检查当前浏览器是否支持某个API，如果不支持的话就加载对应的 polyfill 进行模拟增强。
-            例如：geolocation polyfill 可以在 navigator 对象上添加全局的 geolocation 对象及相应成员。
+      * Polyfill：用在浏览器API上的 Shim。在旧版浏览器上复制标准 API(HTML5, CSS3) 的补充。
+      通常的做法是先检查当前浏览器是否支持某个API，如果不支持的话就加载对应的 polyfill 进行模拟增强。
+      例如：geolocation polyfill 可以在 navigator 对象上添加全局的 geolocation 对象及相应成员。
 
-		  * 区别：Polyfill 专门用来兼容浏览器，Shim 的范围更大些
+      * 区别：Polyfill 专门用来兼容浏览器，Shim 的范围更大些
 
-		  * 目标：一旦新的标准API被普遍的支持，可以方便地去掉 Shim(polyfill)，无需做其他额外工作。
+      * 目标：一旦新的标准API被普遍的支持，可以方便地去掉 Shim(polyfill)，无需做其他额外工作
 
 - 什么是 Modernizr？ Modernizr 工作原理？
 
        * Modernizr 是一个开源的 JavaScript 库，用于检测用户浏览器对 HTML5 与 CSS3 的支持情况
-       * 工作原理：
-          页面加载后立即使用 JS 测试浏览器所支持的特性，将结果作为属性记录在名为Modernizr的对象中。
-          开发人员可以通过这些信息了解他们准备使用的某特性是否被浏览器支持，并作出相应的处理。
 
 - 移动端最小触控区域是多大？
 
-      44 * 44 px 参考《iOS 人机界面指南》
+      44 * 44 px  -- 参考《iOS 人机界面指南》
 
 - 移动端的点击事件的延迟时间是多长，为什么会有延迟？ 如何解决这个延时？
 
@@ -305,8 +299,8 @@
 
 - Underscore 对哪些 JS 原生对象进行了扩展？提供了哪些好用的函数方法？
 
-      Underscore 没有扩展任何JS内置对象，只提供了一套函数式编程的实用功能库（主要针对数组/对象/函数）
-      Underscore 它弥补了部分 jQuery 没有实现的功能，同时又是 Backbone.js 必不可少的部分
+      Underscore 没有扩展任何JS内置对象，只提供了一套函数式编程的实用功能库
+      Underscore 主要针对数组、对象、函数提供更方便的调用，弥补了部分 jQuery 没有实现的功能
 
       Underscore 好用的函数方法(对应ES6)：
         _.each(array, iteratee)         array.forEach(iteratee)
@@ -324,37 +318,40 @@
 
 - 什么是 MVC/MVP/MVVM/Flux？
 
-      * MVC(Model-View-Controller)  V->C, C->M, M->V
+      * MVC(Model-View-Controller) 
+        - V->C, C->M, M->V
         - 通信都是单向的；C只起路由作用，业务逻辑都部署在V
         - Backbone
 
-      * MVP(Model-View-Presenter)   V<->P, P<->M
+      * MVP(Model-View-Presenter)
+        - V<->P, P<->M
         - 通信都是双向的；V和M不发生联系(通过P传)；V非常薄，逻辑都部署在P
         - Riot.js
 
-      * MVVM(Model-View-ViewModel)  V->VM, VM<->M
+      * MVVM(Model-View-ViewModel)
+        - V->VM, VM<->M
         - 采用双向数据绑定：View 和 ViewModel 的变动都会相互映射到对象上面
         - Angular
 
-      * Flux(Dispatcher-Store-View) Action->Dispatcher->Store->View, View->Action
+      * Flux(Dispatcher-Store-View)
+        - Action->Dispatcher->Store->View, View->Action
         - Facebook 为了解决在 MVC 应用中碰到的工程性问题提出一个架构思想
         - 基于一个简单的原则：数据在应用中单向流动（单向数据流）
         - React(Flux 中 View，只关注表现层)
 
 - Backbone 是什么？
 
-      Backbone 为复杂WEB应用程序提供模型(models)、集合(collections)、视图(views)的结构
-      Backbone 将数据呈现为 Models, 当 Models 改变，视图也会自动变化。
+      Backbone 是一个基于 jquery 和 underscore 的前端(MVC)框架
 
 - Riot.js 是什么？
 
-      Riot.js 是一个轻量级（1Kb大小）的客户端(MVP)框架。提供了模板引擎、路由、MVP模式。
-      Riot.js 是目前存在的JavaScript模板引擎中速度最快的（比Underscore的模板快7倍）
+      Riot.js 是一个轻量级（1Kb大小）的前端(MVP)框架。提供了模板引擎、路由、MVP模式。
+      Riot.js 是目前存在的 JavaScript 模板引擎中速度最快的（比Underscore的模板快7倍）
 
 - AngularJS 是什么？
 
-      AngularJS 是一款 JavaScript 框架，由 Google 维护，用来协助大型单一页面应用开发。
-      AngularJS 是较完善的前端 MVVM 框架，包含模板，数据双向绑定，路由，模块化，服务，依赖注入等所有功能
+      AngularJS 是一个完善的前端 MVVM 框架，包含模板、数据双向绑定、路由、模块化、服务、依赖注入等
+      AngularJS 由 Google 维护，用来协助大型单一页面应用开发。
 
 - React 是什么？
 
@@ -367,10 +364,17 @@
 
       * React 解决方案：React + Redux + react-router + Fetch + webpack
 
+- react-router 路由系统的实现原理？
+
+      实现原理：location 与 components 之间的同步
+      * 路由的职责是保证 UI 和 URL 的同步
+      * 在 react-router 中，URL 对应 Location 对象，UI 由 react components 决定
+      * 因此，路由在 react-router 中就转变成 location 与 components 之间的同步
+
 - Meteor 是什么？
 
-      Meteor 是一个 Web APP开发框架，基础构架是 Node.JS + MongoDB，并把该构架延伸到了浏览器端。
-      Meteor 统一了服务器端和客户端的数据访问，使开发者可以轻松完成全栈式开发的所有工作。
+      Meteor 是一个全栈开发框架，基础构架是 Node.JS + MongoDB，并把延伸到了浏览器端。
+      Meteor 统一了服务器端和客户端的数据访问，使开发者可以轻松完成全栈式开发工作。
 
 - jQuery 的实现原理？
 
@@ -387,9 +391,9 @@
 
 - jQuery.extend 与 jQuery.fn.extend 的区别？
 
-      - $.fn.extend() 和 $.extend() 是 jQuery 为扩展插件提拱了两个方法
+      * $.fn.extend() 和 $.extend() 是 jQuery 为扩展插件提拱了两个方法
 
-      - $.extend(object); // 为jQuery添加“静态方法”（工具方法）
+      * $.extend(object); // 为jQuery添加“静态方法”（工具方法）
 
             $.extend({
             　　min: function(a, b) { return a < b ? a : b; },
@@ -398,14 +402,14 @@
             $.min(2,3); //  2
             $.max(4,5); //  5
 
-      - $.extend([true,] targetObject, object1[, object2]); // 对targt对象进行扩展
+      * $.extend([true,] targetObject, object1[, object2]); // 对targt对象进行扩展
 
             var settings = {validate:false, limit:5};
             var options = {validate:true, name:"bar"};
             $.extend(settings, options);  // 注意：不支持第一个参数传 false
             // settings == {validate:true, limit:5, name:"bar"}
 
-      - $.fn.extend(json); // 为jQuery添加“成员函数”（实例方法）
+      * $.fn.extend(json); // 为jQuery添加“成员函数”（实例方法）
 
             $.fn.extend({
                alertValue: function() {
@@ -456,28 +460,29 @@
 
 - jQuery 中的 bind(), live(), delegate(), on()的区别？
 
-      - bind 直接绑定在目标元素上
-      - live 通过冒泡传播事件，默认document上，支持动态数据
-      - delegate 更精确的小范围使用事件代理，性能优于 live
-      - on 是最新的1.9版本整合了之前的三种方式的新事件绑定机制
+      * bind 直接绑定在目标元素上
+      * live 通过冒泡传播事件，默认document上，支持动态数据
+      * delegate 更精确的小范围使用事件代理，性能优于 live
+      * on 是最新的1.9版本整合了之前的三种方式的新事件绑定机制
 
 - 是否知道自定义事件？ jQuery 里的 fire 函数是什么意思，什么时候用？
 
       * 事件即“发布/订阅”模式，自定义事件即“消息发布”，事件的监听即“订阅订阅”
 
       * JS 原生支持自定义事件，示例：
-        - document.createEvent(type); // 创建事件
-        - event.initEvent(eventType, canBubble, prevent); // 初始化事件
-        - target.addEventListener('dataavailable', handler, false); // 监听事件
-        - target.dispatchEvent(e);  // 触发事件
+      ```javascript
+        document.createEvent(type); // 创建事件
+        event.initEvent(eventType, canBubble, prevent); // 初始化事件
+        target.addEventListener('dataavailable', handler, false); // 监听事件
+        target.dispatchEvent(e);  // 触发事件
+      ```
 
       * jQuery 里的 fire 函数用于调用 jQuery 自定义事件列表中的事件
 
-
 - jQuery 通过哪个方法和 Sizzle 选择器结合的？
 
-      - Sizzle 选择器采取 Right To Left 的匹配模式，先搜寻页面中所有的匹配标签，再去判断它的父节点。
-      - jQuery 通过 $(selecter).find(selecter); 和 Sizzle 选择器结合
+      * Sizzle 选择器采取 Right To Left 的匹配模式，先搜寻所有匹配标签，再判断它的父节点
+      * jQuery 通过 $(selecter).find(selecter); 和 Sizzle 选择器结合
 
 -  jQuery 中如何将数组转化为 JSON 字符串，然后再转化回来？
     ```javascript
@@ -521,22 +526,20 @@
 
       * 在触发元素上的事件设置为延迟处理：使用 JS 原生 setTimeout 方法
       * 在触发元素的事件时预先停止所有的动画，再执行相应的动画事件：$('.tab').stop().slideUp();
-        - $(selector).stop(stopAll, goToEnd)：
 
 - jQuery UI 如何自定义组件？
 
       通过向 $.widget() 传递组件名称和一个原型对象来完成
+
       `$.widget("ns.widgetName", [baseWidget], widgetPrototype);`
 
 - jQuery 与 jQuery UI、jQuery Mobile 区别？
 
-      * jQuery 是 JS 库，兼容各种PC浏览器，主要用作更方便处理 DOM、事件、动画、AJAX
+      * jQuery 是 JS 库，兼容各种PC浏览器，主要用作更方便地处理 DOM、事件、动画、AJAX
 
-	    * jQuery UI 是建立在 jQuery 库上的一组用户界面交互、特效、小部件及主题
-         主要功能是提供了一些常用的界面元素，诸如对话框、拖动行为、改变大小行为等等
+      * jQuery UI 是建立在 jQuery 库上的一组用户界面交互、特效、小部件及主题
 
-      * jQuery Mobile 以 jQuery 为基础，用于创建“移动Web应用”的框架。
-         jQuery Mobile 使用 HTML5 & CSS3 最小的脚本来布局网页。
+      * jQuery Mobile 以 jQuery 为基础，用于创建“移动Web应用”的框架
 
 - jQuery 和 Zepto 的区别？ 各自的使用场景？
 
@@ -586,25 +589,29 @@
 
 - WEB应用从服务器主动推送Data到客户端有那些方式？
 
-	    * AJAX 轮询
-	    * html5 服务器推送事件
-	      `(new EventSource(SERVER_URL)).addEventListener("message", func);`
-	    * html5 Websocket
-	      `(new WebSocket(SERVER_URL)).addEventListener("message", func);`
+      * AJAX 轮询
+
+      * html5 服务器推送事件
+
+        `(new EventSource(SERVER_URL)).addEventListener("message", func);`
+
+      * html5 Websocket
+
+        `(new WebSocket(SERVER_URL)).addEventListener("message", func);`
 
 - 99%的网站都需要被重构是那本书上写的？
 
-      《网站重构：应用web标准进行设计（第2版）》
+    《网站重构：应用web标准进行设计（第2版）》
 
 - http状态码有那些？分别代表是什么意思？
 
-  	  1XX(信息类)：表示接收到请求并且继续处理
-  		2XX(响应成功)：表示动作被成功接收、理解和接受
-  		3XX(重定向类)：为了完成指定的动作，必须接受进一步处理
-  		4XX(客户端错误类)：请求包含错误语法或不能正确执行
-  		5XX(服务端错误类)：服务器不能正确执行一个正确的请求
+      1XX(信息类)：表示接收到请求并且继续处理
+      2XX(响应成功)：表示动作被成功接收、理解和接受
+      3XX(重定向类)：为了完成指定的动作，必须接受进一步处理
+      4XX(客户端错误类)：请求包含错误语法或不能正确执行
+      5XX(服务端错误类)：服务器不能正确执行一个正确的请求
 
-  		200 OK                      请求成功返回
+      200 OK                      请求成功返回
       301 Moved Permanently       页面重定向
       302 Temporarily Moved       暂时重定向
       304 Not Modified            缓存可以继续使用
@@ -619,32 +626,30 @@
 
 - 一个页面从输入 URL 到页面加载显示完成，这个过程中都发生了什么？
 
-      01. 浏览器查找域名对应的IP地址
-      - DNS 查询：浏览器缓存->系统缓存->路由器缓存->ISP DNS 缓存->从跟域名服务器开始递归搜索
-      02. 浏览器向Web服务器发送一个 HTTP 请求（TCP三次握手）
-      03. 服务器 301 重定向（从 http://example.com 重定向到 http://www.example.com）
-      - 索引擎通过 301 永久重定向是把访问带 www 的和不带 www 的地址归到同一个网站排名下
-      04. 浏览器跟踪重定向地址，请求另一个带 www 的网址
-      05. 服务器处理请求（通过路由读取资源）
-      06. 服务器返回一个 HTTP 响应（报头中把 Content-type 设置为 'text/html'）
-      07. 浏览器进 DOM 树构建
-      08. 浏览器发送请求获取嵌在 HTML 中的资源（如图片、音频、视频、CSS、JS等）
-      09. 浏览器显示完成页面
-      10. 浏览器发送异步请求
+      01.浏览器查找域名对应的IP地址(DNS 查询：浏览器缓存->系统缓存->路由器缓存->ISP DNS 缓存->根域名服务器)
+      02.浏览器向 Web 服务器发送一个 HTTP 请求（TCP三次握手）
+      03.服务器 301 重定向（从 http://example.com 重定向到 http://www.example.com）
+      04.浏览器跟踪重定向地址，请求另一个带 www 的网址
+      05.服务器处理请求（通过路由读取资源）
+      06.服务器返回一个 HTTP 响应（报头中把 Content-type 设置为 'text/html'）
+      07.浏览器进 DOM 树构建
+      08.浏览器发送请求获取嵌在 HTML 中的资源（如图片、音频、视频、CSS、JS等）
+      09.浏览器显示完成页面
+      10.浏览器发送异步请求
 
 - 你怎么看待 Web App/hybrid App/Native App？（移动端前端 和 Web 前端区别？）
 
       * Web App(HTML5)：采用HTML5生存在浏览器中的应用，不需要下载安装
-      - 优点：开发成本低，迭代更新容易，不需用户升级，跨多个平台和终端
-      - 缺点：消息推送不够及时，支持图形和动画效果较差，功能使用限制（相机、GPS等）
+        - 优点：开发成本低，迭代更新容易，不需用户升级，跨多个平台和终端
+        - 缺点：消息推送不够及时，支持图形和动画效果较差，功能使用限制（相机、GPS等）
 
       * Hybrid App(混合开发)：UI WebView，需要下载安装
-      - 优点：接近 Native App 的体验，部分支持离线功能
-      - 缺点：性能速度较慢，未知的部署时间，受限于技术尚不成熟
+        - 优点：接近 Native App 的体验，部分支持离线功能
+        - 缺点：性能速度较慢，未知的部署时间，受限于技术尚不成熟
 
       * Native App(原生开发)：依托于操作系统，有很强的交互，需要用户下载安装使用
-      - 优点：用户体验完美，支持离线工作，可访问本地资源（通讯录，相册）
-      - 缺点：开发成本高（多系统），开发成本高（版本更新），需要应用商店的审核
+        - 优点：用户体验完美，支持离线工作，可访问本地资源（通讯录，相册）
+        - 缺点：开发成本高（多系统），开发成本高（版本更新），需要应用商店的审核
 
 - Web 前端开发的注意事项？
 
@@ -681,25 +686,25 @@
 - 如何做SEO优化?
 
       * 标题与关键词
-      - 设置有吸引力切合实际的标题，标题中一定要包含所做的关键词
+        - 设置有吸引力切合实际的标题，标题中要包含所做的关键词
 
       * 网站结构目录
-      - 网站的目录结构最好不要超过三级，每一级都有“面包屑导航”，使整个的网站成树状结构分布
+        - 最好不要超过三级，每级有“面包屑导航”，使网站成树状结构分布
 
       * 页面元素
-      - 给图片标注"Alt"可以让搜索引擎更友好的收录
+        - 给图片标注"Alt"可以让搜索引擎更友好的收录
 
       * 网站内容
-      - 每个月每天有规律的更新网站的内容，会使搜索引擎更加喜欢
+        - 每个月每天有规律的更新网站的内容，会使搜索引擎更加喜欢
 
       * 友情链接
-      - 对方一定要是正规网站，每天有专业的团队或者个人维护更新
+        - 对方一定要是正规网站，每天有专业的团队或者个人维护更新
 
       * 内链的布置
-      - 将这个整个网站形成一种类似于蜘蛛网的结构不会出现单独连接的页面，也不会出现死链接
+        - 使网站形成类似蜘蛛网的结构，不会出现单独连接的页面或链接
 
       * 流量分析
-      - 通过统计工具(百度统计，CNZZ统计)分析流量来源/入口/页面/栏目/地区分布，指导下一步的SEO
+        - 通过统计工具(百度统计，CNZZ)分析流量来源，指导下一步的SEO
 
 - 移动端（Android、IOS）怎么做好用户体验?
 
@@ -719,33 +724,33 @@
 - 是否了解 Web 注入攻击（最常见 XSS 和 CSRF）？
 
       * SQL注入
-      - 把SQL命令插入到表单或输入URL查询字符串提交，欺骗服务器达到执行恶意的SQL目的
+        - 把SQL命令插入到表单或输入URL查询字符串提交，欺骗服务器达到执行恶意的SQL目的
 
       * XSS(Cross Site Script)，跨站脚本攻击
-      - 攻击者在页面里插入恶意代码，当用户浏览该页之时，执行嵌入的恶意代码达到攻击目的
+        - 攻击者在页面里插入恶意代码，当用户浏览该页之时，执行嵌入的恶意代码达到攻击目的
 
       * CSRF(Cross Site Request Forgery)，跨站点伪造请求
-      - 伪造合法请求，让用户在不知情的情况下以登录的身份访问，利用用户信任达到攻击目的
+        - 伪造合法请求，让用户在不知情的情况下以登录的身份访问，利用用户信任达到攻击目的
 
 * 线程与进程的区别？
 
       * 一个程序至少有一个进程，一个进程至少有一个线程
       * 线程的划分尺度小于进程，使得多线程程序的并发性高
       * 进程在执行过程中拥有独立的内存单元，而多个线程共享内存
-      * 线程不能够独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制
+      * 线程不能够独立执行，必须应用程序提供多个线程执行控制
 
-- 如何防范Web前端攻击？
+- 如何防范 Web 前端攻击？
 
       * 不要信任任何外部传入的数据
-      - 针对用户输入作相关的格式检查、过滤等操作
+        - 针对用户输入作相关的格式检查、过滤等操作
 
       * 不要信任在任何传入的第三方数据
-      - 使用HTML5中引入的 CORS，设置 Access-Control-Allow-Origin
+        - 使用 CORS，设置 Access-Control-Allow-Origin
 
-      * 更安全地使用Cookie
-      - 设置Cookie为HttpOnly，禁止了JavaScript操作Cookie；使用HTML5中的LocalStorage
+      * 更安全地使用 Cookie
+        - 设置Cookie为HttpOnly，禁止了JavaScript操作Cookie
 
       * 防止网页被其他网站内嵌为iframe
-      - 服务器端设置 X-Frame-Options 响应头，防止页面被其他页面内嵌
+        - 服务器端设置 X-Frame-Options 响应头，防止页面被内嵌
 
 ***
