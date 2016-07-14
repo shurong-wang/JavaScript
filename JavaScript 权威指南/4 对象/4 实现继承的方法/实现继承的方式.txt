@@ -1,0 +1,23 @@
+
+实现继承的方式1：
+if(! Object.create){
+    Object.create = function(Person){
+        function F(){}
+        F.prototype = Person.prototype;
+        return new F();
+    };
+}
+Student.prototype = Object.create(Person.prototype);
+Student.prototype.constructor = Student;
+
+实现继承的方式2：
+function extend(Child, Parent) {
+    var F = function(){};
+　　F.prototype = Parent.prototype;
+　　Child.prototype = new F();
+　　Child.prototype.constructor = Child;
+　　Child.uber = Parent.prototype;
+}
+
+http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html
+http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html

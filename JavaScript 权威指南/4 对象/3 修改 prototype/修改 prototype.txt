@@ -1,0 +1,10 @@
+修改内置构造器的 prototype
+
+Object.prototype.x = 1; 在 for in 遍历时，会遍历到 x
+Object.defindProperty(Object.prototype, 'x', {value: 1, writable: true}); 在 for in 遍历时，则不会遍历到 x
+
+原型链上的 prototype 属性值：
+可配置(configuarable)、可枚举(enumerable)、可写(writable) 
+这些属性都默认都为 false
+
+object.hasOwnProperty(x) 可以判断某个属性是否属于对象本身的属性（用来排除原型链上的属性干扰）

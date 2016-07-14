@@ -1,0 +1,14 @@
+prototype 属性与原型
+
+function Foo(){}
+声明构造器 Foo 时， Foo 构造器默认会有 Foo.prototype 属性，Foo.prototype 属性本身也是对象，因此可以叫做“对象属性”
+同时，Foo.prototype 默认又会有两个属性 Foo.prototype.constructor 和 Foo.prototype.__proto__
+其中，Foo.prototype.__proto__ 就是 Foo.prototype 的原型
+Foo.prototype.__proto__ 又指向 Object 的 prototype 属性，即 Object.prototype
+
+Foo.prototype 的作用：
+当使用 var foo = new Foo() 创建实例 foo 时，Foo.prototype 对象属性会作为实例 foo 的原型 obj.__proto__
+
+prototype 属性与原型 __proto__ 的关系：
+prototype 是构造器（函数对象）上面预置的对象属性，原型 __proto__ 是对象（实例对象）上的原型
+对象的原型 __proto__ 指向其构造器的 prototype 属性

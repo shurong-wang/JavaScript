@@ -1,0 +1,39 @@
+
+var Foo = function(){
+    this.x = 1;
+    this.y = 2;
+};
+Foo.prototype.z = 3;
+var foo = new Foo();
+
+
+# 查看对象的原型：
+1. 通过 foo.__proto__   // 非标准
+2. 通过 Object.getPrototypeOf(foo) // ECMA5
+
+
+# 判断一个对象自身是否存在指定的属性（不去原型链上查找）
+foo.hasOwnProperty('x'); // true
+foo.hasOwnProperty('z'); // false
+'z' in foo; // true
+
+
+# 判断一个该对象是否为另一个对象的实例
+foo instanceof Foo;     // true
+foo instanceof Object;  // true
+
+
+# 判断一个对象是否存在于另一个对象的原型链中
+Foo.prototype.isPrototypeOf(foo);       // true
+Object.prototype.isPrototypeOf(foo);    // true
+Array.prototype.isPrototypeOf(foo);     // false
+
+
+# 判断给定的属性是否可以用 for...in 语句进行枚举
+foo.propertyIsEnumerable("x");  // true
+foo.propertyIsEnumerable("z");  // false
+
+
+# 原型链上的特殊情况：
+1. Object.create(null); 创建的对象的原型 __proto__ 为 undefined
+2. var foo = Foo.bind(null); 操作后，foo.prototype 为 undefined
