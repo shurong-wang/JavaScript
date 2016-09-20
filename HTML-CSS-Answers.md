@@ -134,11 +134,11 @@
          当用户选择label标签时，浏览器会自动将焦点转到和label标签相关的表单控件上
 
         * 使用方法1：
-        `<label for="mobile">Number:</label>`
-        `<input type="text" id="mobile"/>`
+          `<label for="mobile">Number:</label>`
+          `<input type="text" id="mobile"/>`
 
         * 使用方法2：
-        `<label>Date:<input type="text"/></label>`
+          `<label>Date:<input type="text"/></label>`
 
 - 如何关闭 form 的自动完成功能？
 
@@ -232,7 +232,7 @@
       * 含外部载入样式时，后载入样式覆盖其前面的载入的样式和内部样式
       * 选择器优先级: 行内样式[1000] > id[100] > class[10] > Tag[1]
       * 在同一组属性设置中，!important 优先级最高，高于行内样式
-      5* JS动态设置样式，高于一切样式设定
+      * JS动态设置样式，高于一切样式设定
 
 - CSS3新增伪类有哪些？
 
