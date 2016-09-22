@@ -436,12 +436,12 @@
         - IE: window.event.srcElement
 
       * 阻止事件默认行为
-        - W3C: window.event.cancelBubble = true
+        - W3C: e.preventDefault()
         - IE: window.event.returnValue = false
 
-      * 阻止事件传播
+      * 阻止事件冒泡传播
         - W3C: e.stopPropagation()
-        - IE: window.event
+        - IE: window.event.cancelBubble = true
 
 - W3C事件的 target 与 currentTarget 的区别？
 
@@ -611,7 +611,7 @@
     	 5.获取异步调用返回的数据
     	 6.使用 JavaScript 和 DOM 实现局部刷新
 
-      javascript```
+      ```javascript
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -668,7 +668,7 @@
       * 按照HTML标准，在`</body>`结束后出现`<script>`或任何元素的开始标签，都是解析错误。
         虽然不符合HTML标准，但浏览器会自动容错，使实际效果与写在`</body>`之前没有区别
 
-      * 浏览器的容错机制会忽略<script>之前的`</body>`，视作`<script>`仍在 body 体内。
+      * 浏览器的容错机制会忽略`<script>`之前的`</body>`，视作`<script>`仍在 body 体内。
         省略`</body>`和`</html>`闭合标签符合HTML标准，服务器可以利用这一标准尽可能少输出内容
 
 - 延迟加载JS的方式有哪些？
