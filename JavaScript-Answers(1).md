@@ -876,6 +876,6 @@
       * Babel 是一个 JS 编译器，自带一组 ES6 语法转化器，用于转化 JS 代码。
       这些转化器让开发者提前使用最新的 JS语法(ES6/ES7)，而不用等浏览器全部兼容。
       * Babel 默认只转换新的 JS 句法(syntax)，而不转换新的API。
-      如：Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise等全局对象以及一些定义在全局对象上的方法(比如Object.assign)
+      如：Iterator、Generator、Set、Map、Proxy、Reflect、Symbol、Promise等全局对象以及一些定义在全局对象上的方法(比如Object.assign)
       * 如果运行新的 API 和 新的方法，须使用 babel-polyfill，为当前环境提供一个垫片。
       * Babel 6.0 开始，不再直接提供浏览器版本，而是要用构建工具构建出来。
