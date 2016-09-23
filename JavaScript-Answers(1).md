@@ -734,7 +734,7 @@
       * 函数调用模式          foo(arg1, arg2);
       * 构造器调用模式        (new Foo())(arg1, arg2);
       * call/applay调用模式   Foo.foo.call(that, arg1, arg2);
-      * bind调用模式          Foo.foo.bind(that)(arg1, arg2)();
+      * bind调用模式          Foo.foo.bind(that)(arg1, arg2);
 
 - func.call() 和 func.apply() 的区别？
 
