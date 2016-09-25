@@ -70,21 +70,20 @@
 
       * 模块定义规则：
 
-        - AMD 默认一开始就载入全部依赖模块
      ```Javascript
-          define(['./a', './b'], function(a, b) {
-              a.doSomething();
-              b.doSomething();
-          });
-     ```
-        - CMD 依赖模块在用到时才就近载入
-     ```Javascript
-          define(function(require, exports, module) {
-              var a = require('./a');
-              a.doSomething();
-              var b = require('./b');
-              b.doSomething();
-          });
+        // - AMD 默认一开始就载入全部依赖模块
+        define(['./a', './b'], function(a, b) {
+          a.doSomething();
+          b.doSomething();
+        });
+
+        // - CMD 依赖模块在用到时才就近载入
+        define(function(require, exports, module) {
+          var a = require('./a');
+          a.doSomething();
+          var b = require('./b');
+          b.doSomething();
+        });
      ```
 
 - requireJS的核心原理是什么？

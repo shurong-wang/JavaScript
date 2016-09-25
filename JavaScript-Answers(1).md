@@ -140,7 +140,9 @@
          }
          Dog.work();
      ```
+
       2. 对象字面量方式（使用 JSON 对象生成）
+
      ```javascript
          var Person = {
              firstname: "Mark",
@@ -152,7 +154,9 @@
          };
          Person.introduce();
      ```
+
       3. 构造函数方式（内部用 this 关键字指向实例对象）
+
      ```javascript
          function Pet(name, age, hobby){
             this.name = name;
@@ -166,6 +170,7 @@
          maidou.eat();
      ```
       4. 原型方式（在 prototype 上添加属性和方法）
+
      ```javascript
           function Dog(){}
           Dog.prototype.name = "旺财";
@@ -175,7 +180,9 @@
           var wangcai = new Dog();
           wangcai.eat();
      ```
+
       5. 混合方式（构造函数方式[this] + 原型方式[prototype]）
+
      ```javascript
          function Mobile(name, price){
            this.name = name;
@@ -191,6 +198,7 @@
 
       1. 构造函数法（this + prototype） -- 用 new 关键字 生成实例对象
         缺点：用到了 this 和 prototype，编写复杂，可读性差
+
      ```javascript
           function Mobile(name, price){
              this.name = name;
@@ -204,6 +212,7 @@
      ```
       2. Object.create 法 -- 用 Object.create() 生成实例对象
         缺点：不能实现私有属性和私有方法，实例对象之间也不能共享数据
+
      ```javascript
          var Person = {
              firstname: "Mark",
@@ -226,8 +235,10 @@
         　　};
         　}
      ```
+
       3. 极简主义法（消除 this 和 prototype） -- 调用 createNew() 得到实例对象
         优点：容易理解，结构清晰优雅，符合传统的"面向对象编程"的构造
+
      ```javascript
          var Cat = {
            age: 3, // 共享数据 -- 定义在类对象内，createNew() 外
@@ -249,7 +260,9 @@
          var cat = Cat.createNew();
          cat.makeSound();
      ```
+
       4. ES6 语法糖 class -- 用 new 关键字 生成实例对象
+
      ```javascript
          class Point {
            constructor(x, y) {
@@ -275,23 +288,29 @@
          　this.color = color;
         }
     ```
+
       2. 实例继承：将子对象的 prototype 指向父对象的一个实例
+
     ```javascript
         Cat.prototype = new Animal();
         Cat.prototype.constructor = Cat;
     ```
+
       3. 拷贝继承：如果把父对象的所有属性和方法，拷贝进子对象
-    ```javascript         　　
-        function extend(Child, Parent) {
-      　　　var p = Parent.prototype;
-      　　　var c = Child.prototype;
-      　　　for (var i in p) {
-      　　　   c[i] = p[i];
-      　　　}
-      　　　c.uber = p;
-      　 }
+
+    ```javascript
+       function extend(Child, Parent) {
+     　　　var p = Parent.prototype;
+     　　　var c = Child.prototype;
+     　　　for (var i in p) {
+     　　　   c[i] = p[i];
+     　　　}
+     　　　c.uber = p;
+     　 }
     ```
+
       4. 原型继承：将子对象的 prototype 指向父对象的 prototype
+
     ```javascript
         function extend(Child, Parent) {
             var F = function(){};
@@ -302,6 +321,7 @@
         }
     ```
       5. ES6 语法糖 extends：class ColorPoint extends Point {}
+
     ```javascript
         class ColorPoint extends Point {
            constructor(x, y, color) {
@@ -867,17 +887,20 @@
       * === 严格相等运算符，比较时不进行隐式类型转换
       * Object.is 同值相等算法，在 === 基础上对 0 和 NaN 特别处理
 
+    ```Javascript
        +0 === -0 //true
        NaN === NaN // false
 
        Object.is(+0, -0) // false
        Object.is(NaN, NaN) // true
+     ```
 
 - 什么是 Babel ？
 
       * Babel 是一个 JS 编译器，自带一组 ES6 语法转化器，用于转化 JS 代码。
       这些转化器让开发者提前使用最新的 JS语法(ES6/ES7)，而不用等浏览器全部兼容。
       * Babel 默认只转换新的 JS 句法(syntax)，而不转换新的API。
-      如：Iterator、Generator、Set、Map、Proxy、Reflect、Symbol、Promise等全局对象以及一些定义在全局对象上的方法(比如Object.assign)
+      如：Iterator、Generator、Set、Map、Proxy、Reflect、Symbol、Promise等全局对象。
+      以及一些定义在全局对象上的方法(比如Object.assign)
       * 如果运行新的 API 和 新的方法，须使用 babel-polyfill，为当前环境提供一个垫片。
       * Babel 6.0 开始，不再直接提供浏览器版本，而是要用构建工具构建出来。
