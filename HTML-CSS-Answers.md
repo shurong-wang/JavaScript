@@ -405,13 +405,16 @@
 
       * 如果是单行文本, line-height 设置成和 height 值
 
+    ```Css
         .vertical {
           height: 100px;
           line-height: 100px;
         }
+    ```
 
       * 已知高度的块级子元素，采用绝对定位和负边距
 
+    ```Css
         .container {
           position: relative;
         }
@@ -421,10 +424,11 @@
           top:50%;  /*父元素高度50%*/
           margin-top: -150px; /*自身高度一半*/
         }
-
+    ```
       * 未知高度的块级父子元素居中，模拟表格布局
       缺点：IE67不兼容，父级 overflow：hidden 失效
 
+    ```Css
         .container {
           display: table;
         }
@@ -432,10 +436,11 @@
           display: table-cell;
           vertical-align: middle;
         }
-
+    ```
      * 新增 inline-block 兄弟元素，设置 vertical-align
       缺点：需要增加额外标签，IE67不兼容
 
+    ```Css
         .container {
           height: 100%;/*定义父级高度，作为参考*/
         }
@@ -446,29 +451,35 @@
         .extra {
           height: 100%; /*设置新增元素高度为100%*/
         }
+    ```
 
       * 绝对定位配合 CSS3 位移
 
+    ```Css
         .vertical {
           position: absolute;
           top:50%;  /*父元素高度50%*/
           transform:translateY(-50%, -50%);
         }
+     ```
 
       * CSS3弹性盒模型
 
+    ```Css
         .container {
           display:flex;
           justify-content: center; /*子元素水平居中*/
           align-items: center; /*子元素垂直居中*/
         }
+    ```
 
 - 圣杯布局的实现原理？
 
       * 要求：三列布局；中间主体内容前置，且宽度自适应；两边内容定宽
       * 好处：重要的内容放在文档流前面可以优先渲染
       * 原理：利用相对定位、浮动、负边距布局，而不添加额外标签
-      ```css
+
+    ```Css
           .container {
               padding-left: 150px;
               padding-right: 190px;
@@ -491,12 +502,14 @@
               position: relative;
               right: -190px;
           }
-      ```
+    ```
+
 - 什么是双飞翼布局？实现原理？
 
       双飞翼布局：对圣杯布局（使用相对定位，对以后布局有局限性）的改进，消除相对定位布局
       原理：主体元素上设置左右边距，预留两翼位置。左右两栏使用浮动和负边距归位，消除相对定位。
-      ```css
+
+     ```Css
         .container {
             /*padding-left:150px;*/
             /*padding-right:190px;*/
@@ -523,7 +536,7 @@
             /*position:relative;*/
             /*right:-190px;*/
         }
-      ```
+     ```
 
 - 在CSS样式中常使用 px、em 在表现上有什么区别？
 
@@ -560,6 +573,7 @@
 
 - 清除浮动最佳实践（after伪元素闭合浮动）：
 
+    ```Css
       .clearfix:after{
         content: "\200B";
         display: table; 
@@ -569,6 +583,7 @@
       .clearfix{
         *zoom: 1;
       }
+     ```
 
 - 什么是 FOUC(Flash of Unstyled Content)？ 如何来避免 FOUC？
 
@@ -636,7 +651,9 @@
       * 响应式设计就是网站能够兼容多个终端，而不是为每个终端做一个特定的版本
       * 基本原理是利用CSS3媒体查询，为不同尺寸的设备适配不同样式
       * 对于低版本的IE，可采用JS获取屏幕宽度，然后通过resize方法来实现兼容：
-     ```javascript
+
+    ```Javascript
+
       $(window).resize(function () {
           screenRespond();
       });
@@ -653,7 +670,7 @@
           $("body").attr("class", "");
         }
       }
-     ```
+    ```
 
 - 什么是视差滚动效果，如何给每页做不同的动画？
 
@@ -700,7 +717,7 @@
        解决方案2：input:-webkit-autofill { background-color: transparent; }
 
 - input [type=search] 搜索框右侧小图标如何美化？
-  ```css
+  ```Css
       input[type="search"]::-webkit-search-cancel-button{
           -webkit-appearance: none;
           height: 15px;
@@ -717,7 +734,8 @@
       `<a href="logo.jpg" download="网站LOGO" >下载</a>`
 
 - iOS safari 如何阻止“橡皮筋效果”？
-  ```javascript
+
+  ```Javascript
       $(document).ready(function(){
           var stopScrolling = function(event) {
               event.preventDefault();
@@ -746,7 +764,8 @@
        设置元素浮动后，该元素的 display 值自动变成 block
 
 - 怎么让Chrome支持小于12px 的文字？
-  ```css
+
+  ```Css
       .shrink{
         -webkit-transform:scale(0.8);
         -o-transform:scale(1);
@@ -755,8 +774,10 @@
   ```
 
 - 让页面里的字体变清晰，变细用CSS怎么做？（IOS手机浏览器字体齿轮设置）
-  ```css
-      -webkit-font-smoothing: antialiased;
+  ```Css
+      .font1{
+          -webkit-font-smoothing: antialiased;
+      }
   ```
 
 - font-style 属性 oblique 是什么意思？
@@ -764,8 +785,9 @@
       font-style: oblique; 使没有 italic 属性的文字实现倾斜
 
 - position:fixed; 在 android 下无效怎么处理？
-  ```html
-     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+  ```Html
+     <meta name="viewport" content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
   ```
 
 - 如果需要手动写动画，你认为最小时间间隔是多久？

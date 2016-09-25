@@ -130,7 +130,7 @@
 - JavaScript创建对象的几种方式？
 
       1. 工厂方式（使用内置 Object 对象生成）
-      ```javascript
+     ```javascript
          var Dog = new Object();
          Dog.name = "旺财";
          Dog.age = 3;
@@ -138,9 +138,9 @@
              alert("我是" + Dog.name + ",汪汪汪...");
          }
          Dog.work();
-      ```
+     ```
       2. 对象字面量方式（使用 JSON 对象生成）
-      ```javascript
+     ```javascript
          var Person = {
              firstname: "Mark",
              lastname: "Yun",
@@ -150,9 +150,9 @@
              }
          };
          Person.introduce();
-      ```
+     ```
       3. 构造函数方式（内部用 this 关键字指向实例对象）
-      ```javascript
+     ```javascript
          function Pet(name, age, hobby){
             this.name = name;
             this.age = age;
@@ -163,9 +163,9 @@
          }
          var maidou = new Pet("麦兜", 25, "coding");
          maidou.eat();
-      ```
+     ```
       4. 原型方式（在 prototype 上添加属性和方法）
-      ```javascript
+     ```javascript
           function Dog(){}
           Dog.prototype.name = "旺财";
           Dog.prototype.eat = function(){
@@ -173,9 +173,9 @@
           }
           var wangcai = new Dog();
           wangcai.eat();
-      ```
+     ```
       5. 混合方式（构造函数方式[this] + 原型方式[prototype]）
-      ```javascript
+     ```javascript
          function Mobile(name, price){
            this.name = name;
            this.price = price;
@@ -185,12 +185,12 @@
          }
          var iPhone7 = new Mobile("iPhone7", 1000);
          iPhone7.sell();
-      ```javascript
+     ```
 - JavaScript如何实现一个类，怎么实例化这个类？
 
       1. 构造函数法（this + prototype） -- 用 new 关键字 生成实例对象
         缺点：用到了 this 和 prototype，编写复杂，可读性差
-        ```javascript
+     ```javascript
           function Mobile(name, price){
              this.name = name;
              this.price = price;
@@ -200,10 +200,10 @@
            }
            var iPhone7 = new Mobile("iPhone7", 1000);
            iPhone7.sell();
-        ```
+     ```
       2. Object.create 法 -- 用 Object.create() 生成实例对象
         缺点：不能实现私有属性和私有方法，实例对象之间也不能共享数据
-        ```javascript
+     ```javascript
          var Person = {
              firstname: "Mark",
              lastname: "Yun",
@@ -224,10 +224,10 @@
         　　　 return new F();
         　　};
         　}
-      ```
+     ```
       3. 极简主义法（消除 this 和 prototype） -- 调用 createNew() 得到实例对象
         优点：容易理解，结构清晰优雅，符合传统的"面向对象编程"的构造
-        ```javascript
+     ```javascript
          var Cat = {
            age: 3, // 共享数据 -- 定义在类对象内，createNew() 外
            createNew: function () {
@@ -247,9 +247,9 @@
 
          var cat = Cat.createNew();
          cat.makeSound();
-      ```
+     ```
       4. ES6 语法糖 class -- 用 new 关键字 生成实例对象
-      ```javascript
+     ```javascript
          class Point {
            constructor(x, y) {
              this.x = x;
@@ -261,25 +261,26 @@
          }
 
       var point = new Point(2, 3);
-      ```
+     ```
 
 - Javascript如何实现继承？
 
       1. 构造函数绑定：使用 call 或 apply 方法，将父对象的构造函数绑定在子对象上
-      ```javascript   　
+
+    ```javascript
         function Cat(name,color){
          　Animal.apply(this, arguments);
          　this.name = name;
          　this.color = color;
         }
-      ```
+    ```
       2. 实例继承：将子对象的 prototype 指向父对象的一个实例
-      ```javascript
+    ```javascript
         Cat.prototype = new Animal();
         Cat.prototype.constructor = Cat;
-      ```
+    ```
       3. 拷贝继承：如果把父对象的所有属性和方法，拷贝进子对象
-      ```javascript         　　
+    ```javascript         　　
         function extend(Child, Parent) {
       　　　var p = Parent.prototype;
       　　　var c = Child.prototype;
@@ -288,9 +289,9 @@
       　　　}
       　　　c.uber = p;
       　 }
-      ```
+    ```
       4. 原型继承：将子对象的 prototype 指向父对象的 prototype
-      ```javascript
+    ```javascript
         function extend(Child, Parent) {
             var F = function(){};
           　F.prototype = Parent.prototype;
@@ -298,9 +299,9 @@
           　Child.prototype.constructor = Child;
           　Child.uber = Parent.prototype;
         }
-      ```
+    ```
       5. ES6 语法糖 extends：class ColorPoint extends Point {}
-      ```javascript
+    ```javascript
         class ColorPoint extends Point {
            constructor(x, y, color) {
               super(x, y); // 调用父类的constructor(x, y)
@@ -310,7 +311,7 @@
               return this.color + ' ' + super.toString(); // 调用父类的toString()
            }
         }
-      ```
+    ```
 - Javascript作用链域?
 
       * 全局函数无法查看局部函数的内部细节，但局部函数可以查看其上层的函数细节，直至全局细节。
@@ -454,7 +455,7 @@
 
       * W3C: 使用 dispatchEvent 方法
       * IE: 使用 fireEvent 方法
-      ```javascript
+     ```javascript
         var fireEvent = function(element, event){
             if (document.createEventObject){
                 var mockEvent = document.createEventObject();
@@ -465,7 +466,7 @@
                 return !element.dispatchEvent(mockEvent);
             }
         }
-      ```
+     ```
 - 什么是函数节流？介绍一下应用场景和原理？
 
       * 函数节流(throttle)是指阻止一个函数在很短时间间隔内连续调用。
@@ -480,7 +481,7 @@
       再 setTimeout 一个新的定时器重复以上流程。
 
       * 函数节流简单实现：
-      ```javascript
+     ```javascript
         function throttle(method, context) {
              clearTimeout(methor.tId);
              method.tId = setTimeout(function(){
@@ -491,7 +492,7 @@
         window.onresize = function(){
             throttle(myFunc, window);
         }
-      ```
+     ```
 - 区分什么是“客户区坐标”、“页面坐标”、“屏幕坐标”？
 
       * 客户区坐标：鼠标指针在可视区中的水平坐标(clientX)和垂直坐标(clientY)
@@ -584,11 +585,11 @@
 
 - 解释一下这段代码的意思吗？
 
-      ```javascript
+     ```javascript
       [].forEach.call($$("*"), function(el){
           el.style.outline = "1px solid #" + (~~(Math.random()*(1<<24))).toString(16);
       })
-      ```
+     ```
       解释：获取页面所有的元素，遍历这些元素，为它们添加1像素随机颜色的轮廓(outline)
 
       1. `$$(sel)` // $$函数被许多现代浏览器命令行支持，等价于 document.querySelectorAll(sel)
@@ -611,7 +612,7 @@
     	 5.获取异步调用返回的数据
     	 6.使用 JavaScript 和 DOM 实现局部刷新
 
-      ```javascript
+     ```javascript
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -621,7 +622,7 @@
             }
         };
         xhr.send(data);
-      ```
+     ```
 
 - 同步和异步的区别？
 

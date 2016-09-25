@@ -28,26 +28,26 @@
 - 通行的 Javascript 模块的规范有哪些？
 
       * CommonJS -- 主要用在服务器端 node.js
-      ```javascript
+     ```javascript
         var math = require('./math');
         math.add(2,3);
-      ```
+     ```
       * AMD(异步模块定义) -- require.js
-      ```javascript
+     ```javascript
         require(['./math'], function (math) {
             math.add(2, 3);
         });
-      ```
+     ```
       * CMD(通用模块定义) -- sea.js
-      ```javascript
+     ```javascript
         var math = require('./math');
         math.add(2,3);
-      ```
+     ```
       * E6 模块
-      ```javascript
+     ```javascript
         import {math} from './math';
         math.add(2, 3);
-      ```
+     ```
 
 - AMD 与 CMD 规范的区别？
 
@@ -65,22 +65,22 @@
 
 	    * 模块定义规则：
         - AMD 默认一开始就载入全部依赖模块
-        ```javascript
+     ```javascript
           define(['./a', './b'], function(a, b) {
               a.doSomething();
               b.doSomething();
           });
-        ```
+     ```
         
         - CMD 依赖模块在用到时才就近载入
-        ```javascript
+     ```javascript
           define(function(require, exports, module) {
               var a = require('./a');
               a.doSomething();
               var b = require('./b');
               b.doSomething();
           })
-        ```
+     ```
 
 - requireJS的核心原理是什么？
 
@@ -128,7 +128,7 @@
        * BDD：行为驱动开发 -- 业务需求描述产出产品代码的开发方法
        * TDD：测试驱动开发 -- 单元测试用例代码产出产品代码的开发方法
        * 单元测试框架：
-       ```javascript
+     ```javascript
         // mocha 示例
         describe('Test add', function() {
           it('1 + 2 = 3', function() {
@@ -142,7 +142,7 @@
                 expect(add(1, 2)).toEqual(3);
             });
         });
-        ```
+     ```
 
 - 介绍你知道的前端模板引擎？
 
@@ -435,7 +435,7 @@
 
       * jQuery 核心中有一组队列控制方法，由 queue()/dequeue()/clearQueue() 三个方法组成。
       * 主要应用于 animate()，ajax，其他要按时间顺序执行的事件中
-      ```javascript
+     ```javascript
         var func1 = function(){alert('事件1');}
         var func2 = function(){alert('事件2');}
         var func3 = function(){alert('事件3');}
@@ -458,7 +458,7 @@
 
         // 清空整个队列
         $('#box').clearQueue("queue1"); // delete queue1 with clearQueue
-      ```
+     ```
 
 - jQuery 中的 bind(), live(), delegate(), on()的区别？
 
@@ -472,12 +472,12 @@
       * 事件即“发布/订阅”模式，自定义事件即“消息发布”，事件的监听即“订阅订阅”
 
       * JS 原生支持自定义事件，示例：
-      ```javascript
+     ```javascript
         document.createEvent(type); // 创建事件
         event.initEvent(eventType, canBubble, prevent); // 初始化事件
         target.addEventListener('dataavailable', handler, false); // 监听事件
         target.dispatchEvent(e);  // 触发事件
-      ```
+     ```
 
       * jQuery 里的 fire 函数用于调用 jQuery 自定义事件列表中的事件
 
