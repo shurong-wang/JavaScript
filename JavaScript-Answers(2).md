@@ -28,23 +28,28 @@
 - 通行的 Javascript 模块的规范有哪些？
 
       * CommonJS -- 主要用在服务器端 node.js
-     ```javascript
+
+     ```Javascript
         var math = require('./math');
         math.add(2,3);
      ```
+
       * AMD(异步模块定义) -- require.js
-     ```javascript
+
+     ```Javascript
         require(['./math'], function (math) {
             math.add(2, 3);
         });
      ```
       * CMD(通用模块定义) -- sea.js
-     ```javascript
+
+     ```Javascript
         var math = require('./math');
         math.add(2,3);
      ```
       * E6 模块
-     ```javascript
+
+     ```Javascript
         import {math} from './math';
         math.add(2, 3);
      ```
@@ -63,23 +68,23 @@
         - AMD 的 API 默认多功能（分全局 require 和局部 require）
         - CMD 的 API 推崇职责单一纯粹（没有全局 require）
 
-	    * 模块定义规则：
+      * 模块定义规则：
+
         - AMD 默认一开始就载入全部依赖模块
-     ```javascript
+     ```Javascript
           define(['./a', './b'], function(a, b) {
               a.doSomething();
               b.doSomething();
           });
      ```
-        
         - CMD 依赖模块在用到时才就近载入
-     ```javascript
+     ```Javascript
           define(function(require, exports, module) {
               var a = require('./a');
               a.doSomething();
               var b = require('./b');
               b.doSomething();
-          })
+          });
      ```
 
 - requireJS的核心原理是什么？
@@ -128,7 +133,7 @@
        * BDD：行为驱动开发 -- 业务需求描述产出产品代码的开发方法
        * TDD：测试驱动开发 -- 单元测试用例代码产出产品代码的开发方法
        * 单元测试框架：
-     ```javascript
+     ```Javascript
         // mocha 示例
         describe('Test add', function() {
           it('1 + 2 = 3', function() {
@@ -305,18 +310,21 @@
       Underscore 主要针对数组、对象、函数提供更方便的调用，弥补了部分 jQuery 没有实现的功能
 
       Underscore 好用的函数方法(对应ES6)：
-        _.each(array, iteratee)         array.forEach(iteratee)
-        _.map(array, iteratee)          array.map(iteratee)
-        _.find(array, predicate)        array.find(predicate)
-        _.pluck(array, propertyName)    array.map(value => value[propertyName])
-        _.contains(array, element)      array.includes(element)
-        _.toArray(arguments)            Array.from(arguments)
-        _.compact(array)                array.filter(x => !!x)
-        _.uniq(array)                   [...new Set(array)]
-        _.indexOf(array, value)         array.indexOf(value)
-        _.keys(object)                  Object.keys(object)
-        _.isArray(object)               Array.isArray(object)
-        _.isFinite(object)              Number.isFinite(object)
+
+    ```Javascipt
+        _.each(array, iteratee)         // array.forEach(iteratee)
+        _.map(array, iteratee)          // array.map(iteratee)
+        _.find(array, predicate)        // array.find(predicate)
+        _.pluck(array, propertyName)    // array.map(value => value[propertyName])
+        _.contains(array, element)      // array.includes(element)
+        _.toArray(arguments)            // Array.from(arguments)
+        _.compact(array)                // array.filter(x => !!x)
+        _.uniq(array)                   // [...new Set(array)]
+        _.indexOf(array, value)         // array.indexOf(value)
+        _.keys(object)                  // Object.keys(object)
+        _.isArray(object)               // Array.isArray(object)
+        _.isFinite(object)              // Number.isFinite(object)
+    ```
 
 - 什么是 MVC/MVP/MVVM/Flux？
 
@@ -380,11 +388,16 @@
 
 - jQuery 的实现原理？
 
+     ```Javascript
       (function(window, undefined) {})(window);
       // jQuery 利用 JS 函数作用域的特性，采用立即调用表达式包裹了自身，解决命名空间和变量污染问题
+     ```
 
+     ```Javascript
       window.jQuery = window.$ = jQuery;
       // 在闭包当中将 jQuery 和 $ 绑定到 window 上，从而将 jQuery 和 $ 暴露为全局变量
+     ```
+
 
 - jQuery.fn 的 init 方法返回的 this 指的是什么对象？ 为什么要返回 this？
 
@@ -397,22 +410,27 @@
 
       * $.extend(object); // 为jQuery添加“静态方法”（工具方法）
 
+     ```Javascript
             $.extend({
             　　min: function(a, b) { return a < b ? a : b; },
             　　max: function(a, b) { return a > b ? a : b; }
             });
             $.min(2,3); //  2
             $.max(4,5); //  5
+     ```
 
       * $.extend([true,] targetObject, object1[, object2]); // 对targt对象进行扩展
 
+     ```Javascript
             var settings = {validate:false, limit:5};
             var options = {validate:true, name:"bar"};
             $.extend(settings, options);  // 注意：不支持第一个参数传 false
             // settings == {validate:true, limit:5, name:"bar"}
+     ```
 
       * $.fn.extend(json); // 为jQuery添加“成员函数”（实例方法）
 
+    ```Javascript
             $.fn.extend({
                alertValue: function() {
                   $(this).click(function(){
@@ -422,6 +440,7 @@
             });
 
             $("#email").alertValue();
+    ```
 
 - jQuery 的属性拷贝(extend)的实现原理是什么，如何实现深拷贝？
 
@@ -435,7 +454,7 @@
 
       * jQuery 核心中有一组队列控制方法，由 queue()/dequeue()/clearQueue() 三个方法组成。
       * 主要应用于 animate()，ajax，其他要按时间顺序执行的事件中
-     ```javascript
+     ```Javascript
         var func1 = function(){alert('事件1');}
         var func2 = function(){alert('事件2');}
         var func3 = function(){alert('事件3');}

@@ -133,13 +133,17 @@
         * label标签来定义表单控件的关系：
          当用户选择label标签时，浏览器会自动将焦点转到和label标签相关的表单控件上
         * 使用方法1：
-          
-           `<label for="mobile">Number:</label>`
-           `<input type="text" id="mobile"/>`
-        
+
+     ```html
+           <label for="mobile">Number:</label>
+           <input type="text" id="mobile"/>
+     ```
+
         * 使用方法2：
-           
-           `<label>Date:<input type="text"/></label>`
+
+     ```html
+           <label>Date:<input type="text"/></label>
+     ```
 
 - 如何关闭 form 的自动完成功能？
 
@@ -347,12 +351,15 @@
 - 用CSS创建一个三角形的原理是什么？
 
       把上、左、右三条边隐藏（颜色设为 transparent）
-          
-        width: 0;
-        height: 0;
-        border-width: 20px;
-        border-style: solid;
-        border-color: transparent transparent red transparent;
+     ```Css
+        .triangle {
+          width: 0;
+          height: 0;
+          border-width: 20px;
+          border-style: solid;
+          border-color: transparent transparent red transparent;
+        }
+     ```
 
 - 一个满屏“品”字布局如何设计?
 
@@ -691,17 +698,17 @@
 
       * 伪元素 -- 在内容元素的前后插入额外的元素或样式，但是这些元素实际上并不在文档中生成。
        它们只在外部显示可见，但不会在文档的源代码中找到它们，因此，称为“伪”元素。例如：
-         
+     ```Css
           p::before {content:"第一章：";}
           p::after {content:"Hot!";}
           p::first-line {background:red;}
           p::first-letter {font-size:30px;}
-
+     ```
       * 伪类 -- 将特殊的效果添加到特定选择器上。它是已有元素上添加类别的，不会产生新的元素。例如：
-          
+     ```Css
           a:hover {color: #FF00FF}
           p:first-child {color: red}
-
+     ```
 - ::before 和 :after 中双冒号和单冒号有什么区别？
 
        * 在 CSS 中伪类一直用 : 表示，如 :hover, :active 等
@@ -809,13 +816,19 @@
 - 一个高度自适应的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度
 
       方案1：
+     ```Css
         .sub { height: calc(100%-100px); }
+     ```
       方案2：
+     ```Css
         .container { position:relative; }
         .sub { position: absolute; top: 100px; bottom: 0; }
+     ```
       方案3：
+     ```Css
         .container { display:flex; flex-direction:column; }
         .sub { flex:1; }
+     ```
 
 - png、jpg、gif 这些图片格式解释一下，分别什么时候用。有没有了解过webp？
 
