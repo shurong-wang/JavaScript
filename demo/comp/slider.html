@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-slider/9.8.1/css/bootstrap-slider.css" rel="stylesheet">
+    <style media="screen">
+        .slider-handle {
+            box-shadow: none;
+        }
+        .slider-handle.custom {
+        	background: transparent none;
+        }
+        .slider-handle.custom::before {
+        	line-height: 20px;
+        	font-size: 24px;
+        	content:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAARCAYAAADZsVyDAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsSAAALEgHS3X78AAACf0lEQVQ4y5VUu24TQRQ9d2cfsTa2s1k5VRqqCJoIbZKaIkKIR0WFhKBGikAUfAUFDT8ADRUV4iFIQWuvIytICEVCQnEVx1k58WbNZmdnLkUSK7E3KD7VjO655z5nCGfQbDZNInpKRGtCiDIR/cX/IZjZ0Vr/1lo/C4Kgfmowz7KUUsuO4zyv1Wrz5XIZAMDMF6oahgEpJXZ2dvw4jm80m83G0tISnxPe2NioKaUeua47Pzc3B9M0cVlIKZFl2eMsy34A+AwAxqkxz/N7U1NT933fn0gUADzPg+u6V5n51rAaAAjD8AoRPahWqzXP8yYSBQDLslCpVGDb9moYhncAwAjD0NZaP6lWq6uzs7NjTkop5Hk+vOd5DqVUYdae511j5of1er1qMPOqEOLmzMwMpqenxxy63S7a7TaYGcyMdruNbrdbmHW5XIZlWdeJ6LZhmuYL3/cXL2pBmqaI43goHMcx0jQt5FYqFfi+v2BZ1pphGMbiSaRCshACtm0P77ZtQwhRyDVNE67rgogWDK31ZhzHkFJOPLRR5HmOJEnAzFtGnucvoyja7PV6hWSl1LmgUsrC4QFAv99HFEVbUsrXBhGtK6W+7u/v4/DwsLC80VYU7bmUEieVt5j5E4DjPW40Gt+2t7d5FGma8mAwYK01a615MBhwmqZjvE6nw61W62ej0TjeYwBYXl7+w8zvDg4OuqMtcRwHpVIJRAQiQqlUguM4Y9n2+31kWba+srLycSh8UvKHNE3fR1F07kFcBr1eD0mS/CKiL0O900MQBN16vf42SZK7u7u7E/1uURTh6OjojRBiXBgAhBChUupVp9NZ29vbm+g/Nk3zexAEwyz+Af0ycCycQhqqAAAAAElFTkSuQmCC');
+        }
+        .slider-tick.custom {
+            display: none;
+        }
+        #price-slider .slider-selection {
+        	background: #00aa5f;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="slider-container">
+            <input
+                id="filter-price"
+                type="hidden"
+                value=""
+                data-slider-handle="custom"
+                data-slider-tooltip="hide"
+                data-slider-scale="logarithmic"
+                data-slider-min="0"
+                data-slider-max="1000"
+                data-slider-step="1"
+                data-slider-ticks="[0,1000]"
+                data-slider-ticks-labels='[]'
+            />
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-slider/9.8.1/bootstrap-slider.min.js"></script>
+
+    <script type="text/javascript">
+        // mock data
+        const apiData = {
+            price: [30, 1000]
+        };
+
+        const [startVal, endVal] = [...apiData.price];
+        const priceSlider = $('#filter-price').slider({
+            id: 'price-slider',
+            value: apiData.price,
+            ticks_labels: [`$${startVal}`, `$${endVal}`]
+        });
+
+        const $priceTicks = $('#price-slider').find('.slider-tick-label');
+        priceSlider.on('slide', (slideEvt) => {
+            const [startVal, endVal] = [...slideEvt.value];
+            $priceTicks.eq(0).text(`$${startVal}`);
+            $priceTicks.eq(1).text(`$${endVal}`);
+        }).on('slideStop', (slideEvt) => {
+            // 此处进行 filter tags 同步、发送 ajax 请求
+            console.log(slideEvt.value);
+        });
+
+    </script>
+
+</body>
+
+</html>
