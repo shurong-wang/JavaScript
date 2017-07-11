@@ -8,7 +8,30 @@
 	<script src="https://cdn.bootcss.com/benchmark/2.1.4/benchmark.min.js"></script>
 </head>
 <body>
+
+    <h1>Benchmark is running ... <i id="watch"></i></h1>
+    <h2>Open the Developer Tools console to view the execution results.</h2>
+    <h2 style="display: none">Benchmark has been completed!</h2>
+    <h3><a href="javascript:location.reload();">Reload</a></h3>
+
 	<script>
+
+        var _getTime =  function () {
+    		var _=['00', '01', '02', '03', '04', '05', '06', '07', '08', '09'],
+    			d = new Date(),
+    			h = d.getHours(),
+    			m = d.getMinutes(),
+    			s = d.getSeconds();
+
+    		return [ _[h] || h, _[m] || m, _[s] || s ].join(":");
+    	};
+
+    	window.onload = function () {
+    		var watch = document.querySelector("#watch");
+    		setInterval(function () {
+    			watch.innerHTML =  '' + _getTime();
+    		}, 1000);
+    	}
 
 		var suite = new Benchmark.Suite;
 
@@ -19,7 +42,7 @@
 		    for (var i = num.length - 1; i >= 0; i--) {
 		        counter += 1;
 		        newNum = num.charAt(i) + newNum;
-		        if ((counter % 3 === 0) && i != 0) { 
+		        if ((counter % 3 === 0) && i != 0) {
 		            newNum = ',' + newNum;
 		        }
 		    }
@@ -76,10 +99,12 @@
 		.on('cycle', function(event) {
 			console.log(String(event.target));
 		})
-		.on('complete', function() {
+		.on('complete', function ()  {
 		  	console.log('Fastest is ' + this.filter('fastest').map('name'));
+            document.querySelector("h1").style.display = "none";
+            document.querySelector("h2").style.display = "block";
 		})
-		.run({ 'async': false });
+		.run({ 'async': true });
 
 	</script>
 </body>
