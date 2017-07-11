@@ -6,6 +6,25 @@
     <title>Bootstrap Tags Input</title>
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" rel="stylesheet">
+    <style type="text/css">
+        .bootstrap-tagsinput input {
+            display: none;
+        }
+
+        .bootstrap-tagsinput {
+            background-color: rgba(0, 0, 0, 0);
+            border: none;
+            box-shadow: none;
+            display: inline-block;
+            padding: 4px 6px;
+            color: #555;
+            vertical-align: middle;
+            border-radius: 0;
+            max-width: 100%;
+            line-height: 22px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,16 +35,62 @@
 
             </div>
             <div class="col-md-8">
-
+                <input id="filter-tags" type="hidden" />
             </div>
-            
         </div>
     </div>
 
     <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
-    <script type="text/javascript">
 
+    <script type="text/javascript">
+        // mock data
+        const apiData = {
+            filters: [ {
+                "value": "[0,1000]",
+                "text": "$0 - $1000",
+                "label": "Price"
+            }, {
+                "value": "[0, 5000000]",
+                "text": "0 K - 5 M",
+                "label": "Avg volume"
+            }]
+        };
+
+        filterItems = [{
+            "value": "Bullish",
+            "text": "Bullish",
+            "label": "Trend"
+        }, {
+            "value": "Neutral",
+            "text": "Neutral",
+            "label": "Trend"
+        }, {
+            "value": "S&P 500",
+            "text": "S&P 500",
+            "label": "Uiverse"
+        }, {
+            "value": "Double Top",
+            "text": "Double Top",
+            "label": "Pattern"
+        }, {
+            "value": "Energy",
+            "text": "Energy",
+            "label": "Secter"
+        }];
+
+        const $filterTags = $('#filter-tags');
+        $filterTags.tagsinput({
+            itemValue: 'value',
+            itemText: 'text'
+        });
+
+        const {
+            filters
+        } = apiData;
+        filters.forEach((item, index) => {
+            $filterTags.tagsinput('add', item);
+        });
     </script>
 
 </body>
