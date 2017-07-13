@@ -2,11 +2,11 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <title>Bootstrap Tags Input</title>
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" rel="stylesheet">
-    <style type="text/css">
+    <link href='https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css' rel='stylesheet'>
+    <style type='text/css'>
         .bootstrap-tagsinput input {
             display: none;
         }
@@ -29,68 +29,202 @@
 
 <body>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-4'>
+                <form class='form-horizontal'>
+                    <fieldset>
+                        <div class=''>
+                            <legend class=''>
+                                Refline By
+                                <a id="clear-all" href='javascript:void(0);' class='pull-right'>Clear all</a>
+                            </legend>
+                        </div>
 
+                        <section id='Trend' class='control-group filter-section' data-label='Trend'>
+                            <label class='control-label row'>
+                                <span class='col-md-8'>Trend</span>
+                                <a href='javascript:void(0);' class='col-md-4 clear-filter'>Clear</a>
+                            </label>
+
+                            <div class='checkbox'>
+                                <label>
+                                    <input type='checkbox' data-text='Bullish' value='Bullish'> Bullish
+                                </label>
+                            </div>
+                            <div class='checkbox'>
+                                <label>
+                                    <input type='checkbox' data-text='Bearish' value='Bearish'> Bearish
+                                </label>
+                            </div>
+                            <div class='checkbox'>
+                                <label>
+                                    <input type='checkbox' data-text='Neutral' value='Neutral'> Neutral
+                                </label>
+                            </div>
+                        </section>
+
+                        <section id='Universe' class='control-group filter-section' data-label='Universe' style='margin-top: 20px;'>
+                            <label class='control-label row'>
+                                <span class='col-md-8'>Universe</span>
+                                <a href='javascript:void(0);' class='col-md-4 clear-filter'>Clear</a>
+                            </label>
+
+                            <div class='checkbox'>
+                                <label>
+                                    <input type='checkbox' data-text='S&P 500' value='S&P 500'> S&P 500
+                                </label>
+                            </div>
+                            <div class='checkbox'>
+                                <label>
+                                <input type='checkbox' data-text='Russell 1000' value='Russell 1000'> Russell 1000
+                              </label>
+                            </div>
+                        </section>
+
+                    </fieldset>
+                </form>
             </div>
-            <div class="col-md-8">
-                <input id="filter-tags" type="hidden" />
+
+            <div class='col-md-8'>
+                <input id='filter-tags' type='hidden' />
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+    <script src='https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js'></script>
+    <script src='https://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js'></script>
 
-    <script type="text/javascript">
-        // mock data
-        const apiData = {
-            filters: [ {
-                "value": "[0,1000]",
-                "text": "$0 - $1000",
-                "label": "Price"
-            }, {
-                "value": "[0, 5000000]",
-                "text": "0 K - 5 M",
-                "label": "Avg volume"
-            }]
-        };
-
-        filterItems = [{
-            "value": "Bullish",
-            "text": "Bullish",
-            "label": "Trend"
-        }, {
-            "value": "Neutral",
-            "text": "Neutral",
-            "label": "Trend"
-        }, {
-            "value": "S&P 500",
-            "text": "S&P 500",
-            "label": "Uiverse"
-        }, {
-            "value": "Double Top",
-            "text": "Double Top",
-            "label": "Pattern"
-        }, {
-            "value": "Energy",
-            "text": "Energy",
-            "label": "Secter"
-        }];
+    <script type='text/javascript'>
 
         const $filterTags = $('#filter-tags');
+        const $filterSection = $('.filter-section');
+        const filterHash = {
+            Trend: [],
+            Universe: []
+        };
+        const filterSet = new Set([]);
+        let preventItemRemoved = true;
+        let ajaxData = '';
+
         $filterTags.tagsinput({
             itemValue: 'value',
-            itemText: 'text'
+            itemText: 'text',
+            itemLabel: 'label'
         });
 
-        const {
-            filters
-        } = apiData;
-        filters.forEach((item, index) => {
-            $filterTags.tagsinput('add', item);
+        const filterChart = (data) => {
+            console.log(data);
+            // $.get( "api.py", data);
+        };
+
+        const buildAjaxData = (filterSet) => {
+            // console.log(filterSet);
+            const queryHash = {};
+            for (let item of filterSet.values()) {
+                const {
+                    value: filterVal,
+                    text: filterText,
+                    label: filterLabel
+                } = JSON.parse(item);
+                if (queryHash[filterLabel]) {
+                    queryHash[filterLabel] += (`,${filterVal}`);
+                }
+                else {
+                    queryHash[filterLabel] = filterVal;
+                }
+            }
+            ajaxData = JSON.stringify(queryHash);
+
+            filterChart(ajaxData);
+        };
+
+        const updateFilter = () => {
+
+            preventItemRemoved = true;
+
+            $filterSection.each(function(i, section) {
+                const filterLabel = $(section).data('label');
+                $(section).find(':checkbox').each(function(k, checkbox) {
+                    const $checkbox = $(checkbox);
+                    const filterVal = $checkbox.val();
+                    const filterText = $checkbox.data('text');
+                    const isChecked = $checkbox.is(':checked');
+                    let tagOpt = {
+                        'value': filterVal,
+                        'text': filterText,
+                        'label': filterLabel
+                    };
+                    // 更新 hash
+                    filterHash[filterLabel][k] = tagOpt;
+                    // 更新 set
+                    const serializeOpt = JSON.stringify(tagOpt);
+                    if (isChecked) {
+                        filterSet.add(serializeOpt);
+                    }
+                    else {
+                        filterSet.delete(serializeOpt);
+                    }
+                    // 更新 tags
+                    $filterTags.tagsinput((isChecked ? 'add' : 'remove'), tagOpt);
+                });
+            });
+
+            preventItemRemoved = false;
+
+            // console.log('filterSet', filterSet);
+            buildAjaxData(filterSet);
+        };
+
+        // -- mock data start -- //
+        // const apiData = {
+        //     filters: [{
+        //         'value': '[0,1000]',
+        //         'text': '$0 - $1000',
+        //         'label': 'Price'
+        //     }, {
+        //         'value': '[0, 5000000]',
+        //         'text': '0 K - 5 M',
+        //         'label': 'Avg volume'
+        //     }]
+        // };
+        // apiData.filters.forEach((item) => {
+        //     $filterTags.tagsinput('add', item);
+        // });
+        // -- mock data end -- //
+
+        // Click checkbox
+        $filterSection.on('change', 'input:checkbox', function () {
+            updateFilter();
         });
+
+        // Click Tag x
+        $filterTags.on('itemRemoved', function (event) {
+            if (preventItemRemoved) {
+                return;
+            }
+            if (event.item) {
+                const {
+                    label: filterLabel,
+                    value: filterValue
+                } = event.item;
+                $(`#${filterLabel}`).find(`[value='${filterValue}']`).prop('checked', false);
+                updateFilter();
+            }
+        });
+
+        // Clear
+        $('.clear-filter').on('click', function () {
+            $(this).parents('.filter-section').find('input:checked').prop('checked', false);
+            updateFilter();
+        });
+
+        // Clear all
+        $('#clear-all').on('click', function () {
+            $filterSection.find('input:checked').prop('checked', false);
+            updateFilter();
+        });
+
     </script>
 
 </body>
