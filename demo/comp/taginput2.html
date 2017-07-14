@@ -380,7 +380,7 @@
         });
 
         // Sort tag
-        $filterTags.on('beforeItemAdd', function (event) {
+        $filterTags.on('itemAdded', function (event) {
             const newTag = event.item;
             const {value, label, index} = newTag;
             const tags = JSON.parse(JSON.stringify($filterTags.tagsinput('items')));
