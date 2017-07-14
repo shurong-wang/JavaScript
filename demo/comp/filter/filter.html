@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>Filter</title>
+<link href='https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet'>
+<link href='https://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css' rel='stylesheet'>
+<link href='https://cdn.bootcss.com/bootstrap-slider/9.8.1/css/bootstrap-slider.css' rel='stylesheet'>
+<link href='filter.css' rel='stylesheet'>
+</head>
+<body>
+<div class='container'>
+    <div class='row'>
+        <div class='col-md-4'>
+            <form class='form-horizontal'>
+                <fieldset>
+                    <div class=''>
+                        <legend class=''>
+                            Refline By
+                            <a id='clear-all' href='javascript:void(0);' class='pull-right'>Clear all</a>
+                        </legend>
+                    </div>
+
+                    <!-- 注意：checked 项为 mock 后端模板数据 -->
+                    <section id='Trend' class='control-group filter-section' data-label='Trend'>
+                        <label class='control-label row'>
+                            <span class='col-md-8'>Trend</span>
+                            <a href='javascript:void(0);' class='col-md-4 clear-filter'>Clear</a>
+                        </label>
+
+                        <div class='checkbox'>
+                            <label>
+                                <input type='checkbox' data-text='Bullish' value='Bullish' checked /> Bullish
+                            </label>
+                        </div>
+                        <div class='checkbox'>
+                            <label>
+                                <input type='checkbox' data-text='Bearish' value='Bearish' checked /> Bearish
+                            </label>
+                        </div>
+                        <div class='checkbox'>
+                            <label>
+                                <input type='checkbox' data-text='Neutral' value='Neutral'> Neutral
+                            </label>
+                        </div>
+                    </section>
+
+                    <section id='Price' class='control-group filter-section' data-label='Price' style='margin-top: 20px;'>
+                        <label class='control-label row'>
+                            <span class='col-md-8'>Price</span>
+                            <a href='javascript:void(0);' class='col-md-4 clear-filter'>Clear</a>
+                        </label>
+
+                        <div class='slider-container' style='padding: 7px 20px;'>
+                            <!-- 注意：data-slider-value 和 data-slider-ticks-labels 值为 mock 的后端模板数据 -->
+                            <input
+                                id="filter-Price"
+                                type="hidden"
+                                data-provide="slider"
+                                data-slider-id="Price-slider"
+                                data-slider-handle="custom"
+                                data-slider-tooltip="hide"
+                                data-slider-scale="logarithmic"
+                                data-slider-min="0"
+                                data-slider-max="1000"
+                                data-slider-step="1"
+                                data-slider-ticks="[0, 1000]"
+                                ticks_positions="[0, 1000]"
+                                data-slider-value="[30, 960]"
+                                data-slider-ticks-labels='["$30", "$960"]'
+                            />
+                        </div>
+                    </section>
+
+                    <section id='Universe' class='control-group filter-section' data-label='Universe' style='margin-top: 20px;'>
+                        <label class='control-label row'>
+                            <span class='col-md-8'>Universe</span>
+                            <a href='javascript:void(0);' class='col-md-4 clear-filter'>Clear</a>
+                        </label>
+
+                        <div class='checkbox'>
+                            <label>
+                                <input type='checkbox' data-text='S&P 500' value='S&P 500' checked> S&P 500
+                            </label>
+                        </div>
+                        <div class='checkbox'>
+                            <label>
+                                <input type='checkbox' data-text='Russell 1000' value='Russell 1000'> Russell 1000
+                            </label>
+                        </div>
+                    </section>
+
+                </fieldset>
+            </form>
+        </div>
+
+        <div class='col-md-8'>
+            <div id='tags-wrapper'>
+                <input id='filter-tags' type='hidden' />
+            </div>
+        </div>
+    </div>
+</div>
+<script src='https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js'></script>
+<script src='https://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js'></script>
+<script src='https://cdn.bootcss.com/bootstrap-slider/9.8.1/bootstrap-slider.min.js'></script>
+<script src='filter.js'></script>
+</body>
+</html>
