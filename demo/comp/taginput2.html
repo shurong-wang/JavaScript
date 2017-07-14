@@ -16,14 +16,17 @@
             background-color: rgba(0, 0, 0, 0);
             border: none;
             box-shadow: none;
-            display: inline-block;
-            padding: 4px 6px;
-            color: #555;
-            vertical-align: middle;
-            border-radius: 0;
-            max-width: 100%;
-            line-height: 22px;
             cursor: pointer;
+        }
+        .bootstrap-tagsinput .tag {
+            border: 1px solid #ddd;
+            font-size: 16px;
+            font-weight: normal;
+            color: #333;
+            border-radius: 4;
+        }
+        .bootstrap-tagsinput .label-info {
+            background-color: #eee;
         }
 
         .slider-handle {
@@ -83,24 +86,6 @@
                             </div>
                         </section>
 
-                        <section id='Universe' class='control-group filter-section' data-label='Universe' style='margin-top: 20px;'>
-                            <label class='control-label row'>
-                                <span class='col-md-8'>Universe</span>
-                                <a href='javascript:void(0);' class='col-md-4 clear-filter'>Clear</a>
-                            </label>
-
-                            <div class='checkbox'>
-                                <label>
-                                    <input type='checkbox' data-text='S&P 500' value='S&P 500' checked> S&P 500
-                                </label>
-                            </div>
-                            <div class='checkbox'>
-                                <label>
-                                    <input type='checkbox' data-text='Russell 1000' value='Russell 1000'> Russell 1000
-                                </label>
-                            </div>
-                        </section>
-
                         <section id='Price' class='control-group filter-section' data-label='Price' style='margin-top: 20px;'>
                             <label class='control-label row'>
                                 <span class='col-md-8'>Price</span>
@@ -124,6 +109,24 @@
                                     data-slider-value="[30, 960]"
                                     data-slider-ticks-labels='["$30", "$960"]'
                                 />
+                            </div>
+                        </section>
+
+                        <section id='Universe' class='control-group filter-section' data-label='Universe' style='margin-top: 20px;'>
+                            <label class='control-label row'>
+                                <span class='col-md-8'>Universe</span>
+                                <a href='javascript:void(0);' class='col-md-4 clear-filter'>Clear</a>
+                            </label>
+
+                            <div class='checkbox'>
+                                <label>
+                                    <input type='checkbox' data-text='S&P 500' value='S&P 500' checked> S&P 500
+                                </label>
+                            </div>
+                            <div class='checkbox'>
+                                <label>
+                                    <input type='checkbox' data-text='Russell 1000' value='Russell 1000'> Russell 1000
+                                </label>
                             </div>
                         </section>
 
@@ -222,7 +225,7 @@
         const fetchChart = (data) => {
             const params = buildParams(data);
 
-            console.log(params);
+            // console.log(params);
             // $.get( "/api/filter", params);
         };
 
@@ -350,6 +353,13 @@
                 fetchChart(filterSet);
             }
         });
+
+        // Sort tag
+        $filterTags.on('beforeItemAdd', function (event) {
+            console.log(event.item);
+
+        });
+
 
     </script>
 
