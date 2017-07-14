@@ -163,12 +163,24 @@
         let filterSet = new Set([]);
         let preventRemovedCallback = false;
         const $filterSection = $('.filter-section');
+        const $priceSlider = $('#filter-Price');
         const $filterTags = $('#filter-tags');
         $filterTags.tagsinput({
             itemValue: 'value',
-            itemLabel: 'label'
+            itemLabel: 'label',
+            itemIndex: 'index'
         });
-        const $priceSlider = $('#filter-Price');
+        const filterHash = [
+            'Bullish',
+            'Bearish',
+            'Neutral',
+            'Price',
+            'S&P 500',
+            'Russell 1000'
+        ].reduce((prevHash, currVal, currIndex) => {
+            prevHash[currVal] = currIndex;
+            return prevHash;
+        }, {});
 
         // Initialize tags and filterSet
         const renderTags = (filters) => {
@@ -178,19 +190,22 @@
                         const [startVal, endVal] = filters[label].split(',');
                         const tagOpt = {
                             'value': `$${startVal} - $${endVal}`,
-                            'label': label
+                            'label': label,
+                            'index': filterHash[label]
                         };
                         $filterTags.tagsinput('add', tagOpt);
                         filterSet.add(JSON.stringify({
                             'value': `${startVal},${endVal}`,
-                            'label': label
+                            'label': label,
+                            'index': filterHash[label]
                         }));
                     }
                     else {
                         filters[label].split(',').forEach((value) => {
                             const tagOpt = {
                                 'value': value,
-                                'label': label
+                                'label': label,
+                                'index': filterHash[value]
                             };
                             $filterTags.tagsinput('add', tagOpt);
                             filterSet.add(JSON.stringify(tagOpt));
@@ -237,7 +252,8 @@
             const isChecked = $checkbox.is(':checked');
             let tagOpt = {
                 'value': filterVal,
-                'label': filterLabel
+                'label': filterLabel,
+                'index': filterHash[filterVal]
             };
             // Update tags
             preventRemovedCallback = true;
@@ -253,11 +269,13 @@
             const [startVal, endVal] = sliderVal;
             const tagOpt = {
                 'value': `$${startVal} - $${endVal}`,
-                'label': 'Price'
+                'label': 'Price',
+                'index': filterHash.Price
             };
             const setElem = JSON.stringify({
                 'value': `${startVal},${endVal}`,
-                'label': 'Price'
+                'label': 'Price',
+                'index': filterHash.Price
             });
             if (sliderAct === 'add') {
                 // Update tags
@@ -356,10 +374,18 @@
 
         // Sort tag
         $filterTags.on('beforeItemAdd', function (event) {
-            console.log(event.item);
-
+            const newTag = event.item;
+            const {value, label, index} = newTag;
+            const tags = JSON.parse(JSON.stringify($filterTags.tagsinput('items')));
+            const insertIndex = tags.findIndex(tag => tag.index > newTag.index);
+            if (insertIndex > -1) {
+                const newTags = [...tags.slice(0, insertIndex), newTag, ...tags.slice(insertIndex)];
+                $filterTags.tagsinput('removeAll');
+                newTags.forEach(tag => {
+                    $filterTags.tagsinput('add', tag);
+                });
+            }
         });
-
 
     </script>
 
