@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+<meta charset = "UTF-8">
+<title>numeraljs</title> 
+</head> 
+<body>
+
+<script src="http://cdn.bootcss.com/numeral.js/2.0.6/numeral.min.js"></script>
+<script>
+	const num = 123456789000.876;
+
+	console.log(numeral(num).format('0,0'));
+	console.log(numeral(num).format('0a'));
+	console.log(numeral(num).format('0,0.00'));
+	console.log(numeral(num).format('0a.00'));
+	console.log(numeral(num).format('$0a.00'));
+</script> 
+</body> 
+</html>
