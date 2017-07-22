@@ -1,4 +1,12 @@
-//if (!Function.prototype.bind) {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+if (!Function.prototype.bind) {
   Function.prototype.bind = function (oThis) {
     if (typeof this !== "function") {
       throw new TypeError("'this' is not function");
@@ -25,4 +33,16 @@
 
     return fBound;
   };
-//}
+}
+</script>
+
+<script>
+  // 调用
+  var add = function(a, b, c){ return a + b + c;};
+  var newAdd = add.bind(null, 1, 2, 3);
+  var result = newAdd();
+  document.write(result);
+</script>
+
+</body>
+</html>

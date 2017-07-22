@@ -1,0 +1,153 @@
+
+ul.filter-list {
+    width: 300px;
+}
+
+li.dropdown-submenu {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+li.dropdown-submenu > ul.dropdown-menu {
+    top: -2%;
+    left: 98%;
+    text-align: center;
+    margin-top: -6px;
+    margin-left: -1px;
+    border-radius: 0 4px 4px 4px;
+}
+
+ul.dropdown-menu > li > a {
+    display: inline-block;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+
+.popover.info, .popover.more {
+    padding: 0;
+    margin-left: 0;
+    border-radius: 2px;
+}
+
+.popover.info {
+    width: 360px;
+    margin-top: 84%;
+    margin-left: 2%;
+}
+
+.popover.more {
+    white-space: nowrap;
+    border: 0;
+    width: 100px;
+    margin-top: 20%;
+    margin-left: 2%;
+}
+
+.popover .popover-content {
+    padding: 0;
+}
+
+ul.dropdown-menu > li .list-group {
+    margin-bottom: 0;
+}
+
+ul.dropdown-menu > li .list-group-item {
+    border-radius: 2px;
+}
+
+ul.dropdown-menu > li > a:focus, ul.dropdown-menu > li > a:hover {
+    background-color: transparent;
+    outline: none;
+    cursor: default;
+}
+
+li.dropdown-submenu > span {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    background-color: #fff;
+    border: 1px solid #5a5b5c;
+    border-radius: 50%;
+    text-align: center;
+    color: #5a5b5c;
+    vertical-align: middle;
+    outline: none;
+}
+
+li.dropdown-submenu > span.info {
+    line-height: 14px;
+    margin-right: 20px;
+}
+
+li.dropdown-submenu > span.more {
+    line-height: 7px;
+    margin-right: 10px;
+}
+
+li.dropdown-submenu > span:hover, li.dropdown-submenu > span:focus {
+    cursor: pointer;
+    background-color: #00aa5f;
+    border: 1px solid #00aa5f;
+    color: #fff;
+}
+
+li.dropdown-submenu > span:hover + ul.dropdown-menu {
+    display: block;
+}
+
+li.dropdown-submenu.pull-left {
+    float: none;
+}
+
+li.dropdown-submenu.pull-left > ul.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    border-radius: 6px 0 6px 6px;
+}
+
+table.filter-info caption {
+    padding: 20px 60px 30px 20px;
+    font-size: 14px;
+    position: relative;
+}
+
+table.filter-info caption em {
+    font-size: 26px;
+    color: #999;
+    font-weight: 200;
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    cursor: pointer;
+}
+
+table.filter-info caption small {
+    color: #999;
+    font-size: 12px;
+}
+
+table.filter-info tr > td {
+    font-size: 16px;
+    padding-bottom: 30px;
+}
+
+table.filter-info tr > td:nth-of-type(1) {
+    width: 106px;
+    color: #999;
+    padding-left: 20px;
+}
+
+table.filter-info tr > td:nth-of-type(2) {
+    color: #333;
+    padding-right: 20px;
+}
