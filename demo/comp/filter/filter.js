@@ -1,6 +1,6 @@
 
 // demo 中 slider 硬编码为 priceSlider，需要处理
-// 
+//
 class Filter {
     constructor(filterUrl) {
         this.filterList = [
