@@ -1,0 +1,24 @@
+#lights > li {
+    display: block;
+}
+
+#lights span {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-color: gray;
+    margin: 5px;
+    border-radius: 50%;
+}
+
+#lights.stop li:nth-child(1) span {
+    background-color: #a00;
+}
+
+#lights.wait li:nth-child(2) span {
+    background-color: #aa0;
+}
+
+#lights.pass li:nth-child(3) span {
+    background-color: #0a0;
+}
