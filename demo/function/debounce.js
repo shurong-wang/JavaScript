@@ -1,8 +1,8 @@
 /**
- * 防抖动（debounce） 避免重复点击
+ * 防抖动（debounce）
  */
 function debounce(fn, delay) {
-    var timer = null;
+    let timer = null;
     return function(...args) {
         clearTimeout(timer);
         timer = setTimeout(() => fn.apply(this, args), delay);
