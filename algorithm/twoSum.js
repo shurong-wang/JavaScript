@@ -1,24 +1,53 @@
-// Given nums = [2, 7, 11, 15], target = 9,
-// Because nums[0] + nums[1] = 2 + 7 = 9,
-// return [0, 1].
-
-var twoSum = function (nums, target) {
-    var hash = {};
-    for(var i = 0; i < nums.length; i++) {
-        var val = nums[i];
-
-        if(hash[val] !== undefined) {
-
-            return [hash[val], i]
-        } 
-        else {
-            // 关键：hash[val] 与 hash[target - val] 的对应
-            hash[target - val] = i;
+function twoSum1(arr, sum) {
+    for (var i = 0, len = arr.length; i < len; i++) {
+        for (var j = i + 1; j < len; j++) {
+            if (arr[i] + arr[j] === sum) {
+                return [i, j];
+            }
         }
     }
     return [];
-};
+}
 
-const arr = twoSum([1, 2, 3, 4, 5, 6, 7, 8, 9], 10);
-console.log(arr);
+function twoSum2 (arr, sum) {
+    var hash = {};
+    var len = arr.length
+    for(var i = 0; i < len; i++) {
+        var n = arr[i];
+        if(hash[n] !== undefined) {
+            return [hash[n], i]；
+        }
+        else {
+            // 关键：hash[n] 与 hash[sum - n] 对应
+            hash[sum - n] = i;
+        }
+    }
+    return [];
+}
 
+function twoSum3 (arr, sum) {
+    const map = new Map();
+    const len = arr.length;
+    for(var i = 0; i < len; i++) {
+        var n = arr[i];
+        if(map.has(n)) {
+            return [map.get(n), i]；
+        }
+        else {
+            map.set(sum - n, i);
+        }
+    }
+    return [];
+}
+
+
+var arr = [2, 7, 11, 15];
+var sum = 9;
+
+// var len = 10000;
+// var arr = [...Array(len).keys()];
+// var elem = len;
+// var elem = Math.floor(len / 2);
+// var sum = (elem - 2) + (elem - 1);
+
+twoSum1(arr, sum);
