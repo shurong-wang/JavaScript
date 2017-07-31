@@ -50,6 +50,7 @@ function pipe() {
     return fnList.reduceRight((a, b) => () => b(a));
 }
 
+// 如果 output 不做延时，只会输出 'message 1'
 var outputOneByOne = pipe(
     output.bind(null, 'message 1'),
     output.bind(null, 'message 2'),
