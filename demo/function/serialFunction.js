@@ -6,7 +6,9 @@ function delay(time, fn) {
         var self = this;
         var args = [].slice.call(arguments);
         var callback;
-        // 注意：args.length 是函数 fn 的参数
+
+        // args.length 是函数 fn 的参数
+        // 如果原始函数的实参多于形参，说明末尾多传入的一个参数为回调函数
         if (fn.length < args.length) {
             // 获取参数中的回调函数
             callback = args[args.length - 1];
