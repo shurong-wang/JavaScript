@@ -1,3 +1,6 @@
+/**
+ * multicast 批量操作 DOM 元素
+ */
 function multicast(fn) {
     return function (list, ...args) {
         if (list && list.length != 0) {
