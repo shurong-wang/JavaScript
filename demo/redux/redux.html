@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Redux demo</title>
+    <script src="https://cdn.bootcss.com/redux/3.7.2/redux.min.js"></script>
+</head>
+
+<body>
+    <script>
+        /**
+         * Action Creators
+         * @method inc
+         * @return {Object} Action
+         */
+        function inc() {
+            return {
+                type: 'INCREMENT'
+            };
+        }
+
+        /**
+         * Action Creators
+         * @method dec
+         * @return {Object} Action
+         */
+        function dec() {
+            return {
+                type: 'DECREMENT'
+            };
+        }
+
+        /**
+         * Reducer
+         * @method reducer
+         * @param  {Objcet} state
+         * @param  {Objcet} action
+         * @return {Objcet} nextState
+         */
+        function reducer(state, action) {
+            // 首次调用设置初始 state
+            state = state || {
+                counter: 0
+            };
+
+            switch (action.type) {
+                case 'INCREMENT':
+                    return {
+                        counter: state.counter + 1
+                    };
+                case 'DECREMENT':
+                    return {
+                        counter: state.counter - 1
+                    };
+                default:
+                    return state;
+            }
+        }
+
+        /**
+         * store
+         * @type {Object}
+         */
+        var store = Redux.createStore(reducer);
+
+        // 初始化 state
+        console.log(store.getState()); // { counter: 0 }
+
+        // 分派 INCREMENT Action，更新 state
+        store.dispatch(inc());
+        console.log(store.getState()); // { counter: 1 }
+
+        // 分派 INCREMENT Action，更新 state
+        store.dispatch(inc());
+        console.log(store.getState()); // { counter: 2 }
+
+        // 分派 DECREMENT Action，更新 state
+        store.dispatch(dec());
+        console.log(store.getState()); // { counter: 1 }
+    </script>
+</body>
+
+</html>
