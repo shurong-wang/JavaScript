@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Redux Stream</title>
+    <script src="https://cdn.bootcss.com/redux/3.7.2/redux.min.js"></script>
+</head>
+
+<body>
+    <script>
+        function func1(num) {
+            console.log('func1 获得参数 ' + num);
+            return num + 1;
+        }
+
+        function func2(num) {
+            console.log('func2 获得参数 ' + num);
+            return num + 2;
+        }
+
+        function func3(num) {
+            console.log('func3 获得参数 ' + num);
+            return num + 3;
+        }
+
+        // 常规调用
+        var re1 = func3(func2(func1(0)));
+        console.log('re1：' + re1);
+
+        console.log('===============');
+
+        // 优雅调用
+        var re2 = Redux.compose(func3, func2, func1)(0);
+        console.log('re2：' + re2);
+
+
+        /**
+        * compose 源码分析
+        * compose(f, g, h)(...arg) => f(g(h(...args)))
+        * 内部使用了 reduceRight，因此执行顺序是从右到左
+         * @method compose
+         * @param  {Function, Function, Function ...} funcs
+         * @return {Function}       [description]
+         */
+        export default function compose(...funcs) {
+            if (funcs.length === 0) {
+                return arg => arg;
+            }
+
+            if (funcs.length === 1) {
+                return funcs[0];
+            }
+
+            const last = funcs[funcs.length - 1]
+            const rest = funcs.slice(0, -1)
+            return (...args) => rest.reduceRight((composed, f) => f(composed), last(...args));
+        }
+    </script>
+</body>
+
+</html>
