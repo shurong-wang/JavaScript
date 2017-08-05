@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Redux Synthesize</title>
+    <script src="https://cdn.bootcss.com/redux/3.7.2/redux.min.js"></script>
+</head>
+
+<body>
+    <script>
+        /** Action Creators */
+        function inc() {
+            return {
+                type: 'INCREMENT'
+            };
+        }
+
+        /** Action Creators */
+        function dec() {
+            return {
+                type: 'DECREMENT'
+            };
+        }
+
+        /** Reducer */
+        function reducer(state, action) {
+            state = state || {
+                counter: 0
+            };
+
+            switch (action.type) {
+                case 'INCREMENT':
+                    return {
+                        counter: state.counter + 1
+                    };
+                case 'DECREMENT':
+                    return {
+                        counter: state.counter - 1
+                    };
+                default:
+                    return state;
+            }
+        }
+
+        /** Middleware */
+        // function logger(middlewareAPI) {
+        //     return function(dispatch) {
+        //         return function(action) {
+        //             console.log('Before dispatch：', JSON.stringify(middlewareAPI.getState()));
+        //             var returnValue = dispatch(action);
+        //             console.log('After dispatch：', JSON.stringify(middlewareAPI.getState()), '\n\n');
+        //             return returnValue;
+        //         };
+        //     };
+        // }
+
+        /** Middleware ES6 写法*/
+        const logger = ({getState}) => dispatch => action => {
+            console.log('Before dispatch：', JSON.stringify(getState()));
+            var returnValue = dispatch(action);
+            console.log('After dispatch：', JSON.stringify(getState()), '\n\n');
+            return returnValue;
+        }
+
+        // // 生成 store 方式1：
+        // var enhancedCreateStore = Redux.applyMiddleware(logger)(Redux.createStore);
+        // var store = enhancedCreateStore(reducer);
+
+
+        // 生成 store 方式2：
+        // var store = Redux.createStore(reducer, Redux.applyMiddleware(logger));
+
+        // 生成 store 方式3：
+        // import {createStore, applyMiddleware, compose} from 'redux';
+        const {createStore, applyMiddleware, compose} = Redux;
+        const preloadedState = {
+            counter: 0
+        };
+        const store = createStore(
+            reducer,
+            preloadedState,    // 可选，前后端同构的数据同步
+            compose(           // compose 是从右到左的哦！
+                applyMiddleware( // 属于关乎中间件的 Store Enhancer，必须置于 compose 执行链的最后
+                    logger,
+                    // middleware1,
+                    // middleware2,
+                    // middleware3,
+                ),
+                // enhancer3,
+                // enhancer2,
+                // enhancer1,
+            )
+        );
+
+        store.dispatch(inc());
+        store.dispatch(inc());
+        store.dispatch(dec());
+    </script>
+</body>
+
+</html>
