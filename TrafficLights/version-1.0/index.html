@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Traffic lights</title>
+    <link rel="stylesheet" href="./traffic.css">
+</head>
+
+<body>
+<ul id="lights" class="wait">
+    <li><span></span></li>
+    <li><span></span></li>
+    <li><span></span></li>
+</ul>
+
+<script>
+const loadScript = (url, callback = () => {}) => {
+    let script = document.createElement('script')
+    // script.type = 'text/javascript';
+
+    if (script.readyState) { // IE
+        script.onreadystatechange = function() {
+            if (script.readyState == 'loaded' || script.readyState == 'complete') {
+                script.onreadystatechange = null;
+                callback();
+            }
+        };
+    }
+    else { // Others
+        script.onload = function() {
+            callback();
+        };
+    }
+    script.src = url;
+
+    // document.querySelector('head').appendChild(script);
+    document.body.appendChild(script);
+}
+
+const scripts = [
+    'traffic-array.js',
+    'traffic-poll.js',
+    'traffic-promise.js',
+    'traffic-state-machine.js'
+];
+
+loadScript (scripts[3]);
+</script>
+
+</body>
+</html>

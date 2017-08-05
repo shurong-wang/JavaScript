@@ -13,21 +13,16 @@
     <script>
         /**
          * Action Creators
-         * @method inc
+         * @method increment, decrement
          * @return {Object} Action
          */
-        function inc() {
+        function increment() {
             return {
                 type: 'INCREMENT'
             };
         }
 
-        /**
-         * Action Creators
-         * @method dec
-         * @return {Object} Action
-         */
-        function dec() {
+        function decrement() {
             return {
                 type: 'DECREMENT'
             };
@@ -61,25 +56,32 @@
         }
 
         /**
-         * store
+         * Store
          * @type {Object}
          */
-        var store = Redux.createStore(reducer);
+        const store = Redux.createStore(reducer);
 
         // 初始化 state
-        console.log(store.getState()); // { counter: 0 }
+        const state = store.getState();
 
-        // 分派 INCREMENT Action，更新 state
-        store.dispatch(inc());
-        console.log(store.getState()); // { counter: 1 }
+        // 更新 state
+        store.dispatch(increment());
+        const state1 = store.getState();
 
-        // 分派 INCREMENT Action，更新 state
-        store.dispatch(inc());
-        console.log(store.getState()); // { counter: 2 }
+        // 更新 state
+        store.dispatch(increment());
+        const state2 = store.getState();
 
-        // 分派 DECREMENT Action，更新 state
-        store.dispatch(dec());
-        console.log(store.getState()); // { counter: 1 }
+        // 更新 state
+        store.dispatch(decrement());
+        const state3 = store.getState();
+
+
+        const printState = (state) => console.log(JSON.stringify(state));
+        printState(state);
+        printState(state1);
+        printState(state2);
+        printState(state3);
     </script>
 </body>
 
