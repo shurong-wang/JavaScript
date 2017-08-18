@@ -4,12 +4,24 @@
  * 这个单参数版本的函数，就叫做 Thunk 函数
  * @param {Function} fn
  */
+
+/*
 var Thunk = function(fn) {
 	return function() {
 		var args = Array.prototype.slice.call(arguments);
 		return function(callback) {
 			args.push(callback);
 			return fn.apply(this, args);
+		}
+	};
+};
+*/
+
+// ES6 版本
+const Thunk = function(fn) {
+	return function(...args) {
+		return function(callback) {
+			return fn.call(this, ...args, callback);
 		}
 	};
 };
