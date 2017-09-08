@@ -10,7 +10,7 @@
   6. [测试](#测试)
   7. [并发](#并发)
   8. [错误处理](#错误处理)
-  9. [格式化](#格式化)
+  9. [代码规范](#代码规范)
   10. [注释](#注释)
 
 ## 介绍
@@ -188,7 +188,8 @@ function createMicrobrewery(name) {
   var breweryName;
   if (name) {
     breweryName = name;
-  } else {
+  } 
+  else {
     breweryName = 'Hipster Brew Co.';
   }
 }
@@ -425,7 +426,8 @@ function showList(employees) {
 
     if (employee.type === 'manager') {
       portfolio = employee.getMBAProjects();
-    } else {
+    } 
+    else {
       portfolio = employee.getGithubLink();
     }
 
@@ -439,7 +441,6 @@ function showList(employees) {
   });
 }
 ```
-
 
 ### 采用默认参数精简代码
 
@@ -457,11 +458,10 @@ function writeForumComment(subject, body) {
 
 ```javascript
 function writeForumComment(subject = 'No subject', body = 'No text') {
-  ...搜索
+  //...
 }
 
 ```
-
 
 ### 使用 Object.assign 设置默认属性
 
@@ -523,7 +523,8 @@ createMenu(menuConfig);
 function createFile(name, temp) {
   if (temp) {
     fs.create('./temp/' + name);
-  } else {
+  } 
+  else {
     fs.create(name);
   }
 }
@@ -541,12 +542,11 @@ function createFile(name) {
 }
 ```
 
-
 ### 避免副作用
 
 当函数产生了除了“接受一个值并返回一个结果”之外的行为时，称该函数产生了副作用。比如写文件、修改全局变量或将你的钱全转给了一个陌生人等。
 
-程序在某些情况下确实需要副作用这一行为，如先前例子中的写文件。这时应该将这些功能集中在一起，不要用多个函数/类修改某个文件。用且只用一个 service 完成这一需求。
+程序在某些情况下确实需要副作用这一行为，如先前例子中的写文件。这时应该将这些功能集中在一起，不要用多个函数/类修改某个文件，用且只用一个 service 完成这一需求。
 
 **Bad**:
 
@@ -577,7 +577,6 @@ var newName = splitIntoFirstAndLastName(name);
 console.log(name); // 'Ryan McDermott';
 console.log(newName); // ['Ryan', 'McDermott'];
 ```
-
 
 ### 不要写全局函数
 
@@ -637,10 +636,9 @@ class SuperArray extends Array {
 }
 ```
 
-
 ### 采用函数式编程
 
-函数式的编程具有更干净且便于测试的特点。尽可能的使用函数式编程。
+函数式的编程具有更干净且便于测试的特点，尽可能的使用函数式编程。
 
 **Bad**:
 
@@ -692,7 +690,6 @@ var totalOutput = programmerOutput
   .reduce((acc, linesOfCode) => acc + linesOfCode, 0);
 ```
 
-
 ### 封装判断条件
 
 **Bad**:
@@ -743,13 +740,12 @@ if (isDOMNodePresent(node)) {
 }
 ```
 
-
 ### 避免条件判断
 这看起来似乎不太可能。
 
-大多人听到这的第一反应是：“怎么可能不用 if 完成其他功能呢？”许多情况下通过使用多态(polymorphism)可以达到同样的目的。
+大多人听到这的第一反应是：“怎么可能不用 if 完成功能区分？” 其实，许多情况下通过多态(polymorphism)可以达到同样目的。
 
-第二个问题在于采用这种方式的原因是什么。答案是我们之前提到过的：保持函数功能的单一性。
+第二个问题在于避免条件判断的原因是什么？答案我们之前提到过：保持函数功能的单一性。
 
 **Bad**:
 
@@ -798,12 +794,11 @@ class Cessna extends Airplane {
 }
 ```
 
-
 ### 避免类型判断(part 1)
 
 JS 是弱类型语言，这意味着函数可接受任意类型的参数。
 
-有时这会对你带来麻烦，你会对参数做一些类型判断。有许多方法可以避免这些情况。
+这有时带来麻烦，你需要参数做一些类型判断。但有许多方法可以避免这些情况。
 
 **Bad**:
 
@@ -811,7 +806,8 @@ JS 是弱类型语言，这意味着函数可接受任意类型的参数。
 function travelToTexas(vehicle) {
   if (vehicle instanceof Bicycle) {
     vehicle.peddle(this.currentLocation, new Location('texas'));
-  } else if (vehicle instanceof Car) {
+  } 
+  else if (vehicle instanceof Car) {
     vehicle.drive(this.currentLocation, new Location('texas'));
   }
 }
@@ -825,7 +821,6 @@ function travelToTexas(vehicle) {
 }
 ```
 
-
 ### 避免类型判断(part 2)
 如果需处理的数据为字符串，整型，数组等类型，无法使用多态并仍有必要对其进行类型检测时，可以考虑使用 TypeScript。
 
@@ -836,7 +831,8 @@ function combine(val1, val2) {
   if (typeof val1 == "number" && typeof val2 == "number" ||
       typeof val1 == "string" && typeof val2 == "string") {
     return val1 + val2;
-  } else {
+  } 
+  else {
     throw new Error('Must be of type String or Number');
   }
 }
@@ -915,14 +911,12 @@ inventoryTracker('apples', req, 'www.inventory-awesome.io');
 
 JS 没有接口或类型，因此实现这一模式是很困难的，因为我们并没有类似 `public` 和 `private` 的关键词。
 
-然而，使用 getters 和 setters 获取对象的数据远比直接使用点操作符具有优势。为什么呢？
+而使用 getters 和 setters 获取对象的数据，远比直接使用“点”操作符具有优势，原因：
 
-1. 当需要对获取的对象属性执行额外操作时。
-2. 执行 `set` 时可以增加规则对要变量的合法性进行判断。
-3. 封装了内部逻辑。
-4. 在存取时可以方便的增加日志和错误处理。
-5. 继承该类时可以重载默认行为。
-6. 从服务器获取数据时可以进行懒加载。
+1. 当需要对获取的对象属性执行额外操作时，执行 `set` 时可以增加规则对要变量的合法性进行判断
+2. 封装了内部逻辑，在存取时可以方便的增加日志和错误处理
+3. 继承该类时可以重载默认行为
+4. 从服务器获取数据时可以进行懒加载
 
 
 **Bad**:
@@ -930,7 +924,7 @@ JS 没有接口或类型，因此实现这一模式是很困难的，因为我�
 ```javascript
 class BankAccount {
   constructor() {
-	   this.balance = 1000;
+    this.balance = 1000;
   }
 }
 
@@ -945,14 +939,14 @@ bankAccount.balance = bankAccount.balance - 100;
 ```javascript
 class BankAccount {
   constructor() {
-	   this.balance = 1000;
+    this.balance = 1000;
   }
 
   // It doesn't have to be prefixed with `get` or `set` to be a getter/setter
   withdraw(amount) {
-  	if (verifyAmountCanBeDeducted(amount)) {
-  	  this.balance -= amount;
-  	}
+    if (verifyAmountCanBeDeducted(amount)) {
+      this.balance -= amount;
+    }
   }
 }
 
@@ -961,7 +955,6 @@ let bankAccount = new BankAccount();
 // Buy shoes...
 bankAccount.withdraw(100);
 ```
-
 
 ### 让对象拥有私有成员
 可以通过闭包完成
@@ -1011,9 +1004,9 @@ console.log('Employee name: ' + employee.getName()); // Employee name: John Doe
 
 如《代码整洁之道》一书中所述，“修改一个类的理由不应该超过一个”。
 
-将多个功能塞进一个类的想法很诱人，但这将导致你的类无法达到概念上的内聚，并经常不得不进行修改。
+将多个功能塞进一个类的看似方便，但这将导致你的类无法达到概念上的内聚，并经常不得不进行修改。
 
-最小化对一个类需要修改的次数是非常有必要的。如果一个类具有太多太杂的功能，当你对其中一小部分进行修改时，将很难想象到这一修够对代码库中依赖该类的其他模块会带来什么样的影响。
+最小化对一个类修改的次数非常必要。如果一个类具有太多太杂的功能，当你对其中一小部分进行修改时，将很难想象这一修够对依赖该类的其他模块会带来什么样的影响。
 
 **Bad**:
 
@@ -1062,7 +1055,6 @@ class UserSettings {
   }
 }
 ```
-
 
 ### 开/闭原则 (OCP)
 
@@ -1241,12 +1233,11 @@ let shapes = [new Rectangle(), new Rectangle(), new Square()];
 renderLargeShapes(shapes);
 ```
 
-
 ### 接口隔离原则 (ISP)
 
 “客户端不应该依赖它不需要的接口；一个类对另一个类的依赖应该建立在最小的接口上。”
 
-在 JS 中，当一个类需要许多参数设置才能生成一个对象时，或许大多时候不需要设置这么多的参数。此时减少对配置参数数量的需求是有益的。
+在 JS 中，当一个类需要许多参数设置才能生成一个对象时，需要考虑大多时候不需要设置这么多的参数。适当减少配置参数的数量是有益的。
 
 **Bad**:
 
@@ -1309,13 +1300,12 @@ let $ = new DOMTraverser({
 });
 ```
 
-
 ### 依赖反转原则 (DIP)
 
 该原则有两个核心点：
 
-1. 高层模块不应该依赖于低层模块。他们都应该依赖于抽象接口。
-2. 抽象接口应该脱离具体实现，具体实现应该依赖于抽象接口。
+1. 高层模块不应该依赖于低层模块。他们都应该依赖于抽象接口
+2. 抽象接口应该脱离具体实现，具体实现应该依赖于抽象接口
 
 **Bad**:
 
@@ -1392,14 +1382,13 @@ let inventoryTracker = new InventoryTracker(['apples', 'bananas'], new Inventory
 inventoryTracker.requestItems();
 ```
 
-
 ### 使用 ES6 的 classes 而不是 ES5 的 Function
 
 典型的 ES5 的类(function)在继承、构造和方法定义方面可读性较差。
 
-当需要继承时，优先选用 classes。
+当需要继承时，优先选用 ES6 class。
 
-但是，当在需要更大更复杂的对象时，最好优先选择更小的 function 而非 classes。
+但是，当在需要更大更复杂的对象时，最好优先选择更小的 function 而非 class。
 
 **Bad**:
 
@@ -1470,8 +1459,6 @@ class Human extends Mammal {
     speak() {}
 }
 ```
-
-
 
 ### 使用方法链
 
@@ -1695,7 +1682,8 @@ require('request').get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', func
     require('fs').writeFile('article.html', response.body, function(err) {
       if (err) {
         console.error(err);
-      } else {
+      } 
+      else {
         console.log('File written');
       }
     })
@@ -1720,12 +1708,11 @@ require('request-promise').get('https://en.wikipedia.org/wiki/Robert_Cecil_Marti
 
 ```
 
-
 ### Async/Await 是较 Promises 更好的选择
 
 Promises 是较回调而言更好的一种选择，但 ES7 中的 async 和 await 更胜过 Promises。
 
-在能使用 ES7 特性的情况下可以尽量使用他们替代 Promises。
+在能使用 ES7 特性的情况下可以尽量使用 async 和 await 替代 Promises。
 
 **Bad**:
 
@@ -1759,8 +1746,6 @@ async function getCleanCodeArticle() {
   }
 }
 ```
-
-
 
 ## **错误处理**
 
@@ -1830,16 +1815,13 @@ getdata()
 });
 ```
 
+## **代码规范**
 
-
-
-## **格式化**
-
-格式化是一件主观的事。如同这里的许多规则一样，这里并没有一定/立刻需要遵守的规则。可以在[这里](http://standardjs.com/rules.html)完成格式的自动化。
+代码规范是约定行为，虽然不是必须遵守规则，但一旦团队约定，就应该遵守。例如参考的[规范](http://standardjs.com/rules.html)之一。
 
 ### 大小写一致
 
-JS 是弱类型语言，合理的采用大小写可以告诉你关于变量/函数等的许多消息。
+JS 是弱类型语言，合理的采用大小写可以得知关于变量/函数等的许多帮助信息。
 
 这些规则是主观定义的，团队可以根据喜欢进行选择。重点在于无论选择何种风格，都需要注意保持一致性。
 
@@ -1963,8 +1945,6 @@ let review = new PerformanceReview(employee);
 review.perfReview();
 ```
 
-
-
 ## **注释**
 
 ### 只对存在一定业务逻辑复杂性的代码进行注释
@@ -2012,10 +1992,9 @@ function hashIt(data) {
 
 ```
 
-
 ### 不要在代码库中遗留被注释掉的代码
 
-版本控制的存在是有原因的。让旧代码存在于你的 history 里。
+git 等版本控制的存在是有原因之一就是将旧代码保存在于 history 中，而不是注释中。
 
 **Bad**:
 
@@ -2027,16 +2006,16 @@ doStuff();
 ```
 
 **Good**:
+
 ```javascript
 doStuff();
 ```
 
+### 不需要添加版本更新相关注释
 
-### 不需要版本更新类型注释
+应该使用版本控制记录更新历史，废弃代码、被注释的代码，以及用注释记录版本更新都是没有必要的。
 
-我们可以使用版本控制。废代码、被注释的代码及用注释记录代码中的版本更新说明都是没有必要的。
-
-需要时可以使用 `git log` 获取历史版本。
+需要时，可以使用 `git log` 获取历史版本。
 
 **Bad**:
 
@@ -2060,10 +2039,9 @@ function combine(a, b) {
 }
 ```
 
+### 避免位置符号分割标记
 
-### 避免位置标记
-
-这些符号标识会使代码混乱，通常采用适当的缩进即可。
+这些符号标识会使代码混乱，通常采用适当的空行和缩进即可。
 
 **Bad**:
 
@@ -2097,10 +2075,9 @@ let actions = function() {
 }
 ```
 
-
 ### 避免在源文件中写入法律声明
 
-将你的 `LICENSE` 文件置于源码目录树的根目录。
+应当将你的 `LICENSE` 文件置于源码目录树的根目录。
 
 **Bad**:
 
