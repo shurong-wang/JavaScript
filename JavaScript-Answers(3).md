@@ -2,6 +2,7 @@
 ## 编程能力
 
 - 手写事件侦听器，并要求兼容浏览器
+
     ```JavaScript
     var eventUtil = {
       getEvent: function(event) {
@@ -75,6 +76,7 @@
     ```
 
 - 手写事件模型
+
     ```JavaScript
     var Event = (function () {
         var list = {}, bind, trigger, remove;
@@ -123,6 +125,7 @@
     ```
 
 - 手写事件代理，并要求兼容浏览器
+
     ```JavaScript
     function delegateEvent(parentEl, selector, type, fn) {
         var handler = function(e){
@@ -164,6 +167,7 @@
     ```
 
 - 手写事件触发器，并要求兼容浏览器
+
     ```JavaScript
     var fireEvent = function(element, event){
         if (document.createEventObject){
@@ -178,6 +182,7 @@
     ```
 
 - 手写 Function.bind 函数
+
     ```JavaScript
     if (!Function.prototype.bind) {
       Function.prototype.bind = function (oThis) {
@@ -215,6 +220,7 @@
     ```
 
 - 手写数组快速排序
+
     ```JavaScript
     var quickSort = function(arr) {
         if (arr.length <= 1) { return arr; }
@@ -237,6 +243,7 @@
     ```
 
 - 手写数组冒泡排序
+
     ```JavaScript
     var bubble = function(arr){
         var maxIndex = arr.length - 1, temp, flag;
@@ -259,54 +266,75 @@
     // 调用
     var arr = bubble([13, 69, 28, 93, 55, 75, 34]);
     ```
-- 手写数组去重
+    
+- 封装函数去除 [1, 2, 3, NaN, 3, '0', '2', 4, 5, NaN] 数组中的重复元素
+
+  要求：
+  	1. 不改变原数组
+  	2. 只保留一个 NaN  
+  	3. 至少两种实现方法
+  
+
     ```JavaScript
-    Array.prototype.unique = function() { return [...new Set(this)];};
-    // 调用
-    [1, 2, 3, 3, 2, 1].unique();
+    // 方案一：ES6 Set()
+    /*
+    Array.prototype.unique = function () {
+    	return [...new Set(this)];
+    };
+    const arr = [1, 2, 3, NaN, 3, '0', '1', '2', 4, 5, NaN];
+    arr.unique();
+    */
 
-    function unique1(arr){
-        var hash = {}, result = [];
-        for(var i=0, len=arr.length; i<len; i++){
-            if(! hash[arr[i]]){
-              result.push(arr[i]);
-              hash[arr[i]] = true;
+    // 向 Set 加入值的时候，不会发生类型转换，所以 2 和 '2' 是不同的值
+    // Set 内部判断两个值是否不同采用“同值相等”算法，认为 NaN 不等于自身
+    const unique = arr => [...new Set(arr)];
+
+    // 方案二：利用 hash 对象 + 数组函数 push()
+    function unique(arr) {
+        const hash = {};
+        const uniqueArr = [];
+        for (let i = 0; i < arr.length; i++) {
+            const key = arr[i] + ({}).toString.call(arr[i]);
+            if (!hash[key]) {
+                uniqueArr.push(arr[i]);
+                hash[key] = true;
             }
         }
-        return result;
+        return uniqueArr;
     }
-    // 调用
-    unique1([1, 2, 3, 3, 2, 1]);
 
-    Array.prototype.unique2 = function(){
-        this.sort();
-        var result = [this[0]];
-        var len = this.length;
-        for(var i = 0; i < len; i++){
-            if(this[i] !== result[result.length - 1]){
-              result.push(this[i]);
+    // 方案三：数组函数 sort(), shift(), push() + Object.is()
+    function unique(arr) {
+        const sortArr = [...arr].sort();
+        const uniqueArr = [];
+        while (sortArr.length > 0) {
+            // Object.is() 采用“Same-value equality”（同值相等）算法
+            // Object.is(NaN, NaN) // true
+            // Object.is(+0, -0) // false
+            if (Object.is(sortArr[0], sortArr[1])) {
+                sortArr.shift();
+            } else {
+                uniqueArr.push(sortArr.shift());
             }
         }
-        return result;
+        return uniqueArr;
     }
-    // 调用
-    [1, 2, 3, 3, 2, 1].unique2();
 
-    function unique3(arr){
-        var result = [];
-        for(var i=0; i<arr.length; i++){
-            if(result.indexOf(arr[i]) == -1){
-              result.push(arr[i]);
+    // 方案四：for 循环 + 数组函数 includes()
+    function unique(arr) {
+        const uniqueArr = [];
+        for (let i = 0; i < arr.length; i++) {
+            // includes() 内部调用 Object.is() 判断 NaN
+            if (!uniqueArr.includes(arr[i])) {
+                uniqueArr.push(arr[i]);
             }
         }
-        return result;
+        return uniqueArr;
     }
-
-    // 调用
-    unique3([1, 2, 3, 3, 2, 1]);
     ```
 
 - 将url的查询参数解析成字典对象
+
     ```JavaScript
     function parseQuery(url) {
       url = url == null ? window.location.href : url;
@@ -324,6 +352,7 @@
   ```
 
 - 封装函数节流函数
+
     ```JavaScript
     var throttle = function(fn, delay, mustRunDelay){
       var timer = null;
@@ -347,7 +376,7 @@
 
     // 调用（两次间隔50ms内连续触发不执行，但每累计100ms至少执行一次
     window.onresize = throttle(myFunc, 50, 100);
-    ````
+    ```
 
 - 用JS实现千位分隔符
 
