@@ -314,7 +314,9 @@
        * relative  相对定位，相对于自身正常位置进行定位
        * fixed     固定定位，相对于浏览器窗口进行定位（不是body）
        * static    消除定位，元素位于正常的流（忽略 top、bottom、left、right、z-index 值）
+       * sticky    生成粘性定位的元素，容器的位置根据正常文档流计算得出
        * inherit   继承父级元素的 position 属性的值
+      
 
 - rgba() 和 opacity 的透明效果有什么不同？
 
@@ -905,7 +907,7 @@
       方案2 -- 绝对定位设置 `top` 和 `bottom `：
       
      ```Css
-     .container { position:relative; }
+     .container { position: relative; }
      .sub { position: absolute; top: 100px; bottom: 0; }
      ```
      
