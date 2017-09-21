@@ -1083,16 +1083,9 @@ fn.bind(context)(arg1, arg2);
   * for...of 循环            `for(let val of arr){};`
   * Promise 对象             `var promise = new Promise(fn);`
   * Generator 函数           `function* foo(x){yield x; return x * x;}`
-  * `引入 Class(类)`          `class Foo {}`
+  * `引入 Class(类)`         `class Foo {}`
   * 引入模块体系              `export default fn;`
-  * 引入 async 函数[ES7]      
-
-   ```javscript
-	async function asyncPrint(value, ms) {
-		await timeout(ms);
-		console.log(value)
-	}
-	```
+  * 引入 async 函数[ES7]     `const foo = async () => await alert(666);`
 
 ### Object.is() 与原来的比较操作符 ===、== 的区别？
 
