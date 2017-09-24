@@ -9,6 +9,20 @@
 	  2. DOM（文档对象模型）：规定了访问 HTML 和 XML 的接口
 	  3. BOM（浏览器对象模型）：提供了"浏览器窗口"进行交互的对象和方法
 
+### BOM 对象有哪些? 列举 window 对象？
+* BOM 对象包括：
+	- window 对象 -- 打开的窗口对象
+	- location 对象 -- 当前 URL 信息
+	- navigator 对象 -- 浏览器本身信息
+	- screen 对象 -- 客户端屏幕信息
+	- history 对象 -- 浏览器访问历史信息
+* window 对象是 BOM 的顶层(核心)对象，所有其他 BOM 对象都是 window 对象的属性。由于 window 包含了 document，document 对象又是 DOM 的根节点，可以理解为 BOM 包含了 DOM。所以，列举 window 对象：
+	- location 对象 -- 当前 URL 信息
+	- navigator 对象 -- 浏览器本身信息
+	- screen 对象 -- 客户端屏幕信息
+	- history 对象 -- 浏览器访问历史信息
+	- document 对象 -- 文档对象
+
 ### JS 的基本数据类型和引用数据类型
 
   * 基本数据类型：undefined、null、boolean、number、string、symbol
@@ -158,6 +172,17 @@
    	- 引用数据类型存储在堆(heap)中，占据空间大小不固定。在栈中保存指针，指向在堆中的起始地址
    	- 引用数据类型在赋值的时候只拷贝地址，不拷贝值
    	
+### 判断一个变量是否是数组方法
+
+`var a = [];` 
+
+1. `a instanceof Array; `
+2. `a.constructor === Array; `
+3. `Array.prototype.isPrototypeOf(a); `
+4. `Object.getPrototypeOf(a) === Array.prototype; `
+5. `Object.prototype.toString.apply(a) === '[object Array]'; `
+6. `Array.isArray([]);`
+
 ### JavaScript 创建对象的几种方式？
 
 1. 工厂方式（new 内置 Object 对象生成）
@@ -412,6 +437,53 @@
    - 标准浏览器 el.addEventListener() 中的 this 指向触发事件的 Element 节点
    - IE9 之前版本浏览器 el.attachEvent() 中的 this 总是指向全局对象 Window
 
+### 使用箭头函数适用场景和需要注意的地方？
+
+* 箭头函数适合于无复杂逻辑或者无副作用的纯函数场景下，例如：用在 map、reduce、filter 的回调函数定义中
+* 箭头函数的亮点是简洁，但在有多层函数嵌套的情况下，箭头函数反而影响了函数的作用范围的识别度，这种情况不建议使用箭头函数
+* 箭头函数要实现类似纯函数的效果，必须剔除外部状态。所以箭头函数不具备普通函数里常见的 this、arguments 等，当然也就不能用 call()、apply()、bind() 去改变 this 的指向
+* 箭头函数不适合定义对象的方法（对象字面量方法、对象原型方法、构造器方法），因为箭头函数没有自己的 this，其内部的 this 指向的是外层作用域的 this
+
+	```javascript
+	const json = {
+		bar: 1,
+		fn: () => console.log(this.bar)
+	};
+	
+	json.fn();  //-> undefined
+	```
+	- 以上箭头函数中的 this 并不是指向 json 这个对象，而是再往上到达全局作用域
+	
+	```javascript
+	function Foo() {
+		this.bar = 1;
+	}
+	Foo.prototype.fn = () => console.log(this.foo);
+	
+	const foo = new Foo();
+	foo.fn();  //-> undefined
+	```
+	- 以上箭头函数中的 this 并不是指向 Foo，而是根据变量查找规则，回溯到了全局作用域
+	
+	```javascript
+	const Message = (text) => {  
+		this.text = text;
+	};
+	var helloMessage = new Message('Hello World!');  
+	console.log(helloMessage.text); //-> Message is not a constructor
+	```
+	- 以上箭头函数中的 this 并不是指向预期的 button 元素，而是 window
+
+* 箭头函数不适合定义结合动态上下文的回调函数（事件绑定函数），因为箭头函数在声明的时候会绑定静态上下文
+
+	```javascript
+	const button = document.querySelector('#button-load-more');
+	button.addEventListener('click', () => {  
+		this.textContent = 'Loading...';
+	});
+	```
+	- 以上代码中，箭头函数中的 this 并不是指向预期的 button 元素，而是 window
+
 ### eval 的用途？
 
   * eval 字符串参数解析成 JavaScript 代码运行，并返回运行结果
@@ -478,8 +550,11 @@
 	- Window 对象的方法和属性在全局范围内有效
 
 * Document 对象是载入浏览器的 HTML 文档，包括根节点和所有其他节点（元素节点，文本节点，属性节点，注释节点）。
-	- Document 对象使我们可以通过脚本对 HTML 页面中的所有元素进行访问
+	- Document 对象使我们可以通过脚本对 HTML 页面中的所有元素进行访问器
 	- Document 对象是 Window 对象的一部分，可通过 window.document 进行访问
+
+### 描述 DOM 事件捕获的具体流程
+* window -> document -> html(document.documentElement) -> dody(document.body) -> ... -> 目标对象
 
 ### 介绍事件传播的阶段、事件执行顺序及执行次数？
 
@@ -698,11 +773,13 @@
 
 * 使用 instanceof 运算符：`foo instanceof Foo;`
 
-### new 操作符具体干了什么？
-
-  1. 创建实例对象，this 变量引用该对象，同时还继承了构造函数的原型
-  2. 属性和方法被加入到 this 引用的对象中
-  3. 新创建的对象由 this 所引用，并且最后隐式的返回 this
+### new 操作符具体干了什么工作?
+* 当使用 new 操作符调用构造函数，函数实际会经历如下步骤：
+	- 创建一个空对象
+	- 设置原型链，继承该函数的原型
+	- 把函数中上下文 this 指向该对象
+	- 并执行函数体，通过 this 为新对象添加属性或方法
+	- 最后隐式的返回 this
 
 ### 用原生 JavaScript 的实现过什么功能吗？
 
@@ -1109,3 +1186,4 @@ fn.bind(context)(arg1, arg2);
   如：Iterator、Generator、Set、Map、Proxy、Reflect、Symbol、Promise 等全局对象，以及一些定义在全局对象上的方法(比如Object.assign)
   * 如果运行新的 API 和 新的方法，须使用 babel-polyfill，为当前环境提供一个垫片
   * Babel 6.0 开始，不再直接提供浏览器版本，而是要用构建工具构建出来
+

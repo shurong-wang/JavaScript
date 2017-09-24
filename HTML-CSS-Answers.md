@@ -717,6 +717,26 @@ run-in          根据上下文决定对象是内联对象还是块级对象
 5. 加载图片等外部文件
 6. 页面加载完毕 // load
 
+
+### 什么是 BFC(Block formatting context)"块级格式化上下文"？
+
+* BFC（块级格式化上下文）是一个独立的渲染区域，只有 Block-level box 参与，它规定了内部的 Block-level Box 如何布局，并且与这个区域外部毫不相干
+
+* BFC 的渲染规则
+	- BFC 元素的垂直方向的边距会发生重叠
+	- BFC 的区域不会与浮动元素的 box 重叠（清除浮动原理）
+	- BFC 在页面上是一个独立的容器，外面的元素不会影响它里面的元素。反之，里面的元素也不会影响外面的元素
+	- 计算 BFC 的高度的时候，浮动元素也会参与计算
+
+* 如何创建 BFC
+	- overflow 属性不为 visible
+	- float 属性不为 none
+	- position 属性为 absolute 或f ixed
+	- display 属性为 inline-block、table-cell、table-caption、flex、inline-flex
+
+* BFC 的使用场景
+	- 很常用的一个应用场景就是解决边距重叠的问题
+	
 ### 什么是 FOUC？ 如何来避免 FOUC？
 	
 * 页面开始只显示出 HTML 内容，没有成功加载样式。但是几秒后又看到页面渲染后的样子。这期间短暂闪烁现象称为“文档样式闪烁(Flash of Unstyled Content) -- FOUC”

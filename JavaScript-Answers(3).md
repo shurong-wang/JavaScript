@@ -1,6 +1,32 @@
 
 ## 编程能力
 
+- 实现一个函数 clone()，可以对 JavaScript 中的 5 种主要的数据类型（Number、String、Object、Array、Boolean）进行值复制
+
+	```JavaScript
+	function clone(obj) {
+	    // 判断是否对象
+	    var isObject = obj => typeof obj === 'object' && typeof obj !== 'null';
+	    //不是对象，直接把值返回
+	    if (!isObject(obj)) {
+	        return obj;
+	    }
+	    // 区分是数组还是对象，创建空的数组或对象
+	    var isArray = obj => Object.prototype.toString.call(obj).slice(8, -1) === "Array";
+	    var o = isArray(obj) ? [] : {};
+	    for (var k in obj) {
+	        // 如果属性值又为对象，则递归复制
+	        if (isObject(obj[k])) {
+	            o[k] = clone(obj[k])
+	        }
+	        else {
+	            o[k] = obj[k];
+	        }
+	    }
+	    return o;
+	}
+	```
+
 - 手写事件侦听器，并要求兼容浏览器
 
     ```JavaScript
@@ -401,3 +427,5 @@
       return str.replace(reg, ',');
     }
     ```
+    
+    
