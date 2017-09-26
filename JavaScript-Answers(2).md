@@ -327,6 +327,132 @@
 	- 能替代大部分 grunt/gulp 的工作，如打包、压缩混淆、图片 base64
 	- 扩展性强，插件机制完善，特别是支持 React 热插拔的功能
 
+### Webpack 1 / 2 / 3 的 区别
+* webpack2 相对 webpack1 的新增了新特性，需要处理配置文件语法兼容：
+	- 增加对 ES6 模块的原生支持
+	- 可以混用 ES2015 和 AMD 和 CommonJS
+	- 支持 tree-shaking（减少打包后的体积）
+	- 新增更多的 CLI 参数项
+		- `-p` 指定当前的编译环境为生产环境，即修改：process.env.NODE_ENV 为 "production"
+	- 配置选项语法修改
+		- resolve（解析）配置
+			- 取消了 `extensions ` 空字符串（表示导入文件无后缀名）
+			
+			- Webpack1
+			
+			```
+			resolve: {
+			    extensions: ['', '.js', '.css'],
+			    modulesDirectories: ['node_modules', 'src']
+			}
+			```
+			
+			- Webpack2
+			
+			```
+			resolve: {
+				extensions: ['.js', '.css'],
+				modules: [
+					path.resolve(__dirname, 'node_modules'),
+					path.join(__dirname, './src')
+				]
+			}
+			```
+			
+		- module（模块）配置
+			- 外层 `loaders` 改为 `rules`
+			- 内层 `loader` 改为 `use`
+			- 所有插件必须加上 `-loader`，不再允许缩写
+			- 不再支持使用`!`连接插件，改为数组形式
+			- `json-loader` 模块已经移除，不再需要手动添加，webpack2 会自动处理
+			
+			- Webpack1
+			
+			```
+			module: {
+			    loaders: [{
+			        test:   /\.(less|css)$/,
+			        loader: "style!css!less!postcss"
+			    }, {
+			        test: /\.json$/,
+			        loader: 'json'
+			    }]
+			}
+			```
+			
+			- Webpack2
+			
+			```
+			module: {
+				rules: [{
+					test: /\.(less|css)$/,
+					use: [
+						"style-loader", 
+						"css-loader", 
+						"less-loader", 
+						"postcss-loader"
+					]
+				}]
+		   };
+			```	
+		
+		- plugins（插件）配置
+			- 移除（内置）了 OccurenceOrderPlugin 模块、NoErrorsPlugin 模块
+
+* webpack3 几乎与 webpack2 完全兼容，新增新特性：
+	- 加入 Scope Hoisting（作用域提升）
+		- 之前版本将每个依赖都分别封装在一个闭包函数中来独立作用域。这些包装函数闭包函数降低了浏览器 JS 引擎解析速度
+		- Webpack 团队参考 Closure Compiler 和 Rollup JS，将有联系的模块放到同一闭包函数中，从而减少闭包函数数量，使文件大小的少量精简，提高 JS 执行效率
+		- 在 Webpack3 配置中加入`ModuleConcatenationPlugin`插件来启用作用域提升
+
+			```
+			module.exports = {
+				plugins: [
+					new webpack.optimize.ModuleConcatenationPlugin()
+				]
+			};
+			```
+	
+	- 加入 Magic Comments（魔法注解）
+		- 在 Webpack2 中引入了 Code Splitting-Async 的新方法 import()，用于动态引入 ES Module，Webpack 将传入 import 方法的模块打包到一个单独的代码块（chunk），但是却不能像 require.ensure 一样，为生成的 chunk 指定chunkName。因此在 Webpack3 中提出了 Magic Comment 用于解决该问题
+
+			```
+			import(/* webpackChunkName: "my-chunk-name" */ 'module');
+			```
+
+### Webpack 配置优化
+
+1. 分离第三方依赖
+	- 在开发环境下, 通常会采取 HMR（模块热替换）模式来提高开发效率. 一般情况下, 我们只更改自身项目文件, 不会去更改第三方的依赖. 但 webpack 在 rebuild 的时候, 会 build 所有的依赖. 为减少 rebuild 的时间, 我们可以分离第三方依赖, 在项目启动之前, 将其单独打包和引入. 可以借助 DllPlugin 插件实现
+2. 多进程构建
+	- Webpack 的构建过程是单进程的, 利用 HappyPack 插件可让 loader 对文件进行多进程处理. HappyPack 会充分利用系统的资源来提升 Webpack 的构建效率. 此外,  Happypack 会将每一个文件的编译进行缓存，使得 rebuild 更快
+3. 提取公共的依赖模块
+	- 在生产环境下, 利用 CommonsChunkPlugin 插件提取公共的依赖模块. 提取公共模块式, 不能简单的将`node_modules`下的所有模块都打包在一起, 应该分析业务依赖和路由, 尽可能将各个路由组件的公共依赖分别提取, 避免 vendor 包过于太大
+4. 分离不同类型的静态文件
+	- 在生产环境下, 应该将图片和 CSS 从 JS 中分离, 控制最终的 bundle 文件的大小. 使用 ExtractTextPlugin 来提取 CSS, 通过设置 url-loader 的 limit 字节参数, 小于 limit 则将图片转为 DataURl，大于 limit 则通过 file-loader 将图片拷贝到相应的路径. url-loader 内置了 file-loader, 不需要再单独安装 file-loader
+
+5. 优化资源混淆和压缩
+	- Webpack 提供的 UglifyJS 插件采用单线程压缩, 速度较慢. 可以使用 Parallel 插件(webpack-parallel-uglify-plugin)进行优化
+
+6. Gzip 压缩
+	- 在生产环境下, 如果想进一步减小 bundle 文件的大小, 可以使用 Gzip 压缩. 前端使用 compression-webpack-plugin 插件配置, 同时需要服务端开启 gzip 压缩支持
+
+7. 按需加载组件
+	- 在单页应用中, 一个应用可能会对应很多路由, 每个路由都会对应一个组件. 如果将这些组件全部全部放进一个 bundle, 会导致最终的 bundle 文件比较大. 可以利用 Webpack 的 Code Splitting 功能（CommonsChunkPlugin 插件）将代码进行分割, 实现路由的按需加载
+
+
+### Grunt / Gulp / Webpack / Rollup 比较
+
+* Grunt 是一套前端自动化工具，帮助处理反复重复的任务。一般用于：编译，压缩，合并文件，简单语法检查等
+* Gulp 是基于“流”的自动化构建工具，采用代码优于配置的策略，更易于学习和使用
+* Webpack 是模块化管理工具和打包工具。通过 loader 的转换，任何形式的资源都可以视作模块，比如 CommonJs 模块、AMD 模块、ES6 模块、CSS、图片等。它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源。还可以将按需加载的模块进行代码分隔，等到实际需要的时候再异步加载
+* Webpack 的定位是模块打包器，而 Gulp/Grunt 属于构建工具。Webpack 可以代替Gulp/Grunt 的一些功能，但不是一个职能的工具，可以配合使用
+* Rollup 是下一代 ES6 模块化工具，它最大的亮点是利用 ES6 模块模块设计，生成更简洁、更简单的代码。尽可能高效地构建出能够直接被其它 JavaScript 库引用的模块
+	- 基于权衡，Rollup 目前还不支持代码拆分（Code Splitting）和模块的热更新（HMR）
+	- 一般而言，对于应用使用 Webpack，对于类库使用 Rollup；需要代码拆分(Code Splitting)，或者很多静态资源需要处理，再或者你构建的项目需要引入很多 CommonJS 模块的依赖时，使用 webpack。代码库是基于 ES6 模块，而且希望代码能够被其他人直接使用，使用 Rollup 
+	- Rollup 与 Webpack 有这不同的用途，因此会共同存在，并相互支持
+	- React 已经将构建工具从 Webpack 换成了 Rollup
+	
 ### 介绍类库和框架的区别？
 
 * 类库是一些函数的集合，辅助开发者编写应用，起主导作用的是开发者的代码
@@ -886,8 +1012,6 @@ $("#btn").on({
 * 线程的划分尺度小于进程，使得多线程程序的并发性高
 * 进程在执行过程中拥有独立的内存单元，而多个线程共享内存
 * 线程不能够独立执行，必须应用程序提供多个线程执行控制
-
-
 
 ### git 命令，如何批量删除分支
 

@@ -428,4 +428,26 @@
     }
     ```
     
+- 写一个跨浏览器兼容的 trim 函数
+	
+	```JavaScript
+	var trim = function (str) {
+		// 将 null 和 undefined 装换成空字符串
+		if (str == null) {
+			return '';
+		}
+		return String.prototype.trim
+			? String.prototype.trim.call(str)
+			: str.toString().replace(/^\s+|\s+$/g, '');
+	}
+	```
+
+- 为 Date 对象扩展一个方法 dateTotal，获取任意 Date 实例日期所在月份的总天数	```JavaScript	Date.prototype.dateTotal = function () {
+		var y = this.getFullYear();
+		var m = this.getMonth();
+		// new Date("yyyy/mm/dd") 日期的构造方法有一个特殊用法：
+		// 当传入 "yyyy/mm/0" 时，得到的是 "mm" 月上一个月的最后一天
+		return new Date(y, m + 1, 0).getDate();	}
+	```
+
     
