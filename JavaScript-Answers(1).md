@@ -904,20 +904,76 @@
   * 浏览器的容错机制会忽略`<script>`之前的`</body>`，视作`<script>`仍在 body 体内。
     省略`</body>`和`</html>`闭合标签符合 HTML 标准，服务器可以利用这一标准尽可能少输出内容
 
-### 延迟加载 JS 的方式有哪些？
+### “异步加载”和“延迟加载”的区别
+* 异步加载（async loading）
+	- 异步加载又叫非阻塞加载，指浏览器下载执行 js 不会阻塞页面渲染，二者并行执行
 
-  * 设置`<script>`属性 `defer="defer"`（脚本将在页面完成解析时执行）
-  * 动态创建 script DOM：`document.createElement('script');`
-  * XmlHttpRequest 脚本注入
-  * 延迟加载工具 LazyLoad
+* 延迟加载（lazy loading）
+	- 延迟加载指页面初始化时，不加载业务暂时不需要的 js，在需要时或稍后再进行异步加载
 
-### 异步加载 JS 的方式有哪些？
+### 异步加载 JS 的解决方案有哪些？
 
-  * 设置`<script>`属性 `async="async"`（一旦脚本可用，则会异步执行）
-  * 动态创建 script DOM：document.createElement('script');
-  * XmlHttpRequest 脚本注入
-  * 异步加载库 LABjs
-  * 模块加载器 Sea.js
+1. Script DOM Element  动态创建 `<script>` 元素
+
+	```javascript
+	(function() {
+		function lazyload() {
+		    var elem = document.createElement("script");
+		    elem.type = "text/javascript";
+		    elem.async = true;
+		    elem.src = "script.js"; 
+		    document.body.appendChild(elem);
+		}
+	
+		if (window.addEventListener) {
+		    window.addEventListener("load", lazyload, false);
+		} 
+		else if (window.attachEvent) {
+		    window.attachEvent("onload", lazyload);
+		} 
+		else {
+		    window.onload = lazyload;
+		}
+	})();
+	```
+
+2. XHR Injection / XHR Eval  通过 XMLHttpRequest 获取 js 代码，然后在浏览器执行
+
+	```
+	var xhrObj = getXHRObject(); 
+	xhrObj.onreadystatechange =  
+	function() {  
+		if (xhrObj.readyState != 4) {
+			return;
+		} 
+		eval(xhrObj.responseText); 
+	}; 
+	xhrObj.open('GET', 'A.js', true); 
+	xhrObj.send('');
+	```
+
+3. 设置 `script` 的 `defer` 属性或 `async` 属性
+
+	```
+	<script src="foo.js" async ></script>
+	```
+	```
+	<script src="bar.js" defer ></script>
+	```
+
+
+### 介绍 `<script>` 的 `defer` 和 `async` 属性的共同点和区别
+
+* async 和 defer 共同点：
+	- async 和 defer 属性可以异步并行下载脚本（相对 HTML 解析），不会阻塞 DOM 构建和页面渲染
+	- async 和 defer 属性只对外部脚本起作用（没有 src 属性，它们会被忽略）
+
+* defer 和 async 区别：
+	- 开始执行脚本的时机的不同
+		- defer 比 async 要先引入浏览器。它的执行在 HTML 解析完成之后才开始，处在 DOMContentLoaded 事件之前。所以，defer 保证脚本会按照它在 HTML 中出现的顺序执行，并且不会阻塞解析
+		- async 脚本在它们完成下载完成后的第一时间执行，它处在 window 的 load 事件之前，但不一定在 DOMContentLoaded 之前。这意味着设置了 async 的脚本很有可能不会按照它们在 HTML 中出现的顺序执行，并且可能会中断 DOM 的构建
+		- async 应用场景有限，因为它完全不考虑依赖顺序，不过它对于那些可以不依赖任何脚本或不被任何脚本依赖的脚本来说却是非常合适，比如“站长统计”脚本
+
 
 ### 前端性能优化最佳实践
 
