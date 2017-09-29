@@ -539,7 +539,9 @@
 ### 在什么情况下你会优先选择使用 Class Component 而不是 Functional Component？
 * 在组件需要包含内部状态或者使用到生命周期函数的时候使用 Class Component ，否则使用函数式组件
 
-### React 中调用 render 的时机1. 首次渲染2. 调用 setState（不是一次调用对应一次 render）3. 父组件更新4. 调用 forceUpdate### React 组件的优化思路1. 使用 Stateless Component、PureComponent2. shouldComponentUpdate 中避免不必要的更新3. 避免在 render 子组件时重新生成属性相关的函数4. 渲染列表组件正确标识 key
+### React 中调用 render 时机1. 首次渲染(Initial Render)2. 调用 this.setState
+	- 并不是一次 setState 触发一次 render，React 可能会合并操作，再一次性进行 render 3. 父组件发生更新
+	- 一般会引起 props 发生改变，但即使 props 没有改变或者父子组件之间没有数据交换，也会触发 render4. 调用this.forceUpdate### React 组件的优化思路1. 使用 Stateless Component、PureComponent2. shouldComponentUpdate 中避免不必要的更新3. 避免在 render 子组件时重新生成属性相关的函数4. 渲染列表组件正确标识 key
 
 ### Underscore 对哪些 JS 原生对象进行了扩展？提供了哪些好用的函数方法？
 
@@ -563,20 +565,20 @@
 	_.isFinite(object)              // Number.isFinite(object)
 	```
 
-- Backbone 是什么？
+### Backbone 是什么？
 * Backbone 是一个基于 jquery 和 underscore 的前端(MVC)框架
 
-- Riot.js 是什么？
+### Riot.js 是什么？
 
 * Riot.js 是一个轻量级（1Kb大小）的前端(MVP)框架。提供了模板引擎、路由、MVP模式
 * Riot.js 是目前存在的 JavaScript 模板引擎中速度最快的（比 Underscore 的模板快7倍）
 
-- AngularJS 是什么？
+### AngularJS 是什么？
 
 * AngularJS 是一个完善的前端 MVVM 框架，包含模板、数据双向绑定、路由、模块化、服务、依赖注入等
 * AngularJS 由 Google 维护，用来协助大型单一页面应用开发
 
-- React 是什么？
+### React 是什么？
 
 * React 不属于 MV* 系列的框架，作为构建用户界面的 JavaScript 库，侧重于 View 层
 * React 把每一个组件当成了一个状态机，组件内部通过 state 来维护组件状态的变化，当组件的状态发生变化时，React 通过虚拟 DOM 技术来增量并且高效的更新真实 DOM
@@ -591,6 +593,15 @@
 ### 简单介绍 Redux 核心 API 及其工作流程
 
 * Redux 核心 API	- Store -- 应用状态 state 的管理者，存储着整个应用 state的对象	- Action -- 包含 type 属性的对象，type 是实现用户行为追踪的关键	- Reducer -- 根据 action.type 更新 state 的函数* Redux 工作流：	1.	通过Redux.createStore(reducer) 生成 Store	2.	通过 Store.getState() 获取 state 	3. 通过 Store.dispatch(action) 触发 Reducer	4. Reducer 根据 action.type 更新 state，并返回最新的 nextState
+
+### 简单介绍 Redux 三大原则
+
+* 单一数据源
+	- 整个应用的 state 被储存在一棵 object tree 中，并且这个 object tree 只存在于唯一一个 store 中
+* State 是只读的
+	- 唯一改变 state 的方法就是触发 action，action 是一个用于描述已发生事件的普通对象
+* 使用纯函数来执行修改
+	- 为了描述 action 如何改变 state tree，需要编写 reducers 纯函数
 
 ### react-router 路由系统的实现原理？
 
@@ -1034,7 +1045,7 @@ $("#btn").on({
 * 跨域的 js 运行错误捕获
 	- 设置 script 标签 crossorigin 属性 `crossorigin="anonymous"`
 	- 设置 js 资源响应头 `Access-Control-Allow-Orgin:*`
-	- 
+
 * 上报错误的基本原理
 	- 采用 Ajax 方式上报
 	- 利用 Image 对象上报
