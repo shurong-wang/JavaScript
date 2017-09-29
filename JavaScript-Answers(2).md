@@ -539,7 +539,7 @@
 ### 在什么情况下你会优先选择使用 Class Component 而不是 Functional Component？
 * 在组件需要包含内部状态或者使用到生命周期函数的时候使用 Class Component ，否则使用函数式组件
 
-### React 中调用 render 的时机1. 首次渲染2. 调用 setState（不是一次调用对应一次 render）3. 父组件更新4. 调用 fourceUpdate### React 组件的优化思路1. 使用 Stateless Component、PureComponent2. shouldComponentUpdate 中避免不必要的更新3. 避免在 render 子组件时重新生成属性相关的函数4. 渲染列表组件正确标识 key
+### React 中调用 render 的时机1. 首次渲染2. 调用 setState（不是一次调用对应一次 render）3. 父组件更新4. 调用 forceUpdate### React 组件的优化思路1. 使用 Stateless Component、PureComponent2. shouldComponentUpdate 中避免不必要的更新3. 避免在 render 子组件时重新生成属性相关的函数4. 渲染列表组件正确标识 key
 
 ### Underscore 对哪些 JS 原生对象进行了扩展？提供了哪些好用的函数方法？
 
