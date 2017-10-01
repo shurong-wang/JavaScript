@@ -23,6 +23,101 @@
 	- history 对象 -- 浏览器访问历史信息
 	- document 对象 -- 文档对象
 
+### documen.write 和 innerHTML 的区别？
+
+  * document.write 将内容写入页面的内容流，会导致整个页面重绘
+  * elem.innerHTML 将内容写入特定 DOM 节点，只重绘页面的某一部分
+
+### JS 的 DOM 操作：添加、移除、移动、复制、创建和查找节点?
+
+* 创建新节点
+
+	```javascript
+	document.createElement('div');            // 创建一个元素
+	document.createTextNode('hello world');   // 创建一个文本节点
+	// 创建一个 DOM 片段，然后插入子节点
+	document.createDocumentFragment().appendChild(subNodes); 
+	```
+	
+* 复制、添加、移除、替换、插入节点
+
+	```javascript
+	el.cloneNode(true);
+	el.appendChild(subNode);
+	el.removeChild(subNode);
+	el.replaceChild(newNode, oldNode);
+	// 在已有的子节点(existingChild)前插入新子节点
+	el.insertBefore(newChild, existingChild);
+	
+	// 将一个元素节点插入到相对于被调用的元素的给定位置
+	el.insertAdjacentElement(position, newEl);
+	// 参数 position: 
+	// [beforebegin]<p>[afterbegin]foo[beforeend]</p>[afterend]
+	
+	// 将一个文本节点插入到相对于被调用的元素的给定位置
+	el.insertAdjacentText(position, newText);
+	// 参数 position: 
+	// [beforebegin]<p>[afterbegin]foo[beforeend]</p>[afterend]
+	```
+	
+* 查找节点
+
+	```javascript
+	document.getElementsByClassName('highlight');
+	document.getElementsByTagName('div');
+	document.getElementById('btn-button');
+	document.querySelector('#btn-button');
+	document.querySelectorall('#news li');
+	
+	// 获取父元素、父节点
+	el.parentElement;
+	el.parentNode;	// 没有兼容性问题
+	el.offsetParent; // 找到最近的有定位的父节点
+	// 获取子节点，可以是任何一种节点，通过 nodeType 判断
+	el.children;     // 在标准下、非标准下都只含元素类型节点
+                    // 但对待非法嵌套的子节点，处理方式与 childNodes 一致 
+	el.childNodes;   // 非标准下：只包含元素类型，不会包含非法嵌套的子节点
+	　　　　　　　　　　// 标准下：包含元素和文本类型，会包含非法嵌套的子节点 
+	
+	// 获取元素属性列表
+	el.attributes;
+	
+	// 当前元素的第一个/最后一个子元素节点
+	el.firstChild; 				// el.childNodes[0]
+	el.lastChild;					// el.childNodes[el.childNodes.length - 1]
+	el.firstElementChild; 		// 必须是 Element 类型（非标准不支持）
+	el.lastElementChild;		// 必须是 Element 类型（非标准不支持）
+	// 下一个/上一个兄弟元素节点
+	el.nextSibling;
+	el.previousSibling;
+	el.nextElementSibling;  	// 必须是 Element 类型（非标准不支持）
+	el.previousElementSibling;	// 必须是 Element 类型（非标准不支持）
+	
+	// 获取元素值（注意：要先通过 el.childNodes[0] 获取文本节点，才能获取文本值）
+	document.getElementById('description').childNodes[0].nodeValue;
+	
+	// 获取应用到元素计算后的样式
+	window.getComputedStyle(el, null);
+	
+	// 获取元素的大小以及相对于浏览器可视窗口的位置
+	el.getBoundingClientRect();
+	
+	// 获取/设置一个节点的文本内容
+	let text = el.textContent;
+	el.textContent = "this is some sample text";
+	
+	let text = el.innerText;
+	el.innerText = "this is some sample text";
+	
+	let text = el.innerHTML;
+	el.innerHTML = "this is some sample text";
+	
+	// textContent 相比 innerText、innerHTML 的独有的特点：
+	1. textContent 会获取所有元素的内容，包括 <script> 和 <style>，以及隐藏元素
+	2. textContent 不会触发回流（reflow）
+	3. textContent 可以防止 XSS 攻击（相比innerHTML）
+	```
+
 ### JS 的基本数据类型和引用数据类型
 
   * 基本数据类型：undefined、null、boolean、number、string、symbol
@@ -609,6 +704,14 @@
 	}, false);
 	```
 
+### 列举 IE 与其他浏览器不一样的特性？
+* 当前样式：IE 支持 el.currentStyle；FIrefox 使用 window.getComputedStyle(el, null);
+* 读写文本：IE 使用 el.innerText；Firefox 使用 el.textContent
+* 设置透明：IE 使用 filter:alpha(opacity=60)；Firefox 使用 -moz-opacity: 0.6
+* 绑定事件：IE 使用 attachEvent；火狐使用 addEventListener
+* 鼠标位置：IE 使用 event.clientX；火狐使用 event.pageX
+* 目标元素：IE 使用 event.srcElement；Firefox 使用 event.target
+ 
 ### IE 与 火狐的事件机制有什么区别？
 
 * IE 只支持事件冒泡，不支持事件捕获；火狐同时支持件冒泡和事件捕获
@@ -1042,39 +1145,6 @@
    - 其次，如果不设置回调函数，Promise 内部抛出的错误，不会反应到外部
    - 第三，当处于 pending 状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）
 
-### documen.write 和 innerHTML 的区别？
-
-  * document.write 将内容写入页面的内容流，会导致整个页面重绘
-  * elem.innerHTML 将内容写入特定 DOM 节点，只重绘页面的某一部分
-
-### JS 的 DOM 操作：添加、移除、移动、复制、创建和查找节点?
-
-* 创建新节点
-
-	```javascript
-	document.createElement()          // 创建一个具体的元素
-	document.createTextNode()         // 创建一个文本节点
-	document.createDocumentFragment() // 创建一个 DOM 片段
-	```
-	
-* 复制、添加、移除、替换、插入节点
-
-	```javascript
-	el.cloneNode()
-	el.appendChild()
-	el.removeChild()
-	el.replaceChild()
-	el.insertBefore() // 在已有的子节点前插入新子节点
-	```
-	
-* 查找节点
-
-	```javascript
-	document.getElementsByTagName()
-	document.getElementById()
-	document.querySelector()
-	document.querySelectorall()
-	```
 
 ### JavaScript 调用函数有哪几种方式？
 

@@ -15,6 +15,20 @@ div 的 display 默认值为 block，则为“块级”元素；span 默认 disp
 * 块级元素：div ul ol li dl dt dd h1 h2 h3 h4… p
 * 常见的空元素：br hr img input link meta base area embed source
 
+### 行内元素和块级元素有什么区别?
+1. 是否独占一行
+	- 块级元素会独占一行。默认宽度是自身父容器的 100%（与父元素的宽度一致），与内容无关
+　　- 行内元素不会独占一行，相邻的行内元素会排在同一行，其宽度随内容的变化而变化
+2. 是否能够设置宽度和高度
+　　- 块级元素可以设置宽度和高度
+　　- 行内元素设置宽度和高度无效（可以设置 line-height）
+3. 是否可以设置垂上下 margin, padding
+	- 块级元素设置上下左右 margin, padding 都有效
+　　- 行内元素设置左右 margin, padding 有效，设置上下 margin, padding 无效
+4. 嵌套关系
+	- 块级元素可以包含行内元素和块级元素
+	- 行内元素不能包含块级元素，只能包含文本和其它行内元素
+
 ### 页面导入样式时，使用 link 和 @import 有什么区别？
 
 * link 属于HTML标签，除了加载 CSS 外，还能用于定 RSS 等；@import 只能用于加载 CSS
