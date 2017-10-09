@@ -519,18 +519,17 @@
 
 ### 谈谈 this 对象的理解
 
-  > this 总是指向函数的直接调用者，this 指向在调用时决定，而非声明时决定
+> this 总是指向函数的直接调用者; this 的指向在调用时决定，而非声明时决定
 
-   - 在普通函数中，this 指向它的直接调用者，如果找不到直接调用者，则指向 window
-   - 在严格模式下（ES5），函数没有直接调用者时，内部 this 是 undefined
-   - 使用 call, apply, bind 绑定的 this 指向的是绑定的对象（第一个参数）
-   - 在 ES6 箭头函数中，this 的指向是固定的，始终指向定义时所在的对象
-    - 因为箭头函数根本没有自己的 this，导致其内部的 this 就是外层代码块的 this
-   - 在 ES7 中，提出了函数绑定运算符 :: 用来取代 call、apply、bind 调用
-    - `o::fn` 表示将函数 fn 的 this 绑定到对象 o 上
-    - `::fn` 表示将函数 fn 的 this 绑定到当前所在对象上
-   - 标准浏览器 el.addEventListener() 中的 this 指向触发事件的 Element 节点
-   - IE9 之前版本浏览器 el.attachEvent() 中的 this 总是指向全局对象 Window
+- 在普通函数中，this 指向它的直接调用者，如果找不到直接调用者，则指向 window
+- 在严格模式（ES5）下，函数没有直接调用者时，内部 this 是 undefined
+- 使用 call, apply, bind 绑定的 this 指向的是绑定的对象（第一个参数）
+- ES6 箭头函数根本没有自己的 this，导致其内部的 this 就是外层代码块的 this
+- 在 ES7 中，提出了函数绑定运算符 `::` 用来取代 call、apply、bind 绑定 this
+	- `o::fn` 表示将函数 fn 的 this 绑定到对象 o 上
+	- `::fn` 表示将函数 fn 的 this 绑定到当前所在对象上
+- 标准浏览器 el.addEventListener() 中的 this 指向触发事件的 Element 节点
+- IE9 之前版本浏览器 el.attachEvent() 中的 this 总是指向全局对象 Window
 
 ### 使用箭头函数适用场景和需要注意的地方？
 
