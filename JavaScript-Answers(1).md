@@ -531,7 +531,7 @@
 - 标准浏览器 el.addEventListener() 中的 this 指向触发事件的 Element 节点
 - IE9 之前版本浏览器 el.attachEvent() 中的 this 总是指向全局对象 Window
 
-### 使用箭头函数适用场景和需要注意的地方？
+### 箭头函数适用场景，需要注意的地方？
 
 * 箭头函数适合于无复杂逻辑或者无副作用的纯函数场景下，例如：用在 map、reduce、filter 的回调函数定义中
 * 箭头函数的亮点是简洁，但在有多层函数嵌套的情况下，箭头函数反而影响了函数的作用范围的识别度，这种情况不建议使用箭头函数
@@ -545,8 +545,8 @@
 	};
 	
 	json.fn();  //-> undefined
+	// this 并不是指向 json 这个对象，而是再往上到达全局作用域
 	```
-	- 以上箭头函数中的 this 并不是指向 json 这个对象，而是再往上到达全局作用域
 	
 	```javascript
 	function Foo() {
@@ -556,8 +556,8 @@
 	
 	const foo = new Foo();
 	foo.fn();  //-> undefined
+	// this 并不是指向 Foo，根据变量查找规则，回溯到了全局作用域
 	```
-	- 以上箭头函数中的 this 并不是指向 Foo，而是根据变量查找规则，回溯到了全局作用域
 	
 	```javascript
 	const Message = (text) => {  
@@ -565,19 +565,19 @@
 	};
 	var helloMessage = new Message('Hello World!');  
 	console.log(helloMessage.text); //-> Message is not a constructor
+	// 不可以当作构造函数，也就是说，不可以使用 new 命令
 	```
-	- 以上箭头函数中的 this 并不是指向预期的 button 元素，而是 window
 
 * 箭头函数不适合定义结合动态上下文的回调函数（事件绑定函数），因为箭头函数在声明的时候会绑定静态上下文
 
 	```javascript
-	const button = document.querySelector('#button-load-more');
+	const button = document.querySelector('button');
 	button.addEventListener('click', () => {  
 		this.textContent = 'Loading...';
 	});
+	// this 并不是指向预期的 button 元素，而是 window
 	```
-	- 以上代码中，箭头函数中的 this 并不是指向预期的 button 元素，而是 window
-
+	
 ### eval 的用途？
 
   * eval 字符串参数解析成 JavaScript 代码运行，并返回运行结果
