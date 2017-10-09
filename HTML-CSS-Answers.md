@@ -81,8 +81,8 @@ div 的 display 默认值为 block，则为“块级”元素；span 默认 disp
 	- 直接嵌入数学公式 
 		- `<MathML>` 
 * 通信升级：能够使客户端和服务器之间通过创新的技术方法进行通信
-	- Web Sockets（全双工通信协议
-	- Server-sent events（服务器推送
+	- Web Sockets（全双工通信协议)
+	- Server-sent events（服务器推送)
 	- WebRTC（网页实时通信）
 		- 视屏会议
 	- CORS（跨域资源共享） 
@@ -201,7 +201,7 @@ div 的 display 默认值为 block，则为“块级”元素；span 默认 disp
 
 * 有期时间：
 	- cookie          在设置的过期时间之前一直有效，与浏览器是否关闭无关
-	- localStorage    存储持久数据，浏览器关闭后数据不丢失除非主动删除数据
+	- localStorage    存储持久数据，浏览器关闭后数据不丢失，除非主动删除数据
 	- sessionStorage  数据在当前浏览器窗口关闭后自动删除
 
 ### iframe 有那些优点和缺点？
