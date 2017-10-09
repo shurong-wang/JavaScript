@@ -877,11 +877,11 @@
 * 使用 instanceof 运算符：`foo instanceof Foo;`
 
 ### new 操作符具体干了什么工作?
-* 当使用 new 操作符调用构造函数，函数实际会经历如下步骤：
-	- 创建一个空对象
-	- 设置原型链，继承该函数的原型
-	- 把函数中上下文 this 指向该对象
-	- 并执行函数体，通过 this 为新对象添加属性或方法
+* 当使用 new 操作符调用构造函数 `new F();`，函数实际会经历如下步骤：
+	- 新建建一个空对象	`instance = {};`
+	- 继承该函数的原型 `instance.__proto__ = F.prototype;`
+	- 把函数中上下文 this 指向该对象 `instance`，执行 `F` 函数体
+	- 通过 this 为新对象 `instance` 添加属性或方法
 	- 最后隐式的返回 this
 
 ### 用原生 JavaScript 的实现过什么功能吗？
