@@ -618,9 +618,9 @@
 
 * React 解决方案：React + Redux + react-router + Fetch + webpack
 
-### 简单介绍 Redux 核心 API 及其工作流程
+### 简单介绍 Redux 核心 API 及其工作流
 
-* Redux 核心 API	- Store -- 应用状态 state 的管理者，存储着整个应用 state的对象	- Action -- 包含 type 属性的对象，type 是实现用户行为追踪的关键	- Reducer -- 根据 action.type 更新 state 的函数* Redux 工作流：	1.	通过Redux.createStore(reducer) 生成 Store	2.	通过 Store.getState() 获取 state 	3. 通过 Store.dispatch(action) 触发 Reducer	4. Reducer 根据 action.type 更新 state，并返回最新的 nextState
+* Redux 核心 API	- Store -- 应用状态 state 的管理者，存储着整个应用 state的对象	- Action -- Action -- 每次数据改变的源头，包含 type 属性，type 是实现用户行为追踪的关键	- Reducer -- 根据 action.type 更新 state 的纯函数* Redux 工作流：	1.	通过Redux.createStore(reducer) 生成 Store	2.	通过 Store.getState() 获取 state 	3. 通过 Store.dispatch(action) 触发 Reducer	4. Reducer 根据 action.type 更新 state，并返回最新的 nextState
 
 ### 简单介绍 Redux 三大原则
 
