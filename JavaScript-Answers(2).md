@@ -1021,14 +1021,15 @@ $("#btn").on({
 	- 防御措施
 		- 过滤转义输入输出
 		- 避免使用 eval、new Function 等执行字符串的方法，除非确定字符串和用户输入无关
-		- 设设置 Cookie 为 HttpOnly，禁止 JavaScript 操作 Cookie
+		- 设置 Cookie 为 HttpOnly，禁止 JavaScript 操作 Cookie
 
-* CSRF(Cross Site Request Forgery)，跨站点伪造请求
+* CSRF(Cross Site Request Forgery)，跨站点请求伪造
 	- 伪造合法请求，让用户在不知情的情况下以登录的身份访问，利用用户信任达到攻击目的
 	- 防御措施
 		- 检测 http referer 是否是同域名
 		- 避免登录的 session 长时间存储在客户端中
 		- 关键请求使用验证码或者 token 机制验证
+
 
 ### 如何防范 Web 前端攻击？
 
