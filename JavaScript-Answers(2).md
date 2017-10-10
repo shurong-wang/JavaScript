@@ -420,25 +420,25 @@
 			import(/* webpackChunkName: "my-chunk-name" */ 'module');
 			```
 
-### Webpack 配置优化
+### SPA 项目的 Webpack 配置优化
 
 1. 分离第三方依赖
 	- 在开发环境下, 通常会采取 HMR（模块热替换）模式来提高开发效率. 一般情况下, 我们只更改自身项目文件, 不会去更改第三方的依赖. 但 webpack 在 rebuild 的时候, 会 build 所有的依赖. 为减少 rebuild 的时间, 我们可以分离第三方依赖, 在项目启动之前, 将其单独打包和引入. 可以借助 DllPlugin 插件实现
-2. 多进程构建
+2. 多进程构建项目
 	- Webpack 的构建过程是单进程的, 利用 HappyPack 插件可让 loader 对文件进行多进程处理. HappyPack 会充分利用系统的资源来提升 Webpack 的构建效率. 此外,  Happypack 会将每一个文件的编译进行缓存，使得 rebuild 更快
 3. 提取公共的依赖模块
 	- 在生产环境下, 利用 CommonsChunkPlugin 插件提取公共的依赖模块. 提取公共模块式, 不能简单的将`node_modules`下的所有模块都打包在一起, 应该分析业务依赖和路由, 尽可能将各个路由组件的公共依赖分别提取, 避免 vendor 包过于太大
 4. 分离不同类型的静态文件
-	- 在生产环境下, 应该将图片和 CSS 从 JS 中分离, 控制最终的 bundle 文件的大小. 使用 ExtractTextPlugin 来提取 CSS, 通过设置 url-loader 的 limit 字节参数, 小于 limit 则将图片转为 DataURl，大于 limit 则通过 file-loader 将图片拷贝到相应的路径. url-loader 内置了 file-loader, 不需要再单独安装 file-loader
+	- 在生产环境下, 应该将图片和 CSS 从 JS 中分离, 控制最终的 bundle 文件的大小. 可以使用 ExtractTextPlugin 来提取 CSS; 通过设置 url-loader 的 limit 字节参数, 小于 limit 则将图片转为 DataURl，大于 limit 则通过 file-loader 将图片拷贝到相应的路径. url-loader 内置了 file-loader, 不需要再单独安装 file-loader
 
-5. 优化资源混淆和压缩
+5. 优化混淆/压缩速度
 	- Webpack 提供的 UglifyJS 插件采用单线程压缩, 速度较慢. 可以使用 Parallel 插件(webpack-parallel-uglify-plugin)进行优化
 
 6. Gzip 压缩
 	- 在生产环境下, 如果想进一步减小 bundle 文件的大小, 可以使用 Gzip 压缩. 前端使用 compression-webpack-plugin 插件配置, 同时需要服务端开启 gzip 压缩支持
 
 7. 按需加载组件
-	- 在单页应用中, 一个应用可能会对应很多路由, 每个路由都会对应一个组件. 如果将这些组件全部全部放进一个 bundle, 会导致最终的 bundle 文件比较大. 可以利用 Webpack 的 Code Splitting 功能（CommonsChunkPlugin 插件）将代码进行分割, 实现路由的按需加载
+	- 在单页应用中, 一个应用可能会对应很多路由, 每个路由都会对应一个组件. 如果将这些组件全部放进一个 bundle, 会导致最终的 bundle 文件很大. 可以利用 Webpack 的 Code Splitting 功能（CommonsChunkPlugin 插件）将代码进行分割, 实现路由的按需加载
 
 
 ### Grunt / Gulp / Webpack / Rollup 比较
