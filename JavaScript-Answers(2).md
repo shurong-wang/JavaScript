@@ -334,7 +334,7 @@
 	- 支持 tree-shaking（减少打包后的体积）
 	- 新增更多的 CLI 参数项
 		- `-p` 指定当前的编译环境为生产环境（修改 process.env.NODE_ENV 为 "production"）
-	- 配置选项语法修改
+	- 配置选项语法有较大修改，且不兼容之前版本
 		- resolve（解析）配置
 			- 取消了 `extensions ` 空字符串（表示导入文件无后缀名）
 			
