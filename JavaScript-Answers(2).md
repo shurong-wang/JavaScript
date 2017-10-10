@@ -468,7 +468,7 @@
 	- 相对于“单向绑定”，如果用户更新 View，Model 的数据也会自动被更新（双向绑定 = 单向绑定 + UI事件监听）
 	- 当用户填写表单时，更新了 View 的状态，如果此时也自动更新了 Model 的状态，就相当于把 Model 和 View 做了双向绑定
 	- 优点：在表单交互较多的场景下，会简化大量业务无关的代码
-	- 缺点：无法追踪局部状态的变化，潜在的行为太多也增加了出错时 debug 的难度
+	- 缺点：无法追踪局部状态的变化，潜在的行为太多，增加了 debug 错误的难度
 
 ### 什么是 MVC/MVP/MVVM/Flux？
 
@@ -495,15 +495,43 @@
 
 ### 介绍一下 React 组件生命周期？
 
-* componentWillMount
-* render
-* componentDidMount
-* componentWillReceiveProps
-* shouldComponentUpdate
-* componentWillUpdate
-* componentDidUpdate
-* componentWillUnmount
+* Mounting 初始化阶段
+	* constructor
+	* componentWillMount
+	* render
+	* componentDidCatch
+	* componentDidMount
 
+* Updating 更新阶段
+	* componentWillReceiveProps
+	* shouldComponentUpdate
+	* componentWillUpdate
+	* render
+	* componentDidCatch
+	* componentDidUpdate
+
+* Unmounting 销毁阶段
+	* componentWillUnmount
+
+### React 16 有哪些更新
+* 对核心算法重新实现
+	- 采用了全新的内部架构 "Fiber"
+	- 提升复杂 React 应用的可响应性和性能
+* 重写服务器端渲染器（randerer）
+	- 支持流（streaming），可以向客户端更快地发送字节，SSR 速度提高了三倍
+* 更好的错误处理机制
+	- 新增错误处理生命周期函数：componentDidCatch(error, info) 
+* 新增 Portals 函数
+	- 可以将子节点渲染到父节点之外的 DOM 节点中：ReactDOM.createPortal(children, domNode)
+* 新增 render 返回类型：fragments 和 strings
+	- `render() { return [<Component1>, <Component2>]; }`
+	- `render() { return 'Hello React 16!; }`
+* 体积更加小巧
+	- react + react-dom 相比以前版本减少了 32%（使用 Rollup 构建工具；去除了 React 属性的白名单列表）
+* 支持自定义 DOM 属性
+	- 之前无法识别的 HTML 和 SVG 属性只能忽略，新版本中，可以将它们传递给 DOM 了
+* 更新了开源协议（MIT）
+	- 改为更宽松的 MIT 协议，容易被社区接受
 
 ### 介绍一下 vue 组件生命周期？
 
