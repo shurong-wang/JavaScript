@@ -445,8 +445,8 @@
 - 为 Date 对象扩展一个方法 dateTotal，获取任意 Date 实例日期所在月份的总天数	```JavaScript	Date.prototype.dateTotal = function () {
 		var y = this.getFullYear();
 		var m = this.getMonth();
-		// new Date("yyyy/mm/dd") 日期的构造方法有一个特殊用法：
-		// 当传入 "yyyy/mm/0" 时，得到的是 "mm" 月上一个月的最后一天
+		// new Date(yyyy, mm, dd) 日期的构造方法有一个特殊用法：
+		// 当传入 `yyyy, mm, 0` 时，得到的是 mm 月上一个月的最后一天
 		return new Date(y, m + 1, 0).getDate();	}
 	```
 
