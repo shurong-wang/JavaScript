@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>数据双向绑定</title>
+</head>
+<body>
+<ul>
+	<li>
+		<label for="name">姓名</label>
+		<input id="name" name="name" type="text"/>
+	</li>
+	<li>
+		<label for="job">年龄</label>
+		<select id="job" name="job">
+			<option>Java</option>
+			<option>Python</option>
+			<option>PHP</option>
+			<option>HTML5</option>
+            <option>ES6</option>
+            <option>CSS3</option>
+		</select>
+	</li>
+</ul>
+
+<script>
+	const VIEW = {
+		nameEl: document.getElementById('name'),
+		jobEl: document.getElementById('job')
+	}
+
+	function User(name, job) {
+		this.name = name;
+		this.job = job;
+	}
+
+    // data -> view
+	Object.defineProperty(User.prototype, 'name', {
+		set: function(name) {
+			VIEW.nameEl.value = name;
+		},
+		get: function() {
+			return VIEW.nameEl.value;
+		}
+	});
+	Object.defineProperty(User.prototype, 'job', {
+		set: function(job) {
+			var jobOptions = Array.from(VIEW.jobEl.options).map(item => item.innerHTML);
+			if (jobOptions.indexOf(job) === -1) {
+				// throw new Error('职位不存在');
+				console.warn('职位不存在');
+                return;
+			}
+			VIEW.jobEl.value = job;
+		},
+		get: function() {
+			return VIEW.jobEl.value;
+		}
+	});
+
+    // view -> data
+    User.prototype.bind = function(VIEW) {
+		VIEW.nameEl.addEventListener('change', evt => {
+			this.name = evt.target.value;
+            console.log(this);
+		});
+		VIEW.jobEl.addEventListener('change', evt => {
+			this.job = evt.target.value;
+            console.log(this);
+		});
+	}
+
+	var user = new User('Lucy', 'Ruby');
+	user.bind(VIEW);
+
+</script>
+
+</body>
+</html>
