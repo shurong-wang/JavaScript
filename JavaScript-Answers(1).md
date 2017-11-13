@@ -194,7 +194,11 @@
 ### 重绘和回流的触发方式有哪些？如何最小化重绘和回流？
 
 - 重绘和回流的触发方式：
-	1. 添加/删除 DOM 元素(回流+重绘)	2. 隐藏元素 -- display:none(回流+重绘)，visibility:hidden(只重绘，不回流)	3. 移动元素 -- 比如改变 top/left，或者移动元素到另外一个父元素中(重绘+回流)	4. 对 style 的操作(对不同的属性操作，影响不一样)	5. 用户的事件操作，比如鼠标悬停、页面滚动、输入框键入、改变窗口大小等(回流+重绘)
+	1. 添加/删除 DOM 元素(回流+重绘)
+	2. 隐藏元素 -- display:none(回流+重绘)，visibility:hidden(只重绘，不回流)
+	3. 移动元素 -- 比如改变 top/left，或者移动元素到另外一个父元素中(重绘+回流)
+	4. 对 style 的操作(对不同的属性操作，影响不一样)
+	5. 用户的事件操作，比如鼠标悬停、页面滚动、输入框键入、改变窗口大小等(回流+重绘)
 	
 - 最小化重绘和回流方法：
   1. 需要要对元素进行频繁的操作时，可以先隐藏(display: none)，操作完成后再显示。或者使用 cloneNode() 方法，在克隆的节点上进行操作，然后再用克隆的节点替换原始节点
@@ -236,7 +240,7 @@
      - 在 Java、C 等语言中，作用域为 for 语句、if 语句或 {} 内的一块区域，称为作用域；而在 JavaScript 中，作用域为 function () {} 内的区域，称为函数作用域
 
   * JavaScript 变量声明提升
-    - 在JavaScript中，函数声明与变量声明经常被 JavaScript 引擎隐式地提升到当前作用域的顶部
+    - 在 JavaScript 中，函数声明与变量声明经常被 JavaScript 引擎隐式地提升到当前作用域的顶部
     - 声明语句中的赋值部分并不会被提升，只有名称被提升
     - 函数声明的优先级高于变量，如果变量名跟函数名相同且未赋值，则函数声明会覆盖变量声明
     - 如果函数有多个同名参数，那么最后一个参数（即使没有定义）会覆盖前面的同名参数
@@ -275,7 +279,7 @@
 2. `a.constructor === Array; `
 3. `Array.prototype.isPrototypeOf(a); `
 4. `Object.getPrototypeOf(a) === Array.prototype; `
-5. `Object.prototype.toString.apply(a) === '[object Array]'; `
+5. `Object.prototype.toString.call(a) === '[object Array]'; `
 6. `Array.isArray([]);`
 
 ### JavaScript 创建对象的几种方式？
@@ -477,7 +481,7 @@
 		}
 		
 		// uber 是一个德语词，意思是"向上"、"上一层"
-		// uber 属性直接指向父对象的prototype属性
+		// uber 属性直接指向父对象的 prototype 属性
 		// 这等于在子对象上打开一条通道，可以直接调用父对象的方法
 		// 这一行放在这里，只是为了实现继承的完备性，纯属备用性质
 		c.uber = p;
@@ -690,13 +694,13 @@
     - 可以将事件应用于动态添加的子元素上
 
   * 缺点：
-    使用不当会造成事件在不应该触发时触发
+    - 使用不当会造成事件在不应该触发时触发
     
   * 示例：
 
 	```javascript  
 	ulEl.addEventListener('click', function(e){
-	    var target = event.target || event.srcElement;
+	    var target = e.target || e.srcElement;
 	    if(!!target && target.nodeName.toUpperCase() === "LI"){
 	        console.log(target.innerHTML);
 	    }
@@ -704,7 +708,7 @@
 	```
 
 ### 列举 IE 与其他浏览器不一样的特性？
-* 当前样式：IE 支持 el.currentStyle；FIrefox 使用 window.getComputedStyle(el, null);
+* 当前样式：IE 支持 el.currentStyle；FIrefox 使用 window.getComputedStyle(el, null)
 * 读写文本：IE 使用 el.innerText；Firefox 使用 el.textContent
 * 设置透明：IE 使用 filter:alpha(opacity=60)；Firefox 使用 -moz-opacity: 0.6
 * 绑定事件：IE 使用 attachEvent；火狐使用 addEventListener
