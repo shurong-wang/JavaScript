@@ -15,7 +15,7 @@ function twoSum2 (arr, sum) {
     for(var i = 0; i < len; i++) {
         var n = arr[i];
         if(hash[n] !== undefined) {
-            return [hash[n], i]；
+            return [hash[n], i];
         }
         else {
             // 关键：hash[n] 与 hash[sum - n] 对应
