@@ -195,11 +195,11 @@
 - 手写事件触发器，并要求兼容浏览器
 
     ```JavaScript
-    var fireEvent = function(element, event){
-        if (document.createEventObject){
+    var fireEvent = function(element, event) {
+        if (document.createEventObject) {
             var mockEvent = document.createEventObject();
             return element.fireEvent('on' + event, mockEvent)
-        }else{
+        } else {
             var mockEvent = document.createEvent('HTMLEvents');
             mockEvent.initEvent(event, true, true);
             return element.dispatchEvent(mockEvent);
@@ -248,7 +248,7 @@
 - 手写数组快速排序
 
     ```JavaScript
-    var quickSort = function(arr) {
+    var quickSort = function (arr) {
         if (arr.length <= 1) { return arr; }
         var pivotIndex = Math.floor(arr.length / 2);
         var pivot = arr.splice(pivotIndex, 1)[0];
@@ -271,7 +271,7 @@
 - 手写数组冒泡排序
 
     ```JavaScript
-    var bubble = function(arr){
+    var bubble = function (arr) {
         var maxIndex = arr.length - 1, temp, flag;
         for (var i = maxIndex; i > 0; i--) {
             flag = true
@@ -380,20 +380,20 @@
 - 封装函数节流函数
 
     ```JavaScript
-    var throttle = function(fn, delay, mustRunDelay){
+    var throttle = function (fn, delay, mustRunDelay) {
       var timer = null;
       var t_start;
-      return function(){
+      return function () {
         var context = this, args = arguments, t_curr = +new Date();
         clearTimeout(timer);
         if(!t_start){
           t_start = t_curr;
         }
-        if(t_curr - t_start >= mustRunDelay){
+        if(t_curr - t_start >= mustRunDelay) {
           fn.apply(context, args);
           t_start = t_curr;
         } else {
-          timer = setTimeout(function(){
+          timer = setTimeout(function () {
             fn.apply(context, args);
           }, delay);
         }
@@ -407,7 +407,7 @@
 - 用JS实现千位分隔符
 
     ```JavaScript
-    function test1(num){
+    function test1(num) {
       var str = (+ num) + '';
       var len = str.length;
       if(len <= 3) return str;
@@ -419,7 +419,7 @@
       return str.substr(0, len) + num;
     }
 
-    function test2(num){
+    function test2(num) {
       // ?= 正向匹配:匹配位置
       // ?! 正向不匹配:排除位置
       var str = (+num).toString();
@@ -442,12 +442,16 @@
 	}
 	```
 
-- 为 Date 对象扩展一个方法 dateTotal，获取任意 Date 实例日期所在月份的总天数	```JavaScript	Date.prototype.dateTotal = function () {
+- 为 Date 对象扩展一个方法 dateTotal，获取任意 Date 实例日期所在月份的总天数
+
+	```JavaScript
+	Date.prototype.dateTotal = function () {
 		var y = this.getFullYear();
 		var m = this.getMonth();
 		// new Date(yyyy, mm, dd) 日期的构造方法有一个特殊用法：
 		// 当传入 `yyyy, mm, 0` 时，得到的是 mm 月上一个月的最后一天
-		return new Date(y, m + 1, 0).getDate();	}
+		return new Date(y, m + 1, 0).getDate();
+	}
 	```
 
     
