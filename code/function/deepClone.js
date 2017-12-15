@@ -7,7 +7,7 @@ function deepClone(obj) {
     if (isIterable(obj)) {
         newObj = isArray(obj) ? [] : {};
         for (let [k, v] of Object.entries(obj)) {
-            if (isIterable(obj)) { 
+            if (isIterable(v)) { 
                 // 递归调用
                 newObj[k] = deepClone(v);
             } else {
