@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>typeahead + tagsinput</title>
+
+    <link rel="stylesheet" href="./lib/bootstrap-3/bootstrap.min.css">
+    <link rel="stylesheet" href="./lib/bootstrap-3/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="./lib/tagsinput/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="./assets/app.css">
+
+    <script src="./lib/jquery/jquery.min.js"></script>
+    <script src="./lib/bootstrap-3/bootstrap.min.js"></script>
+    <script src="./lib/typeahead/typeahead.bundle.min.js"></script>
+    <script src="./lib/tagsinput/bootstrap-tagsinput.min.js"></script>
+
+</head>
+
+<body>
+    <input type="text" />
+    <script>
+        var elt = $('input');
+        elt.tagsinput({
+            tagClass: function (item) {
+                switch (item.continent) {
+                    case 'Europe': return 'label label-primary';
+                    case 'America': return 'label label-danger label-important';
+                    case 'Australia': return 'label label-success';
+                    case 'Africa': return 'label label-default';
+                    case 'Asia': return 'label label-info';
+                }
+            },
+            itemValue: 'value',
+            itemText: 'text',
+            typeaheadjs: {
+                name: 'cities',
+                displayKey: 'text',
+                source: function (keyword, syncResults, asyncResults) {
+                    $.get('assets/cities.json?keyword=' + keyword, function (data) {
+                        asyncResults(data);
+                    });
+                }
+            }
+        });
+        
+        elt.tagsinput('add', { "value": 1, "text": "Amsterdam", "continent": "Europe" });
+        elt.tagsinput('add', { "value": 4, "text": "Washington", "continent": "America" });
+        elt.tagsinput('add', { "value": 7, "text": "Sydney", "continent": "Australia" });
+        elt.tagsinput('add', { "value": 10, "text": "Beijing", "continent": "Asia" });
+        elt.tagsinput('add', { "value": 13, "text": "Cairo", "continent": "Africa" });
+        elt.tagsinput('add', { "value": 9, "text": "Canberra", "continent": "Australia" });
+    </script>
+</body>
+
+</html>
