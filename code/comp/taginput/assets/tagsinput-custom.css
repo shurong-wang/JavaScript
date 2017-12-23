@@ -1,10 +1,33 @@
 .bootstrap-tagsinput {
-    width: 100%;
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 5px 0;
+}
+
+.bootstrap-tagsinput input {
+    margin-top: 2px;
+}
+
+.bootstrap-tagsinput .tag {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    margin-right: 2px;
+    margin-bottom: 2px;
+    padding: 5px;
+    color: white;
+}
+
+.tag-fill {
+    background-color: rgb(35, 148, 206);
 }
 
 .bootstrap-tagsinput .tag [data-role="remove"]:after {
-    content: "x";
-    padding: 0px 2px;
+    content: "×";
+    font-size: 18px;
 }
 
 .accordion {
@@ -33,7 +56,7 @@
     float: left;
     min-width: 160px;
     padding: 5px 0;
-    margin: 2px 0 0;
+    margin: 4px 0 0;
     list-style: none;
     font-size: 14px;
     background-color: #ffffff;
@@ -67,5 +90,9 @@
 .focus-class {
     outline: 0;
     border-color: rgba(82, 168, 236, 0.8);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 2px rgba(82, 168, 236, 0.6);
+}
+
+.btn-relation {
+    width: 260px;
 }
