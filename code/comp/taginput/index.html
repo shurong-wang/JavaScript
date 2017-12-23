@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>关系发现</title>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/tagsinput-custom.css">
+    <script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+    <script src="http://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+    <script src="http://cdn.bootcss.com/typeahead.js/0.11.1/typeahead.bundle.js"></script>
+    <script src="https://cdn.bootcss.com/lodash.js/4.17.4/lodash.min.js"></script>
+</head>
+
+<body>
+    <input type="text" />
+    <script>
+        const API = 'assets/companies.json?keyword=';
+        const elt = $('input');
+
+        elt.tagsinput({
+            itemValue: 'id',
+            itemText: 'name',
+            maxTags: 5,
+            maxChars: 20,
+            focusClass: 'focus-class',
+            onTagExists: function (item, $tag) {
+                $tag.hide().fadeIn();
+            },
+            tagClass: function (item) {
+                switch (item.type) {
+                    case 1: return 'label label-primary';
+                    case 2: return 'label label-danger label-important';
+                    case 3: return 'label label-success';
+                    case 4: return 'label label-default';
+                    case 5: return 'label label-info';
+                }
+            },
+            typeaheadjs: {
+                name: 'companies',
+                displayKey: 'name',
+                source: _.debounce(fetchSource, 300)
+            }
+        });
+        
+        elt.tagsinput('focus');
+
+        function fetchSource(keyword, syncResults, asyncResults) {
+            $.get(API + keyword, function (data) {
+                asyncResults(data);
+            });
+        }
+
+        elt.tagsinput('add',
+            {
+                "id": 24740773,
+                "name": "北京广誉远投资管理有限公司",
+                "type": 1,
+                "matchType": "历史名称匹配"
+            }
+        );
+
+    </script>
+</body>
+
+</html>
