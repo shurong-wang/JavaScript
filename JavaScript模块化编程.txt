@@ -2,19 +2,24 @@
 # 模块导出函数 -- 不暴露私有成员
 --------------------------------------------------------------------------------
 var module1 = (function(){
-　　var _p = 0; // 私有属性
-    function _method() { // 私有方法
+　　var _p = 0;				// 私有属性
+
+    function _method() {	// 私有方法
         // ...
     };
 
-    var mod = {}; // 模块
-    mod.p1 = 1; // 共有属性
-　　　 mod.m1 = function(){ // 共有方法
-　　　　　　  //...
-　　　　};
-　　　　mod.m2 = function(){ // 共有方法
-　　　　　　  //...
-　　　　};
+    var mod = {};			// 模块
+
+    mod.p1 = 1;				// 共有属性
+
+　　mod.m1 = function(){	// 共有方法
+　　　　//...
+　　};
+
+　　mod.m2 = function(){	// 共有方法
+　　	//...
+　　};
+
 	return mod;
 })();
 
@@ -23,10 +28,10 @@ var module1 = (function(){
 # 放大模式 -- 继承并放大模块
 --------------------------------------------------------------------------------
 var module1 = (function (mod){
-　　　　mod.m3 = function () {
-　　　　　　  //...
-　　　　};
-　　　　return mod;
+	mod.m3 = function () {
+　　	//...
+　　};
+　　return mod;
 })(module1);
 
 
@@ -37,8 +42,8 @@ var module1 = (function (mod){
 这时就要采用"宽放大模式"。
 --------------------------------------------------------------------------------
 var module1 = (function(mod){
-　　　　//...
-　　　　return mod;
+	//...
+　　return mod;
 })(window.module1 || {});
 
 
@@ -57,7 +62,7 @@ module1.sub = (function(){
 保证模块的独立性，使得模块之间的依赖关系清晰明显。
 --------------------------------------------------------------------------------
 var module1 = (function ($, YAHOO){
-　　　　//...
+	//...
 })(jQuery, YAHOO);
 
 
